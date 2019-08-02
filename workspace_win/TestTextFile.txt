@@ -1,0 +1,4 @@
+SLONG ev3_motor_device_close();
+SLONG ev3_motor_device_initialize(CONST UBYTE chList, CONST VOID *opt);
+SLONG ev3_motor_device_write(CONST UBYTE ch, CONST VOID *data, CONST SINT data_len);
+SLONG ev3_motor_device_read(CONST UBYTE ch, VOID *buf, CONST SINT buf_len, SINT *read_len);
