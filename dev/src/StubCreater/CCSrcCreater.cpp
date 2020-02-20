@@ -8,6 +8,7 @@
 #include <sstream>
 #include <string>
 #include <algorithm>
+#include <cctype>
 #include "CCSrcCreator.h"
 
 CCSrcCreator::CCSrcCreator()
@@ -53,6 +54,7 @@ VOID CCSrcCreator::SetBuffVarDeclare(CParamInfo *FuncInfo)
     String StubFuncName = this->CreateStubFuncName(FuncInfo->getName());
     String CalledCountVarName = this->CreateCalledCountVarName(StubFuncName);
     String RetValVarName = this->CreateRetValArrayName(StubFuncName);
+    String FuncRetValType = FuncInfo->getDataType();
 
     list<String> ArgDataTypeList;
     list<String> ArgNameList;
@@ -166,10 +168,22 @@ VOID CCSrcCreator::SetBody(CParamInfo *FuncInfo)
 
     //処理部分の実装開始
     this->WriteLine(String("{"));
-    this->WriteLine(String("\tint ret_val ="));
-    this->WriteLine(String("\t\t") + RetValVarName);
-    this->WriteLine(String("\t\t[") + CalledCountVarName + String("];"));
-    this->WriteLine(String(""));
+    String dataType = FuncInfo->getDataType();
+    transform(dataType.begin(),
+    		dataType.end(),
+			dataType.begin(),
+            ::tolower);
+    printf("DataType = %s\n", dataType.c_str());
+    if (dataType == "void") {
+    	//Skip
+    } else {
+        this->WriteLine(String("\tint ret_val ="));
+        this->WriteLine(String("\t\t") + RetValVarName);
+        this->WriteLine(String("\t\t[") + CalledCountVarName + String("];"));
+        this->WriteLine(String(""));
+    }
+
+
 
     //引数をバッファーに格納する処理を実装
     ArgBuffDataTypeListIterator = ArgBuffNameList.begin();
@@ -202,8 +216,12 @@ VOID CCSrcCreator::SetBody(CParamInfo *FuncInfo)
     }
     this->WriteLine("");
     this->WriteLine(String("\t") + CalledCountVarName + String("++;"));
-    this->WriteLine("");
-    this->WriteLine("\treturn (ret_val);");
+    if (dataType == "void") {
+    	//Skip
+    } else {
+        this->WriteLine("");
+        this->WriteLine("\treturn (ret_val);");
+    }
     this->WriteLine("}");
 }
 

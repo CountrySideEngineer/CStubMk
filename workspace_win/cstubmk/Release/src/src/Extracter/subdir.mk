@@ -4,9 +4,9 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-E:/development/C/cstubmk/dev/src/Extracter/AExtracter.cpp \
-E:/development/C/cstubmk/dev/src/Extracter/CArgExtracter.cpp \
-E:/development/C/cstubmk/dev/src/Extracter/CFuncExtracter.cpp 
+E:/development/C/CStubMk/dev/src/Extracter/AExtracter.cpp \
+E:/development/C/CStubMk/dev/src/Extracter/CArgExtracter.cpp \
+E:/development/C/CStubMk/dev/src/Extracter/CFuncExtracter.cpp 
 
 OBJS += \
 ./src/src/Extracter/AExtracter.o \
@@ -20,24 +20,24 @@ CPP_DEPS += \
 
 
 # Each subdirectory must supply rules for building sources it contributes
-src/src/Extracter/AExtracter.o: E:/development/C/cstubmk/dev/src/Extracter/AExtracter.cpp
+src/src/Extracter/AExtracter.o: E:/development/C/CStubMk/dev/src/Extracter/AExtracter.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cygwin C++ Compiler'
-	g++ -I"E:\development\C\cstubmk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -I"E:\development\C\CStubMk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
-src/src/Extracter/CArgExtracter.o: E:/development/C/cstubmk/dev/src/Extracter/CArgExtracter.cpp
+src/src/Extracter/CArgExtracter.o: E:/development/C/CStubMk/dev/src/Extracter/CArgExtracter.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cygwin C++ Compiler'
-	g++ -I"E:\development\C\cstubmk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -I"E:\development\C\CStubMk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
-src/src/Extracter/CFuncExtracter.o: E:/development/C/cstubmk/dev/src/Extracter/CFuncExtracter.cpp
+src/src/Extracter/CFuncExtracter.o: E:/development/C/CStubMk/dev/src/Extracter/CFuncExtracter.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cygwin C++ Compiler'
-	g++ -I"E:\development\C\cstubmk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -I"E:\development\C\CStubMk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

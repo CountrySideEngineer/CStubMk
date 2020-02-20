@@ -4,13 +4,13 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-E:/development/C/cstubmk/dev/src/StubCreater/AStubCreater.cpp \
-E:/development/C/cstubmk/dev/src/StubCreater/CCHeaderCreator.cpp \
-E:/development/C/cstubmk/dev/src/StubCreater/CCHeaderIFCreator.cpp \
-E:/development/C/cstubmk/dev/src/StubCreater/CCHeaderStubCreator.cpp \
-E:/development/C/cstubmk/dev/src/StubCreater/CCSrcCreater.cpp \
-E:/development/C/cstubmk/dev/src/StubCreater/CCSrcIFCreator.cpp \
-E:/development/C/cstubmk/dev/src/StubCreater/CCSrcStubCreator.cpp 
+E:/development/C/CStubMk/dev/src/StubCreater/AStubCreater.cpp \
+E:/development/C/CStubMk/dev/src/StubCreater/CCHeaderCreator.cpp \
+E:/development/C/CStubMk/dev/src/StubCreater/CCHeaderIFCreator.cpp \
+E:/development/C/CStubMk/dev/src/StubCreater/CCHeaderStubCreator.cpp \
+E:/development/C/CStubMk/dev/src/StubCreater/CCSrcCreater.cpp \
+E:/development/C/CStubMk/dev/src/StubCreater/CCSrcIFCreator.cpp \
+E:/development/C/CStubMk/dev/src/StubCreater/CCSrcStubCreator.cpp 
 
 OBJS += \
 ./src/src/StubCreater/AStubCreater.o \
@@ -32,52 +32,52 @@ CPP_DEPS += \
 
 
 # Each subdirectory must supply rules for building sources it contributes
-src/src/StubCreater/AStubCreater.o: E:/development/C/cstubmk/dev/src/StubCreater/AStubCreater.cpp
+src/src/StubCreater/AStubCreater.o: E:/development/C/CStubMk/dev/src/StubCreater/AStubCreater.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cygwin C++ Compiler'
-	g++ -I"E:\development\C\cstubmk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -I"E:\development\C\CStubMk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
-src/src/StubCreater/CCHeaderCreator.o: E:/development/C/cstubmk/dev/src/StubCreater/CCHeaderCreator.cpp
+src/src/StubCreater/CCHeaderCreator.o: E:/development/C/CStubMk/dev/src/StubCreater/CCHeaderCreator.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cygwin C++ Compiler'
-	g++ -I"E:\development\C\cstubmk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -I"E:\development\C\CStubMk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
-src/src/StubCreater/CCHeaderIFCreator.o: E:/development/C/cstubmk/dev/src/StubCreater/CCHeaderIFCreator.cpp
+src/src/StubCreater/CCHeaderIFCreator.o: E:/development/C/CStubMk/dev/src/StubCreater/CCHeaderIFCreator.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cygwin C++ Compiler'
-	g++ -I"E:\development\C\cstubmk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -I"E:\development\C\CStubMk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
-src/src/StubCreater/CCHeaderStubCreator.o: E:/development/C/cstubmk/dev/src/StubCreater/CCHeaderStubCreator.cpp
+src/src/StubCreater/CCHeaderStubCreator.o: E:/development/C/CStubMk/dev/src/StubCreater/CCHeaderStubCreator.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cygwin C++ Compiler'
-	g++ -I"E:\development\C\cstubmk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -I"E:\development\C\CStubMk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
-src/src/StubCreater/CCSrcCreater.o: E:/development/C/cstubmk/dev/src/StubCreater/CCSrcCreater.cpp
+src/src/StubCreater/CCSrcCreater.o: E:/development/C/CStubMk/dev/src/StubCreater/CCSrcCreater.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cygwin C++ Compiler'
-	g++ -I"E:\development\C\cstubmk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -I"E:\development\C\CStubMk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
-src/src/StubCreater/CCSrcIFCreator.o: E:/development/C/cstubmk/dev/src/StubCreater/CCSrcIFCreator.cpp
+src/src/StubCreater/CCSrcIFCreator.o: E:/development/C/CStubMk/dev/src/StubCreater/CCSrcIFCreator.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cygwin C++ Compiler'
-	g++ -I"E:\development\C\cstubmk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -I"E:\development\C\CStubMk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
-src/src/StubCreater/CCSrcStubCreator.o: E:/development/C/cstubmk/dev/src/StubCreater/CCSrcStubCreator.cpp
+src/src/StubCreater/CCSrcStubCreator.o: E:/development/C/CStubMk/dev/src/StubCreater/CCSrcStubCreator.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cygwin C++ Compiler'
-	g++ -I"E:\development\C\cstubmk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -I"E:\development\C\CStubMk\dev\src\include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
