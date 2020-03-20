@@ -1,6 +1,7 @@
 ﻿using CStubMKGui.Command;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace CStubMKGui.ViewModel
@@ -30,8 +31,8 @@ namespace CStubMKGui.ViewModel
         /// </summary>
         public CStubMkGuiViewModel()
         {
-            this._StubDefFilePath = "";
-            this._StubOutputPath = "";
+            this.StubDefFilePath = "";
+            this.StubOutputPath = "";
             this._CreateStubCommand = null;
         }
         #endregion
@@ -64,7 +65,7 @@ namespace CStubMKGui.ViewModel
             }
             set
             {
-                this._StubDefFilePath = value;
+                this._StubOutputPath = value;
                 this.RaisePropertyChanged(StubOutputPath);
             }
         }
@@ -89,7 +90,7 @@ namespace CStubMKGui.ViewModel
         /// </summary>
         public void CreateStubExecute()
         {
-
+            Console.WriteLine("void CreateStubExecute() called");
         }
 
         /// <summary>
