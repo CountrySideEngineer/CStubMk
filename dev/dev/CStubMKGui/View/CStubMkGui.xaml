@@ -5,8 +5,62 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CStubMKGui"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="スタブ生成" Height="170" Width="600">
+    <Grid x:Name="CStubMkMainViewGrid"
+          Margin="12"
+          >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   TextAlignment="Left"
+                   Text="スタブ定義ファイル：" 
+                   />
+        <TextBox x:Name="StubDefFilePath"
+                 Grid.Row="0"
+                 Grid.Column="1"
+                 Grid.ColumnSpan="4"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Stretch"
+                 Margin="10"
+                 Text="TextBox" 
+                 />
+        <TextBlock Grid.Row="1"
+                   Grid.Column="0"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   TextAlignment="Left"
+                   Text="スタブ定義ファイル：" 
+                   />
+        <TextBox x:Name="StubOutputPath"
+                 Grid.Row="1"
+                 Grid.Column="1"
+                 Grid.ColumnSpan="4"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Stretch"
+                 Margin="10"
+                 Text="" 
+                 />
+        <Button x:Name="button" 
+                Grid.Column="2" 
+                Grid.Row="2" 
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch"
+                Content="実行" 
+                Margin="10"
+                />
     </Grid>
 </Window>
