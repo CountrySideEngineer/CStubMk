@@ -3,9 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:CStubMKGui.ViewModel"
         xmlns:local="clr-namespace:CStubMKGui"
         mc:Ignorable="d"
-        Title="スタブ生成" Height="170" Width="600">
+        Title="スタブ生成" Height="200" Width="600">
+    <Window.DataContext>
+        <vm:CStubMkGuiViewModel/>
+    </Window.DataContext>
     <Grid x:Name="CStubMkMainViewGrid"
           Margin="12"
           >
