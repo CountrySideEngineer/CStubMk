@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon />
+    <StartupObject>CStubMKGui.App</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Model\ISourceCode.cs" />
+    <Compile Remove="Model\StubSourceCode.cs" />
+  </ItemGroup>
+
+</Project>
