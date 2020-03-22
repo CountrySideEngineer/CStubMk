@@ -1,0 +1,44 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace CStubMKGui.Model
+{
+    /// <summary>
+    /// Create source file to create C language source file.
+    /// </summary>
+    public class CStubFileCreater : ISourceFileCreater
+    {
+        #region Constructors and the finalizer
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public CStubFileCreater() {}
+        #endregion
+
+        #region Other methods and private properties in calling order
+        /// <summary>
+        /// Create source file of stub in C language style.
+        /// </summary>
+        /// <param name="outputPath">Path to output source file.</param>
+        /// <param name="parameters">Parameters to create stub.</param>
+        public void Create(String outputPath, IEnumerable<Param> parameters)
+        {
+            var director = new StubDirectorForCStyle();
+            this.Create(new StubSourceFile(director), outputPath, parameters);
+            this.Create(new StubHeaderFile(director), outputPath, parameters);
+        }
+
+        /// <summary>
+        /// Call sequence to create source files (including header file) of stub.
+        /// </summary>
+        /// <param name="stubFile">Object to create source file.</param>
+        /// <param name="outputPath">Path to output source file.</param>
+        /// <param name="parameters">Parameters to create stub.</param>
+        protected void Create(AStubFile stubFile, String outputPath, IEnumerable<Param> parameters)
+        {
+            stubFile.CreateFile(outputPath, parameters);
+        }
+        #endregion
+    }
+}
