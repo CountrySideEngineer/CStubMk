@@ -7,13 +7,6 @@ namespace CStubMKGui.Model
 {
     public class StubSourceFile : AStubFile
     {
-        #region Private fields and constants
-        /// <summary>
-        /// Stub file name.
-        /// </summary>
-        protected String fileName = "Stub.c";
-        #endregion
-
         #region Constructors and the finalizer
         /// <summary>
         /// Constructor
@@ -21,29 +14,18 @@ namespace CStubMKGui.Model
         /// <param name="director">Director object to create code of stub.</param>
         public StubSourceFile(StubDirectorForCStyle director)
         {
+            this.fileName = "Stub.c";
             this.Director = director;
         }
         #endregion
 
         #region Other methods and private properties in calling order
         /// <summary>
-        /// Create stub file.
-        /// </summary>
-        /// <param name="outputPath">Path to folder the stub source file is created.</param>
-        /// <param name="parameters">Informations for stub.</param>
-        public override void CreateFile(String outputPath, IEnumerable<Param> parameters)
-        {
-            String outputFilePath = outputPath + @"\" + fileName;
-            using var fileStream = new StreamWriter(outputFilePath, false, Encoding.GetEncoding("UTF-8"));
-            this.RunSequence(fileStream, parameters);
-        }
-
-        /// <summary>
         /// Sequence to create stub file.
         /// </summary>
         /// <param name="stream">Stream to output stub data.</param>
         /// <param name="parameters">Informations for stub.</param>
-        protected virtual void RunSequence(TextWriter stream, IEnumerable<Param> parameters)
+        protected override void RunCreateFileSequence(TextWriter stream, IEnumerable<Param> parameters)
         {
             this.IncludePart(stream);
             foreach (var param in parameters)
@@ -64,6 +46,10 @@ namespace CStubMKGui.Model
             stream.WriteLine("");
         }
 
+        /// <summary>
+        /// Create code to define macro.
+        /// </summary>
+        /// <param name="stream">Stream to output stub data.</param>
         protected virtual void DefinePart(TextWriter stream)
         {
             stream.Write(this.Director.GetDefinePart());
@@ -81,15 +67,6 @@ namespace CStubMKGui.Model
             this.BufferDeclare(stream);
             this.StubBody(stream);
             this.StubInitPart(stream);
-        }
-
-        /// <summary>
-        /// Output stub header part.
-        /// </summary>
-        /// <param name="stream">Stream to output stub data.</param>
-        protected virtual void StubHeader(TextWriter stream)
-        {
-            stream.WriteLine(this.Director.GetMethodHeader());
         }
 
         /// <summary>

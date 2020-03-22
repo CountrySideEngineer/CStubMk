@@ -114,6 +114,33 @@ namespace CStubMKGui.Model
         }
 
         /// <summary>
+        /// Create code for extern declarations of buffur variabels..
+        /// </summary>
+        /// <returns>Code for extern declarations of buffur.</returns>
+        public String GetStubBufferExternDeclare()
+        {
+            String stubBufferExtern = "";
+            stubBufferExtern += this.GetCodeLine(String.Format("extern int {0};", this.GetMethodCalledCounterName()));
+            foreach (var arg in this.Parameter.Parameters)
+            {
+                String buffExtern = this.GetBufferExternDeclare(arg);
+                stubBufferExtern += this.GetCodeLine(buffExtern);
+            }
+            return stubBufferExtern;
+        }
+
+        /// <summary>
+        /// Create code of extern declaration.
+        /// </summary>
+        /// <param name="arg">Argument of method.</param>
+        /// <returns>Code of extern declaration.</returns>
+        public String GetBufferExternDeclare(Param arg)
+        {
+            String stubBufferExtern = String.Format("extern {0} {1}[];", this.GetDataType(arg), this.GetArgBuffName(arg));
+            return stubBufferExtern;
+        }
+
+        /// <summary>
         /// Create code to declare variable for the count the stub is called.
         /// </summary>
         /// <returns>Code to declare variable for called count.</returns>
@@ -260,6 +287,15 @@ namespace CStubMKGui.Model
         public String GetArgInitEntryPoint()
         {
             return String.Format("void {0}_init()", this.Parameter.Name);
+        }
+
+        /// <summary>
+        /// Create code of extern declaration of function to initialize buffer for stub.
+        /// </summary>
+        /// <returns>Code of extern declaration of intialize function.</returns>
+        public String GetStubInitMethodExtern()
+        {
+            return String.Format("extern {0};", this.GetArgInitEntryPoint());
         }
 
         /// <summary>
