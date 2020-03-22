@@ -9,7 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
+    <Compile Remove="Model\ISourceCode.cs" />
+    <Compile Remove="Model\StubSourceCode.cs" />
   </ItemGroup>
 
 </Project>
