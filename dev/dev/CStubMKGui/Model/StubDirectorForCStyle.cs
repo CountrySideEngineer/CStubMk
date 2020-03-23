@@ -5,6 +5,9 @@ using System.Text;
 
 namespace CStubMKGui.Model
 {
+    /// <summary>
+    /// Create code of stub in C language.
+    /// </summary>
     public class StubDirectorForCStyle
     {
         protected const String CHANGE_LINE_CODE = "\r\n";
@@ -82,7 +85,7 @@ namespace CStubMKGui.Model
             }
             stubHeader += STUB_HEADER_POSTFIX;
 
-            return stubHeader;
+            return this.GetCodeLine(stubHeader);
         }
 
         /// <summary>

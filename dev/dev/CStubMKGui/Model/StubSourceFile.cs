@@ -53,7 +53,6 @@ namespace CStubMKGui.Model
         protected virtual void DefinePart(TextWriter stream)
         {
             stream.Write(this.Director.GetDefinePart());
-            stream.WriteLine("");
         }
 
         /// <summary>
