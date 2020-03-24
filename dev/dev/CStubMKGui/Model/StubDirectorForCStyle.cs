@@ -7,14 +7,14 @@ namespace CStubMKGui.Model
 {
     public class StubDirectorForCStyle
     {
-        protected const String CHANGE_LINE_CODE = "\r\n";
-        protected const String STUB_HEADER_PREFIX = "/*----";
-        protected const String STUB_HEADER_POSTFIX = "----*/";
-        protected const String BUFF_INIT_VALUE_PRIMITIVE = "0";
-        protected const String BUFF_INIT_VALUE_POINTER = "null";
-        protected const String BUFF_INIT_ID_VARIABLE = "id";
-        protected const String BUFF_SIZE_MACRO = "STUB_BUFF_SIZE";
-        protected const String BUFF_SIZE_NUM = "100";
+        protected static readonly String ChangeLineCode = "\r\n";
+        protected static readonly String StubHeaderPrefix = "/*----";
+        protected static readonly String StubHeaderPostfix = "----*/";
+        protected static readonly String BuffInitValuePrimitive = "0";
+        protected static readonly String BuffInitValuePointer = "null";
+        protected static readonly String BuffInitIdVariableName = "id";
+        protected static readonly String BuffSizeMacroName = "STUB_BUFF_SIZE";
+        protected static readonly String BuffSizeNum = "100";
 
         #region Constructors and the finalizer
         /// <summary>
@@ -42,9 +42,10 @@ namespace CStubMKGui.Model
         #region Other methods and private properties in calling order
         public String GetDefinePart()
         {
-            String definePart = String.Format("#define {0}\t\t\t\t({1})", BUFF_SIZE_MACRO, BUFF_SIZE_NUM);
+            String definePart = String.Format("#define {0}\t\t\t\t({1})", BuffSizeMacroName, BuffSizeNum);
             return this.GetCodeLine(definePart);
         }
+
 
         /// <summary>
         /// Create method brief description part of stub method.
@@ -52,35 +53,35 @@ namespace CStubMKGui.Model
         /// <returns>Stub method brief description.</returns>
         public String GetMethodHeader()
         {
-            String stubHeaderContent = String.Format(" Start {0} stub ", this.Parameter.Name);
-            int funcHeaderLineLen = stubHeaderContent.Length + STUB_HEADER_PREFIX.Length + STUB_HEADER_POSTFIX.Length;
-            String stubHeader = STUB_HEADER_PREFIX;
+            String stubHeaderContent = $"Start {this.Parameter.Name} stub";
+            int funcHeaderLineLen = stubHeaderContent.Length + StubHeaderPrefix.Length + StubHeaderPostfix.Length;
+            String stubHeader = StubHeaderPrefix;
             for (int whiteSpaceIndex = 0; whiteSpaceIndex < stubHeaderContent.Length; whiteSpaceIndex++)
             {
                 stubHeader += "-";
             }
-            stubHeader += (STUB_HEADER_POSTFIX + CHANGE_LINE_CODE);
-            stubHeader += STUB_HEADER_PREFIX;
+            stubHeader += (StubHeaderPostfix + ChangeLineCode);
+            stubHeader += StubHeaderPrefix;
             for (int whiteSpaceIndex = 0; whiteSpaceIndex < stubHeaderContent.Length; whiteSpaceIndex++)
             {
                 stubHeader += " ";
             }
-            stubHeader += (STUB_HEADER_POSTFIX + CHANGE_LINE_CODE);
-            stubHeader += STUB_HEADER_PREFIX;
+            stubHeader += (StubHeaderPostfix + ChangeLineCode);
+            stubHeader += StubHeaderPrefix;
             stubHeader += stubHeaderContent;
-            stubHeader += (STUB_HEADER_POSTFIX + CHANGE_LINE_CODE);
-            stubHeader += STUB_HEADER_PREFIX;
+            stubHeader += (StubHeaderPostfix + ChangeLineCode);
+            stubHeader += StubHeaderPrefix;
             for (int whiteSpaceIndex = 0; whiteSpaceIndex < stubHeaderContent.Length; whiteSpaceIndex++)
             {
                 stubHeader += " ";
             }
-            stubHeader += (STUB_HEADER_POSTFIX + CHANGE_LINE_CODE);
-            stubHeader += STUB_HEADER_PREFIX;
+            stubHeader += (StubHeaderPostfix + ChangeLineCode);
+            stubHeader += StubHeaderPrefix;
             for (int whiteSpaceIndex = 0; whiteSpaceIndex < stubHeaderContent.Length; whiteSpaceIndex++)
             {
                 stubHeader += "-";
             }
-            stubHeader += STUB_HEADER_POSTFIX;
+            stubHeader += StubHeaderPostfix;
 
             return stubHeader;
         }
@@ -92,7 +93,7 @@ namespace CStubMKGui.Model
         public String GetStubBufferDeclare()
         {
             String stubBufferDeclare = "";
-            stubBufferDeclare += this.GetCodeLine(String.Format("int {0};", this.GetMethodCalledCounterName()));
+            stubBufferDeclare += this.GetCodeLine($"int {this.GetMethodCalledCounterName()};");
             foreach (var arg in this.Parameter.Parameters)
             {
                 String buffDeclare = this.GetStubBufferDeclare(arg);
@@ -108,9 +109,8 @@ namespace CStubMKGui.Model
         /// <returns>Code to declare buffer used to latch argument.</returns>
         public String GetStubBufferDeclare(Param arg)
         {
-            String stubBufferDec = String.Format("{0} {1}[{2}];",
-                this.GetDataType(arg), this.GetArgBuffName(arg), BUFF_SIZE_MACRO);
-            return stubBufferDec;
+            String stubBufferDeclare = $"{this.GetDataType(arg)} {this.GetArgBuffName(arg)}[{BuffSizeMacroName}]";
+            return stubBufferDeclare;
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace CStubMKGui.Model
         public String GetStubBufferExternDeclare()
         {
             String stubBufferExtern = "";
-            stubBufferExtern += this.GetCodeLine(String.Format("extern int {0};", this.GetMethodCalledCounterName()));
+            stubBufferExtern += this.GetCodeLine($"extern int {this.GetMethodCalledCounterName()};");
             foreach (var arg in this.Parameter.Parameters)
             {
                 String buffExtern = this.GetBufferExternDeclare(arg);
@@ -136,7 +136,7 @@ namespace CStubMKGui.Model
         /// <returns>Code of extern declaration.</returns>
         public String GetBufferExternDeclare(Param arg)
         {
-            String stubBufferExtern = String.Format("extern {0} {1}[];", this.GetDataType(arg), this.GetArgBuffName(arg));
+            String stubBufferExtern = $"extern {this.GetDataType(arg)} {this.GetArgBuffName(arg)}";
             return stubBufferExtern;
         }
 
@@ -146,7 +146,7 @@ namespace CStubMKGui.Model
         /// <returns>Code to declare variable for called count.</returns>
         public String GetCalledCountDeclare()
         {
-            return String.Format("int {0};", this.GetMethodCalledCounterName());
+            return $"int {this.GetMethodCalledCounterName()}";
         }
 
         /// <summary>
@@ -169,12 +169,14 @@ namespace CStubMKGui.Model
             return stubMethod;
         }
 
+
         /// <summary>
         /// Create code of line.
         /// </summary>
         /// <param name="code">Code of line</param>
         /// <param name="indentLevel">Indent depth, level, of the code.</param>
         /// <returns>Code of line.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:メンバーを static に設定します", Justification = "<保留中>")]
         public String GetCodeLine(String code, int indentLevel = 0)
         {
             String codeLine = "";
@@ -183,7 +185,7 @@ namespace CStubMKGui.Model
                 codeLine += "\t";
             }
             codeLine += code;
-            codeLine += CHANGE_LINE_CODE;
+            codeLine += ChangeLineCode;
 
             return codeLine;
         }
@@ -197,14 +199,14 @@ namespace CStubMKGui.Model
             String initMethod = "";
             initMethod = this.GetCodeLine(this.GetArgInitEntryPoint());
             initMethod += this.GetCodeLine("{");
-            initMethod += this.GetCodeLine(String.Format("int {0} = 0;", BUFF_INIT_ID_VARIABLE), 1);
+            initMethod += this.GetCodeLine($"int {BuffInitIdVariableName} = 0;", 1);
             initMethod += this.GetCodeLine("");
-            initMethod += this.GetCodeLine(String.Format(@"for ({0} = 0; {0} < {1}; {0}++) {{",
-                BUFF_INIT_ID_VARIABLE, BUFF_SIZE_MACRO), 1);
+            initMethod += this.GetCodeLine(
+                @$"for ({BuffInitIdVariableName} = 0; {BuffInitIdVariableName} < {BuffSizeMacroName}; {BuffInitIdVariableName}++) {{");
             initMethod += this.GetArgInitPart();
             initMethod += this.GetRetValInitPart();
             initMethod += this.GetCodeLine("}", 1);
-            initMethod += this.GetCodeLine(String.Format("{0} = 0;", this.GetMethodCalledCounterName()), 1);
+            initMethod += this.GetCodeLine($"{this.GetMethodCalledCounterName()} = 0;");
             initMethod += this.GetCodeLine("}");
 
             return initMethod;
@@ -237,7 +239,7 @@ namespace CStubMKGui.Model
             {
                 if (0 < paramIndex)
                 {
-                    argDef += "," + StubDirectorForCStyle.CHANGE_LINE_CODE;
+                    argDef += "," + StubDirectorForCStyle.ChangeLineCode;
                 }
                 argDef += "\t";
                 argDef += this.CommonFormat(param);
@@ -273,11 +275,15 @@ namespace CStubMKGui.Model
         /// </remarks>
         public String GetArgLatchPart(Param argument)
         {
-            String latchPart = String.Format("{0}[{1}] = {2};", 
-                this.GetArgBuffName(argument), 
-                this.GetMethodCalledCounterName(),
-                argument.Name);
-            return latchPart;
+            if (null == argument)
+            {
+                throw new ArgumentNullException(nameof(argument));
+            }
+            else
+            {
+                String latchPart = $"{this.GetArgBuffName(argument)}[{this.GetMethodCalledCounterName()}] = {argument.Name};";
+                return latchPart;
+            }
         }
 
         /// <summary>
@@ -286,7 +292,9 @@ namespace CStubMKGui.Model
         /// <returns>Code of entry point to initialize buffer.</returns>
         public String GetArgInitEntryPoint()
         {
-            return String.Format("void {0}_init()", this.Parameter.Name);
+            Debug.Assert(null != this.Parameter);
+
+            return $"void {this.Parameter.Name}_init()";
         }
 
         /// <summary>
@@ -295,7 +303,7 @@ namespace CStubMKGui.Model
         /// <returns>Code of extern declaration of intialize function.</returns>
         public String GetStubInitMethodExtern()
         {
-            return String.Format("extern {0};", this.GetArgInitEntryPoint());
+            return $"extern {this.GetArgInitEntryPoint()};";
         }
 
         /// <summary>
@@ -320,16 +328,23 @@ namespace CStubMKGui.Model
         /// <returns>Part of code to initialize buffer.</returns>
         public String GetArgInitPart(Param argument)
         {
-            String initValue = "";
-            if (0 < argument.PointerNum)
+            if (null == argument)
             {
-                initValue = BUFF_INIT_VALUE_POINTER;
+                throw new ArgumentNullException(nameof(argument));
             }
             else
             {
-                initValue = BUFF_INIT_VALUE_PRIMITIVE;
+                String initValue = "";
+                if (0 < argument.PointerNum)
+                {
+                    initValue = BuffInitValuePointer;
+                }
+                else
+                {
+                    initValue = BuffInitValuePrimitive;
+                }
+                return $"{this.GetArgBuffName(argument)}[{BuffInitIdVariableName}] = {initValue};";
             }
-            return String.Format("{0}[{1}] = {2};", this.GetArgBuffName(argument), BUFF_INIT_ID_VARIABLE, initValue);
         }
 
         /// <summary>
@@ -340,9 +355,8 @@ namespace CStubMKGui.Model
         {
             String retValInitPart = "";
             if (this.HasReturnValue())
-            if (0 < this.GetRetValBuffName().Length)
             {
-                String retValInit = String.Format("{0}[{1}] = 0;", this.GetRetValBuffName(), BUFF_INIT_ID_VARIABLE);
+                String retValInit = $"{this.GetRetValBuffName()}[{BuffInitIdVariableName}] = 0;";
                 retValInitPart = this.GetCodeLine(retValInit, 2);
             }
             return retValInitPart;
@@ -361,20 +375,20 @@ namespace CStubMKGui.Model
             String returnLatchPart = "";
             if (this.HasReturnValue())
             {
-                String latchPart = String.Format("{0} ret_val = {1}[{2}];",
-                    this.Parameter.DataType,
-                    this.GetRetValBuffName(),
-                    this.GetMethodCalledCounterName());
+                String latchPart = $"{this.Parameter.DataType} ret_val = {this.GetRetValBuffName()}[{this.GetMethodCalledCounterName()}];";
                 returnLatchPart = this.GetCodeLine(latchPart, 1);
 
             }
             return returnLatchPart;
         }
 
+
         /// <summary>
         /// Check whether the parameter the Director holds has value to return or not.
         /// </summary>
         /// <returns>Returns true if the method returns value, otherwise returns false.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1304:CultureInfo を指定します", Justification = "<保留中>")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:StringComparison を指定します", Justification = "<保留中>")]
         protected Boolean HasReturnValue()
         {
             /*
@@ -406,6 +420,7 @@ namespace CStubMKGui.Model
             return returnPart;
         }
 
+
         /// <summary>
         /// Create string in common format
         /// </summary>
@@ -415,6 +430,7 @@ namespace CStubMKGui.Model
         /// The format is below:
         /// ({Prefix}) {DataType}({NumOfPointer}) ({Postfix}) {Name}
         /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:メンバーを static に設定します", Justification = "<保留中>")]
         public String CommonFormat(Param param)
         {
             String commonFormat = "";
@@ -443,22 +459,38 @@ namespace CStubMKGui.Model
         /// <returns>Code to set argument into buffer.</returns>
         public String GetArgBuffName(Param argument)
         {
-            return String.Format("{0}_{1}", this.Parameter.Name, argument.Name);
+            if (null == argument)
+            {
+                throw new ArgumentNullException(nameof(argument));
+            }
+            else
+            {
+                return $"{this.Parameter.Name}_{argument.Name}";
+            }
         }
+
 
         /// <summary>
         /// Create code of data type with prefix, postfix and pointer.
         /// </summary>
         /// <param name="argument">Argument information.</param>
         /// <returns>Code of data type.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:メンバーを static に設定します", Justification = "<保留中>")]
         public String GetDataType(Param argument)
         {
-            String dataType = argument.DataType;
-            for (int index = 0; index < argument.PointerNum; index++)
+            if (null == argument)
             {
-                dataType += "*";
+                throw new ArgumentNullException(nameof(argument));
             }
-            return dataType;
+            else
+            {
+                String dataType = argument.DataType;
+                for (int index = 0; index < argument.PointerNum; index++)
+                {
+                    dataType += "*";
+                }
+                return dataType;
+            }
         }
 
         /// <summary>
@@ -467,7 +499,7 @@ namespace CStubMKGui.Model
         /// <returns>Variable name to latch and return.</returns>
         public String GetRetValBuffName()
         {
-            return String.Format("{0}_ret_val", this.Parameter.Name);
+            return $"{this.Parameter.Name}_ret_val";
         }
 
         /// <summary>
@@ -479,7 +511,7 @@ namespace CStubMKGui.Model
         /// </remarks>
         public String GetMethodCalledCounterName()
         {
-            return String.Format("{0}_called_count", this.Parameter.Name);
+            return $"{this.Parameter.Name}_called_count";
         }
         #endregion
     }
