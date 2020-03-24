@@ -169,7 +169,6 @@ namespace CStubMKGui.Model
             return stubMethod;
         }
 
-
         /// <summary>
         /// Create code of line.
         /// </summary>
