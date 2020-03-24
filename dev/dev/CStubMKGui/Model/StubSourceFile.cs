@@ -14,7 +14,7 @@ namespace CStubMKGui.Model
         /// <param name="director">Director object to create code of stub.</param>
         public StubSourceFile(StubDirectorForCStyle director)
         {
-            this.fileName = "Stub.c";
+            this.FileName = "Stub.c";
             this.Director = director;
         }
         #endregion

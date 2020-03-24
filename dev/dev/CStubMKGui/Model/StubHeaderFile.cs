@@ -14,7 +14,7 @@ namespace CStubMKGui.Model
         /// <param name="director">Director object to create header of stub.</param>
         public StubHeaderFile(StubDirectorForCStyle director)
         {
-            this.fileName = "Stub.h";
+            this.FileName = "Stub.h";
             this.Director = director;
         }
         #endregion
