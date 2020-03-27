@@ -1,4 +1,5 @@
 ﻿using CStubMKGui.Command;
+using CStubMKGui.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -90,7 +91,8 @@ namespace CStubMKGui.ViewModel
         /// </summary>
         public void CreateStubExecute()
         {
-            Console.WriteLine("void CreateStubExecute() called");
+            var stubMk = new CStubMk();
+            stubMk.Create(this.StubDefFilePath, this.StubOutputPath);
         }
 
         /// <summary>

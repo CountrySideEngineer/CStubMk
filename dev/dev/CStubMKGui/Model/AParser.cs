@@ -14,5 +14,17 @@ namespace CStubMKGui.Model
         /// <returns>Parameters for function.</returns>
         public abstract IEnumerable<Param> Parse(String functionDefinition);
         #endregion
+
+        #region FactoryMethod.
+        /// <summary>
+        /// Create parser to parse functino definition.
+        /// </summary>
+        /// <param name="funcDefPath">Path to function definition file.</param>
+        /// <returns>A parser object to parse the file.</returns>
+        public static AParser ParserFactory(string funcDefPath)
+        {
+            return new CExcelParser();
+        }
+        #endregion
     }
 }

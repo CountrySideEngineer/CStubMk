@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CStubMKGui", "CStubMKGui\CStubMKGui.csproj", "{1D8470CC-DA57-40D3-9CD3-B6F7044BF6DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CStubMKGui", "CStubMKGui\CStubMKGui.csproj", "{1D8470CC-DA57-40D3-9CD3-B6F7044BF6DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest_CExcelParser", "UnitTest_CExcelParser\UnitTest_CExcelParser.csproj", "{4FDAEFA3-3615-4E48-A056-1E9B3B83DCC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1D8470CC-DA57-40D3-9CD3-B6F7044BF6DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D8470CC-DA57-40D3-9CD3-B6F7044BF6DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D8470CC-DA57-40D3-9CD3-B6F7044BF6DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FDAEFA3-3615-4E48-A056-1E9B3B83DCC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FDAEFA3-3615-4E48-A056-1E9B3B83DCC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FDAEFA3-3615-4E48-A056-1E9B3B83DCC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FDAEFA3-3615-4E48-A056-1E9B3B83DCC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
