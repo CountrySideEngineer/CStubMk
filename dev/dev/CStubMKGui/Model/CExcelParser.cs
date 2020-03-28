@@ -61,6 +61,11 @@ namespace CStubMKGui.Model
             }
         }
 
+        /// <summary>
+        /// Run a sequence to extract parameters of method and that of argument.
+        /// </summary>
+        /// <param name="workSheet">Worksheet of the table.</param>
+        /// <returns>Parameters of method extracted from the work sheet.</returns>
         protected virtual IEnumerable<Param> ExtractSequence(IXLWorksheet workSheet)
         {
             int startRowIndex = FuncDefStartRowIndex;
