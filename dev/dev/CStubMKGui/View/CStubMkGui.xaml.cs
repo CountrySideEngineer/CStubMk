@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CStubMKGui.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace CStubMKGui
         public CStubMkGui()
         {
             InitializeComponent();
+            this.UpdateNotificationAction();
         }
 
         private void StubDefFilePathTextBox_PreviewDragOver(object sender, DragEventArgs e)
@@ -75,6 +77,24 @@ namespace CStubMKGui
             {
                 StubOutputPathTextBox.Text = dropFiles[0];
             }
+        }
+
+        private void CStubMkMainViewGrid_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
+        }
+
+        private void UpdateNotificationAction()
+        {
+            var viewModel = (ViewModelBase)this.DataContext;
+            viewModel.NotifyOk = new Action<string, string>((title, message) =>
+            {
+                MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.None);
+            });
+            viewModel.NotifyNg = new Action<string, string>((title, message) =>
+            {
+                MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Warning);
+            });
         }
     }
 }

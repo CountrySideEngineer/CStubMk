@@ -12,7 +12,7 @@
         <vm:CStubMkGuiViewModel/>
     </Window.DataContext>
     <Grid x:Name="CStubMkMainViewGrid"
-          Margin="12"
+          Margin="12" DataContextChanged="CStubMkMainViewGrid_DataContextChanged"
           >
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>

@@ -3,6 +3,7 @@ using CStubMKGui.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 
 namespace CStubMKGui.ViewModel
@@ -10,7 +11,7 @@ namespace CStubMKGui.ViewModel
     /// <summary>
     /// ViewModel class for CStubMkGui main window.
     /// </summary>
-    public class CStubMkGuiViewModel : ViewModelCommonBase
+    public class CStubMkGuiViewModel : ViewModelBase
     {
         #region Private fields and constants.
         /// <summary>
@@ -96,8 +97,17 @@ namespace CStubMKGui.ViewModel
         /// </summary>
         public void CreateStubExecute()
         {
-            var stubMk = new CStubMk();
-            stubMk.Create(this.StubDefFilePath, this.StubOutputPath);
+            try
+            {
+                var stubMk = new CStubMk();
+                stubMk.Create(this.StubDefFilePath, this.StubOutputPath);
+
+                this.NotifyOk?.Invoke("完了", "スタブの生成が完了しました。");
+            }
+            catch (FileNotFoundException)
+            {
+                this.NotifyNg?.Invoke("完了", "スタブの生成中にエラーが発生しました。");
+            }
         }
 
         /// <summary>
