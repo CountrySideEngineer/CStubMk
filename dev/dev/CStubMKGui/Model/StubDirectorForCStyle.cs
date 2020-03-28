@@ -53,8 +53,7 @@ namespace CStubMKGui.Model
         /// <returns>Stub method brief description.</returns>
         public String GetMethodHeader()
         {
-            String stubHeaderContent = $"Start {this.Parameter.Name} stub";
-            int funcHeaderLineLen = stubHeaderContent.Length + StubHeaderPrefix.Length + StubHeaderPostfix.Length;
+            String stubHeaderContent = $" Start {this.Parameter.Name} stub ";
             String stubHeader = StubHeaderPrefix;
             for (int whiteSpaceIndex = 0; whiteSpaceIndex < stubHeaderContent.Length; whiteSpaceIndex++)
             {
@@ -136,7 +135,7 @@ namespace CStubMKGui.Model
         /// <returns>Code of extern declaration.</returns>
         public String GetBufferExternDeclare(Param arg)
         {
-            String stubBufferExtern = $"extern {this.GetDataType(arg)} {this.GetArgBuffName(arg)}";
+            String stubBufferExtern = $"extern {this.GetDataType(arg)} {this.GetArgBuffName(arg)}[]";
             return stubBufferExtern;
         }
 
