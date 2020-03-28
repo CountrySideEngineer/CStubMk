@@ -57,7 +57,7 @@
                  HorizontalAlignment="Stretch"
                  VerticalAlignment="Stretch"
                  Margin="10"
-                 Text="{Binding Path=StubOutputPath, Mode=TwoWay}" PreviewDragOver="StubOutputPathTextBox_PreviewDragOver" Drop="StubOutputPathTextBox_Drop" 
+                 Text="{Binding Path=StubOutputPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewDragOver="StubOutputPathTextBox_PreviewDragOver" Drop="StubOutputPathTextBox_Drop" 
                  />
         <Button Grid.Column="2" 
                 Grid.Row="2" 
