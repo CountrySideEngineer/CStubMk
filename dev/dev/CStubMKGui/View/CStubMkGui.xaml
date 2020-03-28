@@ -7,7 +7,9 @@
         xmlns:local="clr-namespace:CStubMKGui"
         mc:Ignorable="d"
         AllowDrop="True"
-        Title="スタブ生成" Height="200" Width="600">
+        Title="スタブ生成" Height="200" Width="600"
+        WindowStartupLocation="CenterScreen"
+        >
     <Window.DataContext>
         <vm:CStubMkGuiViewModel/>
     </Window.DataContext>
