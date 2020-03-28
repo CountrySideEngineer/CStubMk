@@ -61,6 +61,7 @@ namespace CStubMKGui.Model
             }
         }
 
+
         /// <summary>
         /// Run a sequence to extract parameters of method and that of argument.
         /// </summary>
@@ -68,27 +69,34 @@ namespace CStubMKGui.Model
         /// <returns>Parameters of method extracted from the work sheet.</returns>
         protected virtual IEnumerable<Param> ExtractSequence(IXLWorksheet workSheet)
         {
-            int startRowIndex = FuncDefStartRowIndex;
-            int lastRowIndex = workSheet.LastRowUsed().RowNumber();
-            var parameters = new List<Param>();
-            while (startRowIndex <= lastRowIndex)
+            if (null == workSheet)
             {
-                int nextStartRow = 0;
-                try
-                {
-                    nextStartRow = this.FindNextItem(workSheet, startRowIndex, FuncDefStartColIndex);
-                }
-                catch (Exception ex)
-                when ((ex is InvalidOperationException) || (ex is NullReferenceException))
-                {
-                    nextStartRow = (lastRowIndex + 1);
-                }
-                Param param = this.ExtractMethod(workSheet, startRowIndex, (nextStartRow - startRowIndex));
-                parameters.Add(param);
-
-                startRowIndex = nextStartRow;
+                throw new ArgumentNullException(nameof(workSheet));
             }
-            return parameters;
+            else
+            {
+                int startRowIndex = FuncDefStartRowIndex;
+                int lastRowIndex = workSheet.LastRowUsed().RowNumber();
+                var parameters = new List<Param>();
+                while (startRowIndex <= lastRowIndex)
+                {
+                    int nextStartRow = 0;
+                    try
+                    {
+                        nextStartRow = this.FindNextItem(workSheet, startRowIndex, FuncDefStartColIndex);
+                    }
+                    catch (Exception ex)
+                    when ((ex is InvalidOperationException) || (ex is NullReferenceException))
+                    {
+                        nextStartRow = (lastRowIndex + 1);
+                    }
+                    Param param = this.ExtractMethod(workSheet, startRowIndex, (nextStartRow - startRowIndex));
+                    parameters.Add(param);
+
+                    startRowIndex = nextStartRow;
+                }
+                return parameters;
+            }
         }
 
         /// <summary>

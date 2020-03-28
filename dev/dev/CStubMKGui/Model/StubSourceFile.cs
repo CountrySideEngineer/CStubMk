@@ -41,6 +41,7 @@ namespace CStubMKGui.Model
             else
             {
                 this.IncludePart(stream);
+                this.DefinePart(stream);
                 foreach (var param in parameters)
                 {
                     this.Director.Parameter = param;
@@ -76,7 +77,7 @@ namespace CStubMKGui.Model
         /// <exception cref="ArgumentNullException">Argument <para>stream</para> is null.</exception>
         protected virtual void DefinePart(TextWriter stream)
         {
-            if (null == null)
+            if (null == stream)
             {
                 throw new ArgumentNullException(nameof(stream));
             }

@@ -221,7 +221,7 @@ namespace CStubMKGui.Model
         /// </remarks>
         public String GetMethodDef()
         {
-            Debug.Assert(null != Parameter);
+            Debug.Assert(null != this.Parameter);
 
             return this.CommonFormat(this.Parameter);
         }
@@ -430,6 +430,7 @@ namespace CStubMKGui.Model
         /// ({Prefix}) {DataType}({NumOfPointer}) ({Postfix}) {Name}
         /// </remarks>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:メンバーを static に設定します", Justification = "<保留中>")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:パブリック メソッドの引数の検証", Justification = "<保留中>")]
         public String CommonFormat(Param param)
         {
             String commonFormat = "";

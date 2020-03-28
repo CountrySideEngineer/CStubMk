@@ -29,12 +29,14 @@ namespace CStubMKGui.Model
             this.Create(new StubHeaderFile(director), outputPath, parameters);
         }
 
+
         /// <summary>
         /// Call sequence to create source files (including header file) of stub.
         /// </summary>
         /// <param name="stubFile">Object to create source file.</param>
         /// <param name="outputPath">Path to output source file.</param>
         /// <param name="parameters">Parameters to create stub.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:パブリック メソッドの引数の検証", Justification = "<保留中>")]
         protected void Create(AStubFile stubFile, String outputPath, IEnumerable<Param> parameters)
         {
             stubFile.CreateFile(outputPath, parameters);
