@@ -201,11 +201,12 @@ namespace CStubMKGui.Model
             initMethod += this.GetCodeLine($"int {BuffInitIdVariableName} = 0;", 1);
             initMethod += this.GetCodeLine("");
             initMethod += this.GetCodeLine(
-                @$"for ({BuffInitIdVariableName} = 0; {BuffInitIdVariableName} < {BuffSizeMacroName}; {BuffInitIdVariableName}++) {{");
+                @$"for ({BuffInitIdVariableName} = 0; {BuffInitIdVariableName} < {BuffSizeMacroName}; {BuffInitIdVariableName}++) {{",
+                1);
             initMethod += this.GetArgInitPart();
             initMethod += this.GetRetValInitPart();
             initMethod += this.GetCodeLine("}", 1);
-            initMethod += this.GetCodeLine($"{this.GetMethodCalledCounterName()} = 0;");
+            initMethod += this.GetCodeLine($"{this.GetMethodCalledCounterName()} = 0;", 1);
             initMethod += this.GetCodeLine("}");
 
             return initMethod;
