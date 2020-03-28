@@ -41,14 +41,14 @@
                  HorizontalAlignment="Stretch"
                  VerticalAlignment="Stretch"
                  Margin="10"
-                 Text="{Binding Path=StubDefFilePath, Mode=TwoWay}" PreviewDragOver="StubDefFilePathTextBox_PreviewDragOver" Drop="StubDefFilePathTextBox_Drop"
+                 Text="{Binding Path=StubDefFilePath, UpdateSourceTrigger=PropertyChanged}" PreviewDragOver="StubDefFilePathTextBox_PreviewDragOver" Drop="StubDefFilePathTextBox_Drop"
                  />
         <TextBlock Grid.Row="1"
                    Grid.Column="0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Center"
                    TextAlignment="Left"
-                   Text="スタブ定義ファイル：" 
+                   Text="スタブ出力フォルダ：" 
                    />
         <TextBox x:Name="StubOutputPathTextBox"
                  Grid.Row="1"
@@ -57,7 +57,7 @@
                  HorizontalAlignment="Stretch"
                  VerticalAlignment="Stretch"
                  Margin="10"
-                 Text="{Binding Path=StubOutputPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewDragOver="StubOutputPathTextBox_PreviewDragOver" Drop="StubOutputPathTextBox_Drop" 
+                 Text="{Binding Path=StubOutputPath, UpdateSourceTrigger=PropertyChanged}" PreviewDragOver="StubOutputPathTextBox_PreviewDragOver" Drop="StubOutputPathTextBox_Drop" 
                  />
         <Button Grid.Column="2" 
                 Grid.Row="2" 
