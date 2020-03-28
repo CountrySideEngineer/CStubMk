@@ -81,7 +81,7 @@ namespace CStubMKGui
 
         private void CStubMkMainViewGrid_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-
+            this.UpdateNotificationAction();
         }
 
         private void UpdateNotificationAction()
