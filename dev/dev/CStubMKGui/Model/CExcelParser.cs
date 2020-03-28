@@ -10,7 +10,7 @@ namespace CStubMKGui.Model
     /// <summary>
     /// Parse excel file into Param object.
     /// </summary>
-    public class CExcelParser : AParser
+    public class CExcelParser : AExcelParser
     {
         #region Function definition parameters.
 #pragma warning disable CA1051 // 参照可能なインスタンス フィールドを宣言しません
@@ -22,7 +22,7 @@ namespace CStubMKGui.Model
         /// <summary>
         /// Row index of the data of method is starting to be set.
         /// </summary>
-        protected readonly int FuncDefStartRowIndex = 4;
+        protected readonly int FuncDefStartRowIndex = 5;
 
         /// <summary>
         /// Column index the parameter of method is starting.
