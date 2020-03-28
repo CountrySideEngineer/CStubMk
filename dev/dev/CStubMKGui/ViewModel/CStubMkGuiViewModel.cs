@@ -16,14 +16,17 @@ namespace CStubMKGui.ViewModel
         /// <summary>
         /// Stub definition file path.
         /// </summary>
-        protected String _StubDefFilePath;
+        private String stubDefFilePath;
 
         /// <summary>
         /// Stub output folder path.
         /// </summary>
-        protected String _StubOutputPath;
+        private String stubOutputPath;
 
-        protected DelegateCommand _CreateStubCommand;
+        /// <summary>
+        /// Command to create stub source and header files.
+        /// </summary>
+        private DelegateCommand createStubCommand;
         #endregion
 
         #region Constructors and the finalizer
@@ -34,11 +37,11 @@ namespace CStubMKGui.ViewModel
         {
             this.StubDefFilePath = "";
             this.StubOutputPath = "";
-            this._CreateStubCommand = null;
+            this.createStubCommand = null;
         }
         #endregion
 
-        #region MyRegion
+        #region Properties
         /// <summary>
         /// Property to stub definition file path.
         /// </summary>
@@ -46,12 +49,12 @@ namespace CStubMKGui.ViewModel
         {
             get
             {
-                return this._StubDefFilePath;
+                return this.stubDefFilePath;
             }
             set
             {
-                this._StubDefFilePath = value;
-                this.RaisePropertyChanged("StubDefFilePath");
+                this.stubDefFilePath = value;
+                this.RaisePropertyChanged(nameof(StubDefFilePath));
             }
         }
 
@@ -62,12 +65,12 @@ namespace CStubMKGui.ViewModel
         {
             get
             {
-                return this._StubOutputPath;
+                return this.stubOutputPath;
             }
             set
             {
-                this._StubOutputPath = value;
-                this.RaisePropertyChanged(StubOutputPath);
+                this.stubOutputPath = value;
+                this.RaisePropertyChanged(nameof(StubOutputPath));
             }
         }
 
@@ -78,14 +81,16 @@ namespace CStubMKGui.ViewModel
         {
             get
             {
-                if (null == this._CreateStubCommand)
+                if (null == this.createStubCommand)
                 {
-                    this._CreateStubCommand = new DelegateCommand(this.CreateStubExecute, this.CanCreateStubExecute);
+                    this.createStubCommand = new DelegateCommand(this.CreateStubExecute, this.CanCreateStubExecute);
                 }
-                return this._CreateStubCommand;
+                return this.createStubCommand;
             }
         }
+        #endregion
 
+        #region Method
         /// <summary>
         /// Exeucte create stub command.
         /// </summary>
@@ -104,7 +109,8 @@ namespace CStubMKGui.ViewModel
         /// </returns>
         protected Boolean CanCreateStubExecute()
         {
-            if ((0 == this._StubDefFilePath.Length) || (0 == this._StubOutputPath.Length))
+            if (((string.IsNullOrEmpty(this.StubDefFilePath)) || (string.IsNullOrWhiteSpace(this.StubDefFilePath))) ||
+                ((string.IsNullOrEmpty(this.StubOutputPath)) || (string.IsNullOrWhiteSpace(this.StubOutputPath))))
             {
                 return false;
             }
