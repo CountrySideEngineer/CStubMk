@@ -56,13 +56,7 @@ namespace CStubMKGui.Model.Tests
         }
 
         [TestMethod()]
-        public void GetStubBufferDeclareTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void GetStubBufferDeclareTest_002()
+        public void GetStubBufferDeclareTest_001()
         {
             var param1 = new Param
             {
@@ -71,115 +65,481 @@ namespace CStubMKGui.Model.Tests
             };
             var param2 = new Param
             {
-                Name = "SampleParam",
+                Name = "SampleParam1",
                 DataType = "DataType"
             };
             var director = new StubDirectorForCStyle(param1);
             var buffDeclare = director.GetStubBufferDeclare(param2);
 
-            Assert.AreEqual("DataType SampleParam[100]", buffDeclare);
+            Assert.AreEqual("DataType SampleParam_SampleParam1[STUB_BUFF_SIZE]", buffDeclare);
         }
 
         [TestMethod()]
-        public void GetStubBufferExternDeclareTest()
+        public void GetStubInitMethodTest_001()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var stubInitMethod = director.GetStubInitMethod();
+
+            var stubInitMethodExpect = "void SampleParam_init()\r\n";
+            stubInitMethodExpect += "{\r\n";
+            stubInitMethodExpect += "\tint id = 0;\r\n";
+            stubInitMethodExpect += "\t\r\n";
+            stubInitMethodExpect += "\tfor (id = 0; id < STUB_BUFF_SIZE; id++) {\r\n";
+            stubInitMethodExpect += "\t\tSampleParam_ret_val[id] = 0;\r\n";
+            stubInitMethodExpect += "\t}\r\n";
+            stubInitMethodExpect += "\tSampleParam_called_count = 1;";
+            stubInitMethodExpect += "}\r\n";
+
         }
 
         [TestMethod()]
-        public void GetBufferExternDeclareTest()
+        public void GetMethodDefTest_001()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var commonFormat = director.GetMethodDef();
+
+            Assert.AreEqual("DataType SampleParam", commonFormat);
         }
 
         [TestMethod()]
-        public void GetCalledCountDeclareTest()
+        public void GetArgDefTest_001()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var param2 = new Param
+            {
+                Name = "SampleParamArg",
+                DataType = "ArgDataType",
+            };
+            param1.Parameters = new List<Param>
+            {
+                param2
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var argDef = director.GetArgDef();
+
+            Assert.AreEqual("\tArgDataType SampleParamArg", argDef);
         }
 
         [TestMethod()]
-        public void GetStubMethodTest()
+        public void GetArgDefTest_002()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var param2 = new Param
+            {
+                Name = "SampleParamArg1",
+                DataType = "ArgDataType",
+            };
+            var param3 = new Param
+            {
+                Name = "SampleParamArg2",
+                DataType = "ArgDataType",
+            };
+            param1.Parameters = new List<Param>
+            {
+                param2,
+                param3
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var argDef = director.GetArgDef();
+
+            Assert.AreEqual("\tArgDataType SampleParamArg1,\r\n\tArgDataType SampleParamArg2", argDef);
         }
 
         [TestMethod()]
-        public void GetCodeLineTest()
+        public void GetArgLatchPartTest_001()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var param2 = new Param
+            {
+                Name = "SampleParamArg",
+                DataType = "ArgDataType",
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var argLatchPart = director.GetArgLatchPart(param2);
+
+            Assert.AreEqual("SampleParam_SampleParamArg[SampleParam_called_count] = SampleParamArg;",
+                argLatchPart);
         }
 
         [TestMethod()]
-        public void GetStubInitMethodTest()
+        public void GetArgLatchPartTest_002()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            try
+            {
+                var director = new StubDirectorForCStyle(param1);
+                director.GetArgLatchPart(null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("Value cannot be null. (Parameter 'argument')", ex.Message);
+            }
+            catch (Exception)
+            {
+                Assert.Fail();
+            }
         }
 
         [TestMethod()]
-        public void GetMethodDefTest()
+        public void GetArgLatchPartTest_003()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var param2 = new Param
+            {
+                Name = "SampleParamArg",
+                DataType = "ArgDataType",
+            };
+            param1.Parameters = new List<Param>
+            {
+                param2
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var argLatchPart = director.GetArgLatchPart();
+
+            Assert.AreEqual("\tSampleParam_SampleParamArg[SampleParam_called_count] = SampleParamArg;\r\n",
+                argLatchPart);
         }
 
         [TestMethod()]
-        public void GetArgDefTest()
+        public void GetArgLatchPartTest_004()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var param2 = new Param
+            {
+                Name = "SampleParamArg1",
+                DataType = "ArgDataType",
+            };
+            var param3 = new Param
+            {
+                Name = "SampleParamArg2",
+                DataType = "ArgDataType",
+            };
+            param1.Parameters = new List<Param>
+            {
+                param2,
+                param3
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var argLatchPart = director.GetArgLatchPart();
+
+            Assert.AreEqual("\tSampleParam_SampleParamArg1[SampleParam_called_count] = SampleParamArg1;\r\n\tSampleParam_SampleParamArg2[SampleParam_called_count] = SampleParamArg2;\r\n",
+                argLatchPart);
         }
 
         [TestMethod()]
-        public void GetArgLatchPartTest()
+        public void GetArgInitEntryPointTest_001()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var entryPoint = director.GetArgInitEntryPoint();
+
+            Assert.AreEqual("void SampleParam_init()", entryPoint);
         }
 
         [TestMethod()]
-        public void GetArgLatchPartTest1()
+        public void GetStubInitMethodExternTest_001()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var stubInitMethodExtern = director.GetStubInitMethodExtern();
+
+            Assert.AreEqual("extern void SampleParam_init();", stubInitMethodExtern);
         }
 
         [TestMethod()]
-        public void GetArgInitEntryPointTest()
+        public void GetArgInitPartTest_001()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var param2 = new Param
+            {
+                Name = "SampleParamArg",
+                DataType = "ArgDataType",
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var argInitPart = director.GetArgInitPart(param2);
+
+            Assert.AreEqual("SampleParam_SampleParamArg[id] = 0;", argInitPart);
         }
 
         [TestMethod()]
-        public void GetStubInitMethodExternTest()
+        public void GetArgInitPartTest_002()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var param2 = new Param
+            {
+                Name = "SampleParamArg",
+                DataType = "ArgDataType",
+                PointerNum = 1
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var argInitPart = director.GetArgInitPart(param2);
+
+            Assert.AreEqual("SampleParam_SampleParamArg[id] = null;", argInitPart);
         }
 
         [TestMethod()]
-        public void GetArgInitPartTest()
+        public void GetArgInitPartTest_003()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var director = new StubDirectorForCStyle(param1);
+            try
+            {
+                director.GetArgInitPart(null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual(@"Value cannot be null. (Parameter 'argument')", ex.Message);
+            }
+            catch (Exception)
+            {
+                Assert.Fail();
+            }
         }
 
         [TestMethod()]
-        public void GetArgInitPartTest1()
+        public void GetArgInitPartTest_004()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var param2 = new Param
+            {
+                Name = "SampleParamArg",
+                DataType = "ArgDataType",
+            };
+            param1.Parameters = new List<Param>()
+            {
+                param2
+            };
+
+            var director = new StubDirectorForCStyle(param1);
+            var argInitPart = director.GetArgInitPart();
+
+            Assert.AreEqual("\t\tSampleParam_SampleParamArg[id] = 0;\r\n", argInitPart);
         }
 
         [TestMethod()]
-        public void GetReturnLatchPartTest()
+        public void GetArgInitPartTest_005()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var param2 = new Param
+            {
+                Name = "SampleParamArg1",
+                DataType = "ArgDataType1",
+            };
+            var param3 = new Param
+            {
+                Name = "SampleParamArg2",
+                DataType = "ArgDataType2",
+            };
+            param1.Parameters = new List<Param>()
+            {
+                param2,
+                param3
+            };
+
+            var director = new StubDirectorForCStyle(param1);
+            var argInitPart = director.GetArgInitPart();
+
+            Assert.AreEqual("\t\tSampleParam_SampleParamArg1[id] = 0;\r\n\t\tSampleParam_SampleParamArg2[id] = 0;\r\n",
+                argInitPart);
         }
 
         [TestMethod()]
-        public void GetReturnPartTest()
+        public void GetArgInitPartTest_006()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            param1.Parameters = new List<Param>();
+
+            var director = new StubDirectorForCStyle(param1);
+            var argInitPart = director.GetArgInitPart();
+
+            Assert.AreEqual("", argInitPart);
         }
 
         [TestMethod()]
-        public void CommonFormatTest()
+        public void GetReturnLatchPartTest_001()
         {
-            Assert.Fail();
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var returnLatchPart = director.GetReturnLatchPart();
+
+            Assert.AreEqual("\tDataType ret_val = SampleParam_ret_val[SampleParam_called_count];\r\n",
+                returnLatchPart);
+        }
+
+        [TestMethod()]
+        public void GetReturnLatchPartTest_002()
+        {
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "void",
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var returnLatchPart = director.GetReturnLatchPart();
+
+            Assert.AreEqual("", returnLatchPart);
+        }
+
+        [TestMethod()]
+        public void GetReturnPartTest_001()
+        {
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var returnPart = director.GetReturnPart();
+
+            Assert.AreEqual("\treturn ret_val;\r\n", returnPart);
+        }
+
+        [TestMethod()]
+        public void GetReturnPartTest_002()
+        {
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "void",
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var returnPart = director.GetReturnPart();
+
+            Assert.AreEqual("", returnPart);
+        }
+
+        [TestMethod()]
+        public void CommonFormatTest_001()
+        {
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var cmdFormat = director.CommonFormat(param1);
+
+            Assert.AreEqual("DataType SampleParam", cmdFormat);
+        }
+
+        [TestMethod()]
+        public void CommonFormatTest_002()
+        {
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+                Prefix = "Prefix"
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var cmdFormat = director.CommonFormat(param1);
+
+            Assert.AreEqual("Prefix DataType SampleParam", cmdFormat);
+        }
+
+        [TestMethod()]
+        public void CommonFormatTest_003()
+        {
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+                Prefix = "Prefix",
+                PointerNum = 1,
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var cmdFormat = director.CommonFormat(param1);
+
+            Assert.AreEqual("Prefix DataType* SampleParam", cmdFormat);
+        }
+
+        [TestMethod()]
+        public void CommonFormatTest_004()
+        {
+            var param1 = new Param
+            {
+                Name = "SampleParam",
+                DataType = "DataType",
+                Prefix = "Prefix",
+                PointerNum = 1,
+                Postifx = "Postfix"
+            };
+            var director = new StubDirectorForCStyle(param1);
+            var cmdFormat = director.CommonFormat(param1);
+
+            Assert.AreEqual("Prefix DataType* Postfix SampleParam", cmdFormat);
         }
 
         [TestMethod()]
