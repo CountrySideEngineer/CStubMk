@@ -40,7 +40,7 @@ namespace CStubMKGui.Model
         #endregion
 
         #region Other methods and private properties in calling order
-        public String GetDefinePart()
+        public virtual String GetDefinePart()
         {
             String definePart = String.Format("#define {0}\t\t\t\t({1})", BuffSizeMacroName, BuffSizeNum);
             return this.GetCodeLine(definePart);
@@ -51,7 +51,7 @@ namespace CStubMKGui.Model
         /// Create method brief description part of stub method.
         /// </summary>
         /// <returns>Stub method brief description.</returns>
-        public String GetMethodHeader()
+        public virtual String GetMethodHeader()
         {
             String stubHeaderContent = $" Start {this.Parameter.Name} stub ";
             String stubHeader = StubHeaderPrefix;
@@ -89,7 +89,7 @@ namespace CStubMKGui.Model
         /// Create code to declare buffer used to latch arguments.
         /// </summary>
         /// <returns>Code to declare buffer used to latch arguments.</returns>
-        public String GetStubBufferDeclare()
+        public virtual String GetStubBufferDeclare()
         {
             String stubBufferDeclare = "";
             stubBufferDeclare += this.GetCodeLine($"int {this.GetMethodCalledCounterName()};");
@@ -106,7 +106,7 @@ namespace CStubMKGui.Model
         /// </summary>
         /// <param name="arg">Argument of method.</param>
         /// <returns>Code to declare buffer used to latch argument.</returns>
-        public String GetStubBufferDeclare(Param arg)
+        public virtual String GetStubBufferDeclare(Param arg)
         {
             String stubBufferDeclare = $"{this.GetDataType(arg)} {this.GetArgBuffName(arg)}[{BuffSizeMacroName}]";
             return stubBufferDeclare;
@@ -116,7 +116,7 @@ namespace CStubMKGui.Model
         /// Create code for extern declarations of buffur variabels..
         /// </summary>
         /// <returns>Code for extern declarations of buffur.</returns>
-        public String GetStubBufferExternDeclare()
+        public virtual String GetStubBufferExternDeclare()
         {
             String stubBufferExtern = "";
             stubBufferExtern += this.GetCodeLine($"extern int {this.GetMethodCalledCounterName()};");
@@ -133,7 +133,7 @@ namespace CStubMKGui.Model
         /// </summary>
         /// <param name="arg">Argument of method.</param>
         /// <returns>Code of extern declaration.</returns>
-        public String GetBufferExternDeclare(Param arg)
+        public virtual String GetBufferExternDeclare(Param arg)
         {
             String stubBufferExtern = $"extern {this.GetDataType(arg)} {this.GetArgBuffName(arg)}[]";
             return stubBufferExtern;
@@ -143,7 +143,7 @@ namespace CStubMKGui.Model
         /// Create code to declare variable for the count the stub is called.
         /// </summary>
         /// <returns>Code to declare variable for called count.</returns>
-        public String GetCalledCountDeclare()
+        public virtual String GetCalledCountDeclare()
         {
             return $"int {this.GetMethodCalledCounterName()}";
         }
@@ -152,7 +152,7 @@ namespace CStubMKGui.Model
         /// Create stub method body.
         /// </summary>
         /// <returns>Stub body.</returns>
-        public String GetStubMethod()
+        public virtual String GetStubMethod()
         {
             String stubMethod = "";
             stubMethod = this.GetCodeLine(this.GetMethodDef() + "(");
@@ -175,7 +175,7 @@ namespace CStubMKGui.Model
         /// <param name="indentLevel">Indent depth, level, of the code.</param>
         /// <returns>Code of line.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:メンバーを static に設定します", Justification = "<保留中>")]
-        public String GetCodeLine(String code, int indentLevel = 0)
+        public virtual String GetCodeLine(String code, int indentLevel = 0)
         {
             String codeLine = "";
             for (int indentIndex = 0; indentIndex < indentLevel; indentIndex++)
@@ -192,7 +192,7 @@ namespace CStubMKGui.Model
         /// Create method to initialize buffer to latch argumet and counter.
         /// </summary>
         /// <returns>Code of method to initialize stub.</returns>
-        public String GetStubInitMethod()
+        public virtual String GetStubInitMethod()
         {
             String initMethod = "";
             initMethod = this.GetCodeLine(this.GetArgInitEntryPoint());
@@ -219,7 +219,7 @@ namespace CStubMKGui.Model
         /// The definition is in format below
         /// (Prefix) DataType(NumOfPointer) (Postfix)FunctionName
         /// </remarks>
-        public String GetMethodDef()
+        public virtual String GetMethodDef()
         {
             Debug.Assert(null != this.Parameter);
 
@@ -230,7 +230,7 @@ namespace CStubMKGui.Model
         /// Create argument definition part for function, method.
         /// </summary>
         /// <returns>String of argument definition part</returns>
-        public String GetArgDef()
+        public virtual String GetArgDef()
         {
             String argDef = "";
             int paramIndex = 0;
@@ -252,7 +252,7 @@ namespace CStubMKGui.Model
         /// Create code to latch argument value of stub.
         /// </summary>
         /// <returns>Code to latch argument value.</returns>
-        public String GetArgLatchPart()
+        public virtual String GetArgLatchPart()
         {
             String argLatchPart = "";
             foreach (var arg in this.Parameter.Parameters)
@@ -272,7 +272,7 @@ namespace CStubMKGui.Model
         /// The code is in format below:
         /// {FunctinName}_{ArgumentName}[{MethodName}_called_count] = {ArgumentName};
         /// </remarks>
-        public String GetArgLatchPart(Param argument)
+        public virtual String GetArgLatchPart(Param argument)
         {
             if (null == argument)
             {
@@ -289,7 +289,7 @@ namespace CStubMKGui.Model
         /// Create code of entry point to initialize stub buffer.
         /// </summary>
         /// <returns>Code of entry point to initialize buffer.</returns>
-        public String GetArgInitEntryPoint()
+        public virtual String GetArgInitEntryPoint()
         {
             Debug.Assert(null != this.Parameter);
 
@@ -300,7 +300,7 @@ namespace CStubMKGui.Model
         /// Create code of extern declaration of function to initialize buffer for stub.
         /// </summary>
         /// <returns>Code of extern declaration of intialize function.</returns>
-        public String GetStubInitMethodExtern()
+        public virtual String GetStubInitMethodExtern()
         {
             return $"extern {this.GetArgInitEntryPoint()};";
         }
@@ -309,7 +309,7 @@ namespace CStubMKGui.Model
         /// Create code of method body to initialize buffer.
         /// </summary>
         /// <returns>Code of method body to initialize buffer.</returns>
-        public String GetArgInitPart()
+        public virtual String GetArgInitPart()
         {
             String argInitPart = "";
             foreach (var arg in this.Parameter.Parameters)
@@ -325,7 +325,7 @@ namespace CStubMKGui.Model
         /// </summary>
         /// <param name="argument">Parameter about argument of stub.</param>
         /// <returns>Part of code to initialize buffer.</returns>
-        public String GetArgInitPart(Param argument)
+        public virtual String GetArgInitPart(Param argument)
         {
             if (null == argument)
             {
@@ -350,7 +350,7 @@ namespace CStubMKGui.Model
         /// Create code to initialize buffer which stores the return value the stub returns.
         /// </summary>
         /// <returns>Code to initialize return value buffer.</returns>
-        protected String GetRetValInitPart()
+        protected virtual String GetRetValInitPart()
         {
             String retValInitPart = "";
             if (this.HasReturnValue())
@@ -369,7 +369,7 @@ namespace CStubMKGui.Model
         /// The code is in format below:
         /// {DataTypeOfFunction} retval = {FunctionName}_ret_val[{FunctionName}_called_count];
         /// </remarks>
-        public String GetReturnLatchPart()
+        public virtual String GetReturnLatchPart()
         {
             String returnLatchPart = "";
             if (this.HasReturnValue())
@@ -388,7 +388,7 @@ namespace CStubMKGui.Model
         /// <returns>Returns true if the method returns value, otherwise returns false.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1304:CultureInfo を指定します", Justification = "<保留中>")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:StringComparison を指定します", Justification = "<保留中>")]
-        protected Boolean HasReturnValue()
+        protected virtual Boolean HasReturnValue()
         {
             /*
              * If the function data type is "void" and the pointer depth larger than 0, like "void*",
@@ -409,7 +409,7 @@ namespace CStubMKGui.Model
         /// If the data type of method set into this director is "void" and its number of pointer is lower,
         /// this method return empty line string.
         /// </remarks>
-        public String GetReturnPart()
+        public virtual String GetReturnPart()
         {
             String returnPart = "";
             if (this.HasReturnValue())
@@ -431,7 +431,7 @@ namespace CStubMKGui.Model
         /// </remarks>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:メンバーを static に設定します", Justification = "<保留中>")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:パブリック メソッドの引数の検証", Justification = "<保留中>")]
-        public String CommonFormat(Param param)
+        public virtual String CommonFormat(Param param)
         {
             String commonFormat = "";
             if (0 < param.Prefix.Length)
@@ -457,7 +457,7 @@ namespace CStubMKGui.Model
         /// </summary>
         /// <param name="argument">Argument information to latch.</param>
         /// <returns>Code to set argument into buffer.</returns>
-        public String GetArgBuffName(Param argument)
+        public virtual String GetArgBuffName(Param argument)
         {
             if (null == argument)
             {
@@ -476,7 +476,7 @@ namespace CStubMKGui.Model
         /// <param name="argument">Argument information.</param>
         /// <returns>Code of data type.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:メンバーを static に設定します", Justification = "<保留中>")]
-        public String GetDataType(Param argument)
+        public virtual String GetDataType(Param argument)
         {
             if (null == argument)
             {
@@ -497,7 +497,7 @@ namespace CStubMKGui.Model
         /// Create variable name to latch and return.
         /// </summary>
         /// <returns>Variable name to latch and return.</returns>
-        public String GetRetValBuffName()
+        public virtual String GetRetValBuffName()
         {
             return $"{this.Parameter.Name}_ret_val";
         }
@@ -509,7 +509,7 @@ namespace CStubMKGui.Model
         /// <remarks>The variable name is in fomrat below:
         /// {MethodName}_called_count
         /// </remarks>
-        public String GetMethodCalledCounterName()
+        public virtual String GetMethodCalledCounterName()
         {
             return $"{this.Parameter.Name}_called_count";
         }

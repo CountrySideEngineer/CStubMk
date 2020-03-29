@@ -22,7 +22,7 @@ namespace CStubMKGui.Model
         /// </summary>
         /// <param name="outputPath">Path to output source file.</param>
         /// <param name="parameters">Parameters to create stub.</param>
-        public void Create(String outputPath, IEnumerable<Param> parameters)
+        public virtual void Create(String outputPath, IEnumerable<Param> parameters)
         {
             var director = new StubDirectorForCStyle();
             this.Create(new StubSourceFile(director), outputPath, parameters);
@@ -37,7 +37,7 @@ namespace CStubMKGui.Model
         /// <param name="outputPath">Path to output source file.</param>
         /// <param name="parameters">Parameters to create stub.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:パブリック メソッドの引数の検証", Justification = "<保留中>")]
-        protected void Create(AStubFile stubFile, String outputPath, IEnumerable<Param> parameters)
+        protected virtual void Create(AStubFile stubFile, String outputPath, IEnumerable<Param> parameters)
         {
             stubFile.CreateFile(outputPath, parameters);
         }
