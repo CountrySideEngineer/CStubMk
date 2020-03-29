@@ -14,7 +14,7 @@ namespace CStubMKGui.Model
         /// <param name="director">Director object to create header of stub.</param>
         public StubHeaderFile(StubDirectorForCStyle director)
         {
-            this.fileName = "Stub.h";
+            this.FileName = "Stub.h";
             this.Director = director;
         }
         #endregion
@@ -25,6 +25,7 @@ namespace CStubMKGui.Model
         /// </summary>
         /// <param name="stream">Stream to output stub declaration part.</param>
         /// <param name="parameters">Informations for stub.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:パブリック メソッドの引数の検証", Justification = "<保留中>")]
         protected override void RunCreateFileSequence(TextWriter stream, IEnumerable<Param> parameters)
         {
             this.DefineHeaderMacro(stream);
@@ -39,10 +40,12 @@ namespace CStubMKGui.Model
             this.EndIfMacro(stream);
         }
 
+
         /// <summary>
         /// Output "define" part to prevent from duplicate including.
         /// </summary>
         /// <param name="stream">Stream to output stub declaration part.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:パブリック メソッドの引数の検証", Justification = "<保留中>")]
         protected void DefineHeaderMacro(TextWriter stream)
         {
             stream.WriteLine("#ifndef _STUB_H_");
@@ -50,10 +53,12 @@ namespace CStubMKGui.Model
             stream.WriteLine("");
         }
 
+
         /// <summary>
         /// Output code to make the header file readable in CPP language.
         /// </summary>
         /// <param name="stream">Stream to output stub declaration part.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:パブリック メソッドの引数の検証", Justification = "<保留中>")]
         protected void DeclareExternCppStart(TextWriter stream)
         {
             stream.WriteLine("#ifdef __cplusplus");
@@ -62,10 +67,12 @@ namespace CStubMKGui.Model
             stream.WriteLine("");
         }
 
+
         /// <summary>
         /// Output stub declare part.
         /// </summary>
         /// <param name="stream">Stream to output stub declaration part.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:パブリック メソッドの引数の検証", Justification = "<保留中>")]
         protected void CreateStubDeclare(TextWriter stream)
         {
             //関数ヘッダー
@@ -75,28 +82,34 @@ namespace CStubMKGui.Model
             stream.WriteLine("");
         }
 
+
         /// <summary>
         /// Output code for extern declare buffer of stub.
         /// </summary>
         /// <param name="stream">Stream to output stub declaration part.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:パブリック メソッドの引数の検証", Justification = "<保留中>")]
         protected void BufferExtern(TextWriter stream)
         {
             stream.Write(this.Director.GetStubBufferExternDeclare());
         }
 
+
         /// <summary>
         /// Output code for extern declare method to initialize buffer of stub.
         /// </summary>
         /// <param name="stream">Stream to output stub declaration part.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:パブリック メソッドの引数の検証", Justification = "<保留中>")]
         protected void BufferInitExtern(TextWriter stream)
         {
             stream.Write(this.Director.GetStubInitMethodExtern());
         }
 
+
         /// <summary>
         /// Output end of code to make the header file readable in CPP language.
         /// </summary>
         /// <param name="stream">Stream to output stub declaration part.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:パブリック メソッドの引数の検証", Justification = "<保留中>")]
         protected void DeclareExternCppEnd(TextWriter stream)
         {
             stream.WriteLine("#ifdef __cplusplus");
@@ -104,10 +117,12 @@ namespace CStubMKGui.Model
             stream.WriteLine("#endif  /* __cplusplus */");
         }
 
+
         /// <summary>
         /// Output "end of define" part to prevent from duplicate including.
         /// </summary>
         /// <param name="stream">Stream to output stub declaration part.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:パブリック メソッドの引数の検証", Justification = "<保留中>")]
         protected void EndIfMacro(TextWriter stream)
         {
             stream.WriteLine("#endif /* _STUB_H_ */");

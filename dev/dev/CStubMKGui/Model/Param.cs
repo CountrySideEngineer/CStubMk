@@ -66,7 +66,7 @@ namespace CStubMKGui.Model
         /// <summary>
         /// Collection of sub data.
         /// </summary>
-        public IEnumerable<Param> Parameters;
+        public IEnumerable<Param> Parameters { get; set; }
         #endregion
 
     }
