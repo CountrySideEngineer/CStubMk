@@ -1,7 +1,9 @@
 ﻿using CStubMKGui.Command;
+using CStubMKGui.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 
 namespace CStubMKGui.ViewModel
@@ -9,20 +11,23 @@ namespace CStubMKGui.ViewModel
     /// <summary>
     /// ViewModel class for CStubMkGui main window.
     /// </summary>
-    public class CStubMkGuiViewModel : ViewModelCommonBase
+    public class CStubMkGuiViewModel : ViewModelBase
     {
         #region Private fields and constants.
         /// <summary>
         /// Stub definition file path.
         /// </summary>
-        protected String _StubDefFilePath;
+        private String stubDefFilePath;
 
         /// <summary>
         /// Stub output folder path.
         /// </summary>
-        protected String _StubOutputPath;
+        private String stubOutputPath;
 
-        protected DelegateCommand _CreateStubCommand;
+        /// <summary>
+        /// Command to create stub source and header files.
+        /// </summary>
+        private DelegateCommand createStubCommand;
         #endregion
 
         #region Constructors and the finalizer
@@ -33,11 +38,11 @@ namespace CStubMKGui.ViewModel
         {
             this.StubDefFilePath = "";
             this.StubOutputPath = "";
-            this._CreateStubCommand = null;
+            this.createStubCommand = null;
         }
         #endregion
 
-        #region MyRegion
+        #region Properties
         /// <summary>
         /// Property to stub definition file path.
         /// </summary>
@@ -45,12 +50,12 @@ namespace CStubMKGui.ViewModel
         {
             get
             {
-                return this._StubDefFilePath;
+                return this.stubDefFilePath;
             }
             set
             {
-                this._StubDefFilePath = value;
-                this.RaisePropertyChanged("StubDefFilePath");
+                this.stubDefFilePath = value;
+                this.RaisePropertyChanged(nameof(StubDefFilePath));
             }
         }
 
@@ -61,12 +66,12 @@ namespace CStubMKGui.ViewModel
         {
             get
             {
-                return this._StubOutputPath;
+                return this.stubOutputPath;
             }
             set
             {
-                this._StubOutputPath = value;
-                this.RaisePropertyChanged(StubOutputPath);
+                this.stubOutputPath = value;
+                this.RaisePropertyChanged(nameof(StubOutputPath));
             }
         }
 
@@ -77,20 +82,32 @@ namespace CStubMKGui.ViewModel
         {
             get
             {
-                if (null == this._CreateStubCommand)
+                if (null == this.createStubCommand)
                 {
-                    this._CreateStubCommand = new DelegateCommand(this.CreateStubExecute, this.CanCreateStubExecute);
+                    this.createStubCommand = new DelegateCommand(this.CreateStubExecute, this.CanCreateStubExecute);
                 }
-                return this._CreateStubCommand;
+                return this.createStubCommand;
             }
         }
+        #endregion
 
+        #region Method
         /// <summary>
         /// Exeucte create stub command.
         /// </summary>
         public void CreateStubExecute()
         {
-            Console.WriteLine("void CreateStubExecute() called");
+            try
+            {
+                var stubMk = new CStubMk();
+                stubMk.Create(this.StubDefFilePath, this.StubOutputPath);
+
+                this.NotifyOk?.Invoke("完了", "スタブの生成が完了しました。");
+            }
+            catch (FileNotFoundException)
+            {
+                this.NotifyNg?.Invoke("完了", "スタブの生成中にエラーが発生しました。");
+            }
         }
 
         /// <summary>
@@ -102,7 +119,8 @@ namespace CStubMKGui.ViewModel
         /// </returns>
         protected Boolean CanCreateStubExecute()
         {
-            if ((0 == this._StubDefFilePath.Length) || (0 == this._StubOutputPath.Length))
+            if (((string.IsNullOrEmpty(this.StubDefFilePath)) || (string.IsNullOrWhiteSpace(this.StubDefFilePath))) ||
+                ((string.IsNullOrEmpty(this.StubOutputPath)) || (string.IsNullOrWhiteSpace(this.StubOutputPath))))
             {
                 return false;
             }

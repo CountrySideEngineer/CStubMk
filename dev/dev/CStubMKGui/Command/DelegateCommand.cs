@@ -14,12 +14,12 @@ namespace CStubMKGui.Command
         /// <summary>
         /// Body of command operation.
         /// </summary>
-        protected Action _Execute;
+        private Action execute;
 
         /// <summary>
         /// Shows whether the command can execute or not.
         /// </summary>
-        protected Func<bool> _CanExecute;
+        private Func<bool> canExecute;
         #endregion
 
         #region Constructors and the Finalizer
@@ -27,12 +27,12 @@ namespace CStubMKGui.Command
         /// Constructor.
         /// Create the object with specifying the method called when the Execute method run.
         /// </summary>
-        /// <param name="_Execute">Action object to exeucte command.</param>
-        public DelegateCommand(Action _Execute) : this(_Execute, () => true) { }
-        public DelegateCommand(Action _Execute, Func<bool> _CanExecute)
+        /// <param name="Execute">Action object to exeucte command.</param>
+        public DelegateCommand(Action Execute) : this(Execute, () => true) { }
+        public DelegateCommand(Action Execute, Func<bool> CanExecute)
         {
-            this._Execute = _Execute ?? throw new ArgumentNullException("_Execute");
-            this._CanExecute = _CanExecute ?? throw new ArgumentNullException("_CanExecute");
+            this.execute = Execute ?? throw new ArgumentNullException(nameof(Execute));
+            this.canExecute = CanExecute ?? throw new ArgumentNullException(nameof(CanExecute));
         }
         #endregion
 
@@ -40,10 +40,29 @@ namespace CStubMKGui.Command
         /// <summary>
         /// Event to notify the CanExecute method result has changed.
         /// </summary>
-        event EventHandler ICommand.CanExecuteChanged
+        public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
+        }
+        #endregion
+
+        #region Public properties
+        /// <summary>
+        /// Property of Action to execution.
+        /// </summary>
+        protected Action Exec {
+            get { return this.execute; }
+            set {this.execute = value; }
+        }
+
+        /// <summary>
+        /// Property of whether the action can execute.
+        /// </summary>
+        protected Func<Boolean> CanExec
+        {
+            get { return this.canExecute; }
+            set { this.canExecute = value; }
         }
         #endregion
 
@@ -53,18 +72,18 @@ namespace CStubMKGui.Command
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        bool ICommand.CanExecute(object parameter)
+        public Boolean CanExecute(object parameter)
         {
-            return this._CanExecute();
+            return this.canExecute();
         }
 
         /// <summary>
         /// Defines the method to be called when the command is invoked.
         /// </summary>
         /// <param name="parameter"></param>
-        void ICommand.Execute(object parameter)
+        public void Execute(object parameter)
         {
-            this._Execute();
+            this.execute();
         }
         #endregion
     }
@@ -88,11 +107,21 @@ namespace CStubMKGui.Command
         }
         #endregion
 
-        public bool CanExecute(object parameter)
+        /// <summary>
+        /// Defines the method that determines whether the command can execute in its current state.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public Boolean CanExecute(object parameter)
         {
             return this._CanExecute == null ? true : this._CanExecute(parameter);
         }
 
+        /// <summary>
+        /// Defines the method that determines whether the command can execute in its current state.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         public void Execute(object parameter)
         {
             this._Execute((T)parameter);
@@ -102,12 +131,12 @@ namespace CStubMKGui.Command
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="_Execute"></param>
-        /// <param name="_CanExecute"></param>
-        public DelegateCommand(Action<T> _Execute, Predicate<object> _CanExecute)
+        /// <param name="execute"></param>
+        /// <param name="canExecute"></param>
+        public DelegateCommand(Action<T> execute, Predicate<object> canExecute)
         {
-            this._Execute = _Execute ?? throw new ArgumentNullException("_Execute");
-            this._CanExecute = _CanExecute ?? throw new ArgumentNullException("_CanExecute");
+            this._Execute = execute ?? throw new ArgumentNullException(nameof(execute));
+            this._CanExecute = canExecute ?? throw new ArgumentNullException(nameof(canExecute));
         }
         #endregion
     }
