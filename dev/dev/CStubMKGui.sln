@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest_StubSourceFile", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest_StubHeaderFile", "UnitTest_StubHeaderFile\UnitTest_StubHeaderFile.csproj", "{8ABC40B8-CD72-47E8-A40C-1C0CEDC4FA2E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest_CStubFileCreater", "UnitTest_CStubFileCreater\UnitTest_CStubFileCreater.csproj", "{E18A50E3-40AC-4087-94AF-5BE04BE9FDC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{8ABC40B8-CD72-47E8-A40C-1C0CEDC4FA2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ABC40B8-CD72-47E8-A40C-1C0CEDC4FA2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8ABC40B8-CD72-47E8-A40C-1C0CEDC4FA2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E18A50E3-40AC-4087-94AF-5BE04BE9FDC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E18A50E3-40AC-4087-94AF-5BE04BE9FDC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E18A50E3-40AC-4087-94AF-5BE04BE9FDC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E18A50E3-40AC-4087-94AF-5BE04BE9FDC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

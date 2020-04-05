@@ -23,7 +23,7 @@ namespace CStubMKGui.Model
         /// </summary>
         /// <param name="outputPath">Path to output folder.</param>
         /// <param name="parameters">Parameters of stub file.</param>
-        public void CreateFile(String outputPath, IEnumerable<Param> parameters)
+        public virtual void CreateFile(String outputPath, IEnumerable<Param> parameters)
         {
             String outputFilePath = outputPath + @"\" + FileName;
             using var fileStream = new StreamWriter(outputFilePath, false, Encoding.GetEncoding("UTF-8"));
@@ -35,7 +35,7 @@ namespace CStubMKGui.Model
         /// </summary>
         /// <param name="writer">Output stream to write code of stub.</param>
         /// <param name="parameters">Parameters of stub file.</param>
-        public void CreateFile(TextWriter writer, IEnumerable<Param> parameters)
+        public virtual void CreateFile(TextWriter writer, IEnumerable<Param> parameters)
         {
             this.RunCreateFileSequence(writer, parameters);
         }
