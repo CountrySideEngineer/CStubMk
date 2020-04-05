@@ -14,28 +14,30 @@ namespace CStubMKGui.Model
         public StubDirectorForCStyle Director { get; set; }
 
         /// <summary>
-        /// field of file name.
-        /// </summary>
-        private String fileName;
-
-        /// <summary>
         /// Property of filea name.
         /// </summary>
-        protected String FileName {
-            get { return this.fileName; }
-            set { this.fileName = value; }
-        }
+        public String FileName { get; set; }
 
         /// <summary>
         /// Method to create stub file.
         /// </summary>
         /// <param name="outputPath">Path to output folder.</param>
         /// <param name="parameters">Parameters of stub file.</param>
-        public void CreateFile(String outputPath, IEnumerable<Param> parameters)
+        public virtual void CreateFile(String outputPath, IEnumerable<Param> parameters)
         {
-            String outputFilePath = outputPath + @"\" + fileName;
+            String outputFilePath = outputPath + @"\" + FileName;
             using var fileStream = new StreamWriter(outputFilePath, false, Encoding.GetEncoding("UTF-8"));
-            this.RunCreateFileSequence(fileStream, parameters);
+            this.CreateFile(fileStream, parameters);
+        }
+
+        /// <summary>
+        /// Method to create stub file.
+        /// </summary>
+        /// <param name="writer">Output stream to write code of stub.</param>
+        /// <param name="parameters">Parameters of stub file.</param>
+        public virtual void CreateFile(TextWriter writer, IEnumerable<Param> parameters)
+        {
+            this.RunCreateFileSequence(writer, parameters);
         }
 
         /// <summary>

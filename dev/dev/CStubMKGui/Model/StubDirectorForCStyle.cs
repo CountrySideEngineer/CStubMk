@@ -5,6 +5,9 @@ using System.Text;
 
 namespace CStubMKGui.Model
 {
+    /// <summary>
+    /// Create code of stub in C language.
+    /// </summary>
     public class StubDirectorForCStyle
     {
         protected static readonly String ChangeLineCode = "\r\n";
@@ -82,7 +85,7 @@ namespace CStubMKGui.Model
             }
             stubHeader += StubHeaderPostfix;
 
-            return stubHeader;
+            return this.GetCodeLine(stubHeader);
         }
 
         /// <summary>
@@ -312,12 +315,22 @@ namespace CStubMKGui.Model
         public virtual String GetArgInitPart()
         {
             String argInitPart = "";
-            foreach (var arg in this.Parameter.Parameters)
+            try
             {
-                String initPart = this.GetArgInitPart(arg);
-                argInitPart += this.GetCodeLine(initPart, 2);
+                foreach (var arg in this.Parameter.Parameters)
+                {
+                    String initPart = this.GetArgInitPart(arg);
+                    argInitPart += this.GetCodeLine(initPart, 2);
+                }
+                return argInitPart;
             }
-            return argInitPart;
+            catch (NullReferenceException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("引数バッファ初期化処理作成：エラー");
+
+                return "";
+            }
         }
 
         /// <summary>
@@ -436,18 +449,21 @@ namespace CStubMKGui.Model
             String commonFormat = "";
             if (0 < param.Prefix.Length)
             {
-                commonFormat += param.Prefix + " ";
+                commonFormat += (param.Prefix + " ");
             }
             commonFormat += param.DataType;
-            for (int ptrIndex = 0; ptrIndex < param.PointerNum; ptrIndex++)
+            if (0 < param.PointerNum)
             {
-                commonFormat += "*";
-            }
-            if (0 < param.Postifx.Length)
-            {
-                commonFormat += param.Postifx;
+                for (int ptrIndex = 0; ptrIndex < param.PointerNum; ptrIndex++)
+                {
+                    commonFormat += "*";
+                }
             }
             commonFormat += " ";
+            if (0 < param.Postifx.Length)
+            {
+                commonFormat += (param.Postifx + " ");
+            }
             commonFormat += param.Name;
             return commonFormat;
         }

@@ -29,7 +29,6 @@ namespace CStubMKGui.Model
             this.Create(new StubHeaderFile(director), outputPath, parameters);
         }
 
-
         /// <summary>
         /// Call sequence to create source files (including header file) of stub.
         /// </summary>

@@ -40,7 +40,6 @@ namespace CStubMKGui.Model
             this.EndIfMacro(stream);
         }
 
-
         /// <summary>
         /// Output "define" part to prevent from duplicate including.
         /// </summary>
@@ -52,7 +51,6 @@ namespace CStubMKGui.Model
             stream.WriteLine("#define _STUB_H_");
             stream.WriteLine("");
         }
-
 
         /// <summary>
         /// Output code to make the header file readable in CPP language.
@@ -66,7 +64,6 @@ namespace CStubMKGui.Model
             stream.WriteLine("#endif  /* __cplusplus */");
             stream.WriteLine("");
         }
-
 
         /// <summary>
         /// Output stub declare part.
@@ -82,7 +79,6 @@ namespace CStubMKGui.Model
             stream.WriteLine("");
         }
 
-
         /// <summary>
         /// Output code for extern declare buffer of stub.
         /// </summary>
@@ -93,7 +89,6 @@ namespace CStubMKGui.Model
             stream.Write(this.Director.GetStubBufferExternDeclare());
         }
 
-
         /// <summary>
         /// Output code for extern declare method to initialize buffer of stub.
         /// </summary>
@@ -103,7 +98,6 @@ namespace CStubMKGui.Model
         {
             stream.Write(this.Director.GetStubInitMethodExtern());
         }
-
 
         /// <summary>
         /// Output end of code to make the header file readable in CPP language.
@@ -116,7 +110,6 @@ namespace CStubMKGui.Model
             stream.WriteLine("}");
             stream.WriteLine("#endif  /* __cplusplus */");
         }
-
 
         /// <summary>
         /// Output "end of define" part to prevent from duplicate including.
