@@ -111,7 +111,7 @@ namespace CStubMKGui.Model
         /// <returns>Code to declare buffer used to latch argument.</returns>
         public virtual String GetStubBufferDeclare(Param arg)
         {
-            String stubBufferDeclare = $"{this.GetDataType(arg)} {this.GetArgBuffName(arg)}[{BuffSizeMacroName}]";
+            String stubBufferDeclare = $"{this.GetDataType(arg)} {this.GetArgBuffName(arg)}[{BuffSizeMacroName}];";
             return stubBufferDeclare;
         }
 
