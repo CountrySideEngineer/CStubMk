@@ -42,6 +42,7 @@ namespace CStubMKGui.Model
             DataType,
             Prefix,
             PostFix,
+            Mode,
             Max,
         };
 #pragma warning restore CA1051 // 参照可能なインスタンス フィールドを宣言しません
@@ -151,6 +152,7 @@ namespace CStubMKGui.Model
         /// <param name="startColIndex">Index of column to start extract parameters.</param>
         /// <returns>Param object contains extracted parameters.</returns>
         /// <exception cref="ArgumentNullException">The argument workSheet is null.</exception>
+        /// <exception cref="InvalidOperationException">The data in sheet is invalid.</exception>
         protected virtual Param ExtractParam(IXLWorksheet workSheet, int startRowIndx, int startColIndex)
         {
             if (null == workSheet)
@@ -163,14 +165,17 @@ namespace CStubMKGui.Model
                 var dataType = workSheet.Cell(startRowIndx, startColIndex + (int)TableColIndex.DataType).GetString();
                 var prefix = workSheet.Cell(startRowIndx, startColIndex + (int)TableColIndex.Prefix).GetString();
                 var postfix = workSheet.Cell(startRowIndx, startColIndex + (int)TableColIndex.PostFix).GetString();
+                var mode = workSheet.Cell(startRowIndx, startColIndex + (int)TableColIndex.Mode).GetString();
                 var pointerNum = this.RemovePointer(ref dataType);
+                var accessMode = Param.ToMode(mode);
                 var param = new Param
                 {
                     Name = name,
                     DataType = dataType,
                     Prefix = prefix,
                     Postifx = postfix,
-                    PointerNum = (Byte)pointerNum
+                    PointerNum = (Byte)pointerNum,
+                    Mode = accessMode
                 };
                 return param;
             }
