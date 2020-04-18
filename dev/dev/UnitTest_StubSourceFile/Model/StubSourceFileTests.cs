@@ -15,55 +15,6 @@ namespace CStubMKGui.Model.Tests
         public static int BuffSize = 100;
         public int GetDefinePartCalledCount;
         public string[] GetDefinePartRetVal = new string[BuffSize];
-        public override string GetDefinePart()
-        {
-            var RetVal = this.GetDefinePartRetVal[GetDefinePartCalledCount];
-            this.GetDefinePartCalledCount++;
-
-            return RetVal;
-        }
-        public void GetDefinePartInit()
-        {
-            for (int index = 0; index < BuffSize; index++)
-            {
-                GetDefinePartRetVal[index] = string.Empty;
-            }
-            GetDefinePartCalledCount = 0;
-        }
-
-        public int GetStubBufferDeclareCalledCount;
-        public string[] GetStubBufferDeclareRetVal = new string[BuffSize];
-        public override string GetStubBufferDeclare()
-        {
-            var RetVal = this.GetStubBufferDeclareRetVal[GetStubBufferDeclareCalledCount];
-            GetStubBufferDeclareCalledCount++;
-            return RetVal;
-        }
-        public void GetStubBufferDeclareInit()
-        {
-            for (int index = 0; index < BuffSize; index++)
-            {
-                GetStubBufferDeclareRetVal[index] = string.Empty;
-            }
-            GetStubBufferDeclareCalledCount = 0;
-        }
-
-        public int GetStubMethodCalledCount;
-        public string[] GetStubMethodRetVal = new string[BuffSize];
-        public override string GetStubMethod()
-        {
-            var RetVal = this.GetStubMethodRetVal[GetStubMethodCalledCount];
-            GetStubMethodCalledCount++;
-            return RetVal;
-        }
-        public void GetStubMethodInit()
-        {
-            for (int index = 0; index < BuffSize; index++)
-            {
-                GetStubMethodRetVal[index] = string.Empty;
-            }
-            GetStubMethodCalledCount = 0;
-        }
 
         public int GetStubInitMethodCalledCount;
         public string[] GetStubInitMethodRetVal = new string[BuffSize];
@@ -98,13 +49,64 @@ namespace CStubMKGui.Model.Tests
             }
         }
 
+        public int GetBufferSectionCalledCount;
+        public string[] GetBufferSectionRetVal = new string[BuffSize];
+        public override string GetBufferSection()
+        {
+            var retVal = GetBufferSectionRetVal[GetBufferSectionCalledCount];
+            GetBufferSectionCalledCount++;
+            return retVal;
+        }
+        public void GetBufferSectionInit()
+        {
+            for (int index = 0; index < BuffSize; index++)
+            {
+                GetBufferSectionRetVal[index] = string.Empty;
+            }
+            GetBufferSectionCalledCount = 0;
+        }
+
+        public int StubBodySectionCalledCount;
+        public string[] StubBodySectionRetVal = new string[BuffSize];
+        public override string StubBodySection()
+        {
+            var retVal = StubBodySectionRetVal[StubBodySectionCalledCount];
+            StubBodySectionCalledCount++;
+            return retVal;
+        }
+        public void StubBodySectionInit()
+        {
+            for (int index = 0; index < BuffSize; index++)
+            {
+                StubBodySectionRetVal[index] = string.Empty;
+            }
+            StubBodySectionCalledCount = 0;
+        }
+
+        public int GetStartPartCalledCount;
+        public string[] GetStartPartRetVal = new string[BuffSize];
+        public override string GetStartPart()
+        {
+            var retVal = GetStartPartRetVal[GetStartPartCalledCount];
+            GetStartPartCalledCount++;
+            return retVal;
+        }
+        public void GetStartPartInit()
+        {
+            for (int index = 0; index < BuffSize; index++)
+            {
+                GetStartPartRetVal[index] = string.Empty;
+            }
+            GetStartPartCalledCount = 0;
+        }
+
         public void StubDirectorForCStyleInit()
         {
-            this.GetDefinePartInit();
-            this.GetStubBufferDeclareInit();
-            this.GetStubMethodInit();
             this.GetStubInitMethodInit();
             this.GetMethodHeaderInit();
+            this.GetBufferSectionInit();
+            this.StubBodySectionInit();
+            this.GetStartPartInit();
         }
     }
 
@@ -211,25 +213,25 @@ namespace CStubMKGui.Model.Tests
             };
             var director = new StubDirectorForCStyleMockForTest();
             director.StubDirectorForCStyleInit();
-            director.GetDefinePartRetVal[0] = "GetDefinePart";
-            director.GetStubBufferDeclareRetVal[0] = "GetStubBufferdeclre";
-            director.GetStubMethodRetVal[0] = "GetStubMethod";
-            director.GetStubInitMethodRetVal[0] = "GetStubInitMethod";
+            director.GetStartPartRetVal[0] = "GetStartPart";
             director.GetMethodHeaderRetVal[0] = "GetMethodHeader";
+            director.GetBufferSectionRetVal[0] = "GetBufferSection";
+            director.StubBodySectionRetVal[0] = "StubBodySection";
+            director.GetStubInitMethodRetVal[0] = "GetStubInitMethod";
             var stubSourceFile = new StubSourceFile(director);
             using var writer = new StreamWriteMock("./sample.txt", false, Encoding.GetEncoding("UTF-8"));
             stubSourceFile.CreateFile(writer, parameters);
 
-            Assert.AreEqual(4, writer.WriteLineCalledCount);
-            Assert.AreEqual(4, writer.WriteCalledCount);
+            Assert.AreEqual(3, writer.WriteLineCalledCount);
+            Assert.AreEqual(5, writer.WriteCalledCount);
             Assert.AreEqual("#include <stdio.h>", writer.WriteLineArg1[0]);
             Assert.AreEqual("", writer.WriteLineArg1[1]);
-            Assert.AreEqual("GetDefinePart", writer.WriteArg1[0]);
+            Assert.AreEqual("GetStartPart", writer.WriteArg1[0]);
             Assert.AreEqual("", writer.WriteLineArg1[2]);
-            Assert.AreEqual("GetMethodHeader", writer.WriteLineArg1[3]);
-            Assert.AreEqual("GetStubBufferdeclre", writer.WriteArg1[1]);
-            Assert.AreEqual("GetStubMethod", writer.WriteArg1[2]);
-            Assert.AreEqual("GetStubInitMethod", writer.WriteArg1[3]);
+            Assert.AreEqual("GetMethodHeader", writer.WriteArg1[1]);
+            Assert.AreEqual("GetBufferSection", writer.WriteArg1[2]);
+            Assert.AreEqual("StubBodySection", writer.WriteArg1[3]);
+            Assert.AreEqual("GetStubInitMethod", writer.WriteArg1[4]);
         }
 
         [TestMethod()]
@@ -255,34 +257,34 @@ namespace CStubMKGui.Model.Tests
             };
             var director = new StubDirectorForCStyleMockForTest();
             director.StubDirectorForCStyleInit();
-            director.GetDefinePartRetVal[0] = "GetDefinePart";
-            director.GetStubBufferDeclareRetVal[0] = "GetStubBufferdeclre";
+            director.GetStartPartRetVal[0] = "GetStartPart1";
             director.GetMethodHeaderRetVal[0] = "GetMethodHeader1";
-            director.GetMethodHeaderRetVal[1] = "GetMethodHeader2";
-            director.GetStubBufferDeclareRetVal[0] = "GetStubBufferDeclre1";
-            director.GetStubBufferDeclareRetVal[1] = "GetStubBufferDeclre2";
-            director.GetStubMethodRetVal[0] = "GetStubMethod1";
-            director.GetStubMethodRetVal[1] = "GetStubMethod2";
+            director.GetBufferSectionRetVal[0] = "GetBufferSection1";
+            director.StubBodySectionRetVal[0] = "StubBodySection1";
             director.GetStubInitMethodRetVal[0] = "GetStubInitMethod1";
+
+            director.GetMethodHeaderRetVal[1] = "GetMethodHeader2";
+            director.GetBufferSectionRetVal[1] = "GetBufferSection2";
+            director.StubBodySectionRetVal[1] = "StubBodySection2";
             director.GetStubInitMethodRetVal[1] = "GetStubInitMethod2";
 
             var stubSourceFile = new StubSourceFile(director);
             using var writer = new StreamWriteMock("./sample.txt", false, Encoding.GetEncoding("UTF-8"));
             stubSourceFile.CreateFile(writer, parameters);
-            Assert.AreEqual(5, writer.WriteLineCalledCount);
-            Assert.AreEqual(7, writer.WriteCalledCount);
+            Assert.AreEqual(3, writer.WriteLineCalledCount);
+            Assert.AreEqual(9, writer.WriteCalledCount);
             Assert.AreEqual("#include <stdio.h>", writer.WriteLineArg1[0]);
             Assert.AreEqual("", writer.WriteLineArg1[1]);
-            Assert.AreEqual("GetDefinePart", writer.WriteArg1[0]);
+            Assert.AreEqual("GetStartPart1", writer.WriteArg1[0]);
             Assert.AreEqual("", writer.WriteLineArg1[2]);
-            Assert.AreEqual("GetMethodHeader1", writer.WriteLineArg1[3]);
-            Assert.AreEqual("GetStubBufferDeclre1", writer.WriteArg1[1]);
-            Assert.AreEqual("GetStubMethod1", writer.WriteArg1[2]);
-            Assert.AreEqual("GetStubInitMethod1", writer.WriteArg1[3]);
-            Assert.AreEqual("GetMethodHeader2", writer.WriteLineArg1[4]);
-            Assert.AreEqual("GetStubBufferDeclre2", writer.WriteArg1[4]);
-            Assert.AreEqual("GetStubMethod2", writer.WriteArg1[5]);
-            Assert.AreEqual("GetStubInitMethod2", writer.WriteArg1[6]);
+            Assert.AreEqual("GetMethodHeader1", writer.WriteArg1[1]);
+            Assert.AreEqual("GetBufferSection1", writer.WriteArg1[2]);
+            Assert.AreEqual("StubBodySection1", writer.WriteArg1[3]);
+            Assert.AreEqual("GetStubInitMethod1", writer.WriteArg1[4]);
+            Assert.AreEqual("GetMethodHeader2", writer.WriteArg1[5]);
+            Assert.AreEqual("GetBufferSection2", writer.WriteArg1[6]);
+            Assert.AreEqual("StubBodySection2", writer.WriteArg1[7]);
+            Assert.AreEqual("GetStubInitMethod2", writer.WriteArg1[8]);
         }
 
         [TestMethod()]
@@ -309,13 +311,8 @@ namespace CStubMKGui.Model.Tests
             var director = new StubDirectorForCStyleMockForTest();
             director.StubDirectorForCStyleInit();
             director.GetDefinePartRetVal[0] = "GetDefinePart";
-            director.GetStubBufferDeclareRetVal[0] = "GetStubBufferdeclre";
             director.GetMethodHeaderRetVal[0] = "GetMethodHeader1";
             director.GetMethodHeaderRetVal[1] = "GetMethodHeader2";
-            director.GetStubBufferDeclareRetVal[0] = "GetStubBufferDeclre1";
-            director.GetStubBufferDeclareRetVal[1] = "GetStubBufferDeclre2";
-            director.GetStubMethodRetVal[0] = "GetStubMethod1";
-            director.GetStubMethodRetVal[1] = "GetStubMethod2";
             director.GetStubInitMethodRetVal[0] = "GetStubInitMethod1";
             director.GetStubInitMethodRetVal[1] = "GetStubInitMethod2";
 
@@ -361,13 +358,8 @@ namespace CStubMKGui.Model.Tests
             var director = new StubDirectorForCStyleMockForTest();
             director.StubDirectorForCStyleInit();
             director.GetDefinePartRetVal[0] = "GetDefinePart";
-            director.GetStubBufferDeclareRetVal[0] = "GetStubBufferdeclre";
             director.GetMethodHeaderRetVal[0] = "GetMethodHeader1";
             director.GetMethodHeaderRetVal[1] = "GetMethodHeader2";
-            director.GetStubBufferDeclareRetVal[0] = "GetStubBufferDeclre1";
-            director.GetStubBufferDeclareRetVal[1] = "GetStubBufferDeclre2";
-            director.GetStubMethodRetVal[0] = "GetStubMethod1";
-            director.GetStubMethodRetVal[1] = "GetStubMethod2";
             director.GetStubInitMethodRetVal[0] = "GetStubInitMethod1";
             director.GetStubInitMethodRetVal[1] = "GetStubInitMethod2";
 
