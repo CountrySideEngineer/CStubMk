@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using ClosedXML.Excel;
 using System.Linq;
+using System.IO;
 
 namespace CStubMKGui.Model
 {
@@ -55,8 +56,9 @@ namespace CStubMKGui.Model
         /// <returns>Parameters for function.</returns>
         public override IEnumerable<Param> Parse(String functionDefinition)
         {
-            using (var workBook = new XLWorkbook(functionDefinition))
+            using (var fileStream = new StreamReader(functionDefinition))
             {
+                var workBook = new XLWorkbook(functionDefinition);
                 var workSheet = workBook.Worksheet("FunctionDefinition");
                 return this.ExtractSequence(workSheet);
             }
@@ -167,7 +169,16 @@ namespace CStubMKGui.Model
                 var postfix = workSheet.Cell(startRowIndx, startColIndex + (int)TableColIndex.PostFix).GetString();
                 var mode = workSheet.Cell(startRowIndx, startColIndex + (int)TableColIndex.Mode).GetString();
                 var pointerNum = this.RemovePointer(ref dataType);
-                var accessMode = Param.ToMode(mode);
+                var accessMode = Param.AccessMode.None;
+                try
+                {
+                    accessMode = Param.ToMode(mode);
+                }
+                catch (InvalidOperationException)
+                {
+
+                    Debug.WriteLine($"Invvaid mode : Set as None");
+                }
                 var param = new Param
                 {
                     Name = name,

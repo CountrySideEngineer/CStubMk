@@ -8,7 +8,7 @@ namespace CStubMKGui.Model
     /// <summary>
     /// Create code of stub in C language.
     /// </summary>
-    public class StubDirectorForCStyle
+    public abstract class StubDirectorForCStyle
     {
         protected static readonly String ChangeLineCode = "\r\n";
         protected static readonly String StubHeaderPrefix = "/*----";
@@ -39,16 +39,18 @@ namespace CStubMKGui.Model
         #endregion
 
         #region Public properties
+        /// <summary>
+        /// Parameter for code to be created.
+        /// </summary>
         public Param Parameter { get; set; }
         #endregion
 
-        #region Other methods and private properties in calling order
-        public virtual String GetDefinePart()
+        #region Method to create code declaring method header
+        public virtual String GetStartPart()
         {
-            String definePart = String.Format("#define {0}\t\t\t\t({1})", BuffSizeMacroName, BuffSizeNum);
+            string definePart = $"#define {BuffSizeMacroName}\t\t\t\t({BuffSizeNum})";
             return this.GetCodeLine(definePart);
         }
-
 
         /// <summary>
         /// Create method brief description part of stub method.
@@ -87,21 +89,54 @@ namespace CStubMKGui.Model
 
             return this.GetCodeLine(stubHeader);
         }
+        #endregion
+
+        #region Methods to create code declaring buffers.
+        /// <summary>
+        /// Entry point.
+        /// </summary>
+        /// <returns>Code declaring buffers.</returns>
+        public virtual string GetBufferSection()
+        {
+            return this.GetStubBufferDeclare();
+        }
 
         /// <summary>
         /// Create code to declare buffer used to latch arguments.
         /// </summary>
         /// <returns>Code to declare buffer used to latch arguments.</returns>
-        public virtual String GetStubBufferDeclare()
+        protected virtual String GetStubBufferDeclare()
         {
-            String stubBufferDeclare = "";
-            stubBufferDeclare += this.GetCodeLine($"int {this.GetMethodCalledCounterName()};");
+            string stubBufferDec = "";
+            stubBufferDec = this.GetCodeLine(this.GetMethodCalledCounterDeclare());
             foreach (var arg in this.Parameter.Parameters)
             {
-                String buffDeclare = this.GetStubBufferDeclare(arg);
-                stubBufferDeclare += this.GetCodeLine(buffDeclare);
+                string buffDeclare = this.GetStubBufferDeclare(arg);
+                stubBufferDec += this.GetCodeLine(buffDeclare);
             }
-            return stubBufferDeclare;
+
+            return stubBufferDec;
+        }
+
+        /// <summary>
+        /// Create code to declare variable to count the number of stub called count.
+        /// </summary>
+        /// <returns>Code of method called count variable declaring.</returns>
+        protected string GetMethodCalledCounterDeclare()
+        {
+            return $"int {this.GetMethodCalledCounterName()}";
+        }
+
+        /// <summary>
+        /// Create variable name to store method called count;
+        /// </summary>
+        /// <returns>Variable name to store method called count</returns>
+        /// <remarks>The variable name is in fomrat below:
+        /// {MethodName}_called_count
+        /// </remarks>
+        protected virtual String GetMethodCalledCounterName()
+        {
+            return $"{this.Parameter.Name}_called_count";
         }
 
         /// <summary>
@@ -109,11 +144,222 @@ namespace CStubMKGui.Model
         /// </summary>
         /// <param name="arg">Argument of method.</param>
         /// <returns>Code to declare buffer used to latch argument.</returns>
-        public virtual String GetStubBufferDeclare(Param arg)
+        protected virtual String GetStubBufferDeclare(Param arg)
         {
             String stubBufferDeclare = $"{this.GetDataType(arg)} {this.GetArgBuffName(arg)}[{BuffSizeMacroName}];";
             return stubBufferDeclare;
         }
+        #endregion
+
+        #region Create code of stub body.
+        /// <summary>
+        /// Create stub method body.
+        /// </summary>
+        /// <returns>Stub body.</returns>
+        public virtual string StubBodySection()
+        {
+            String stubMethod = "";
+            stubMethod = this.GetStubEntryPointPart() + "(";
+            stubMethod += ChangeLineCode;
+            stubMethod += this.GetArgDefPart();
+            stubMethod += ")";
+            stubMethod += ChangeLineCode;
+            stubMethod += "{";
+            stubMethod += ChangeLineCode;
+            stubMethod += this.GetReturnLatchPart();
+            stubMethod += this.GetArgLatchPart();
+            stubMethod += this.GetMethodCalledCounterIncrementPart();
+            stubMethod += ChangeLineCode;   //Enpty line.
+            stubMethod += this.GetReturnPart();
+            stubMethod += "}";
+            stubMethod += ChangeLineCode;
+
+            return stubMethod;
+        }
+
+        /// <summary>
+        /// Create method definition part.
+        /// </summary>
+        /// <returns>String to define function.</returns>
+        /// <remarks>
+        /// The definition is in format below
+        /// (Prefix) DataType(NumOfPointer) (Postfix)FunctionName
+        /// </remarks>
+        protected virtual String GetStubEntryPointPart()
+        {
+            Debug.Assert(null != this.Parameter);
+
+            return this.CommonFormat(this.Parameter);
+        }
+
+        /// <summary>
+        /// Create argument definition part for function, method.
+        /// </summary>
+        /// <returns>String of argument definition part</returns>
+        protected virtual String GetArgDefPart()
+        {
+            String argDef = "";
+            int paramIndex = 0;
+            foreach (var param in this.Parameter.Parameters)
+            {
+                if (0 < paramIndex)
+                {
+                    argDef += "," + StubDirectorForCStyle.ChangeLineCode;
+                }
+                argDef += "\t";
+                argDef += this.CommonFormat(param);
+
+                paramIndex++;
+            }
+            return argDef;
+        }
+
+        /// <summary>
+        /// Create code to latch return value.
+        /// </summary>
+        /// <returns>Code to latch return value.</returns>
+        /// <remarks>
+        /// The code is in format below:
+        /// {DataTypeOfFunction} retval = {FunctionName}_ret_val[{FunctionName}_called_count];
+        /// </remarks>
+        protected virtual String GetReturnLatchPart()
+        {
+            String returnLatchPart = "";
+            if (this.HasReturnValue())
+            {
+                String latchPart = $"{this.Parameter.DataType} ret_val = {this.GetRetValBuffName()}[{this.GetMethodCalledCounterName()}];";
+                returnLatchPart = this.GetCodeLine(latchPart, 1);
+
+            }
+            return returnLatchPart;
+        }
+
+        /// <summary>
+        /// Create code to latch argument value of stub.
+        /// </summary>
+        /// <returns>Code to latch argument value.</returns>
+        protected virtual String GetArgLatchPart()
+        {
+            String argLatchPart = "";
+            foreach (var arg in this.Parameter.Parameters)
+            {
+                String latchPart = this.GetArgLatchPart(arg);
+                argLatchPart += this.GetCodeLine(latchPart, 1);
+            }
+            return argLatchPart;
+        }
+
+        /// <summary>
+        /// Create code to latch argument into buffer.
+        /// </summary>
+        /// <param name="argument">Argument information to latch.</param>
+        /// <returns>Code to latch argument into buffer.</returns>
+        /// <remarks>
+        /// The code is in format below:
+        /// {FunctinName}_{ArgumentName}[{MethodName}_called_count] = {ArgumentName};
+        /// </remarks>
+        protected virtual String GetArgLatchPart(Param argument)
+        {
+            if (null == argument)
+            {
+                throw new ArgumentNullException(nameof(argument));
+            }
+            else
+            {
+                String latchPart = $"{this.GetArgBuffName(argument)}[{this.GetMethodCalledCounterName()}] = {argument.Name};";
+                return latchPart;
+            }
+        }
+
+        protected virtual string GetMethodCalledCounterIncrementPart()
+        {
+            string calledCounter = "";
+            calledCounter = $"{this.GetMethodCalledCounterName()}++;";
+            return this.GetCodeLine(calledCounter, 1);
+        }
+
+        /// <summary>
+        /// Create code to return latched return value.
+        /// </summary>
+        /// <returns>Code to return latched value.</returns>
+        /// <remarks>
+        /// If the data type of method set into this director is "void" and its number of pointer is lower,
+        /// this method return empty line string.
+        /// </remarks>
+        protected virtual String GetReturnPart()
+        {
+            String returnPart = "";
+            if (this.HasReturnValue())
+            {
+                returnPart = this.GetCodeLine("return ret_val;", 1);
+            }
+            return returnPart;
+        }
+        #endregion
+
+        #region Create code of method to init buffers.
+        /// <summary>
+        /// Create method to initialize buffer to latch argumet and counter.
+        /// </summary>
+        /// <returns>Code of method to initialize stub.</returns>
+        public virtual String GetStubInitMethod()
+        {
+            String initMethod = "";
+            initMethod = this.GetArgInitEntryPoint();
+            initMethod += ChangeLineCode;
+            initMethod += "{";
+            initMethod += ChangeLineCode;
+            initMethod += this.GetIdInitPart();
+            initMethod += "";
+            initMethod += this.GetInitBuffersPart();
+            initMethod += this.GetCodeLine("}");
+
+            return initMethod;
+        }
+
+        /// <summary>
+        /// Create code of entry point to initialize stub buffer.
+        /// </summary>
+        /// <returns>Code of entry point to initialize buffer.</returns>
+        protected virtual String GetArgInitEntryPoint()
+        {
+            Debug.Assert(null != this.Parameter);
+
+            return $"void {this.Parameter.Name}_init()";
+        }
+
+        /// <summary>
+        /// Returns code to initialize variable used in for-loop context.
+        /// </summary>
+        /// <returns>Code to initialize variable id.</returns>
+        protected virtual string GetIdInitPart()
+        {
+            string initPart = $"int {BuffInitIdVariableName} = 0;";
+            return this.GetCodeLine(initPart, 1);
+        }
+
+        protected virtual string GetInitBuffersPart()
+        {
+            string forLoopEntry =
+                @$"for ({BuffInitIdVariableName} = 0; {BuffInitIdVariableName} < {BuffSizeMacroName}; {BuffInitIdVariableName}++) {{";
+
+            string initBuffers = this.GetCodeLine(forLoopEntry, 1);
+            initBuffers += this.GetArgInitPart();
+            initBuffers += this.GetRetValInitPart();
+            initBuffers += this.GetCodeLine("}", 1);
+            initBuffers += this.GetMethodCalledCounterInitPart();
+
+            return initBuffers;
+        }
+
+        protected virtual string GetMethodCalledCounterInitPart()
+        {
+            string initCalledCount = this.GetMethodCalledCounterName();
+            initCalledCount += " = 0;";
+
+            return this.GetCodeLine(initCalledCount, 1);
+        }
+        #endregion
 
         /// <summary>
         /// Create code for extern declarations of buffur variabels..
@@ -152,26 +398,6 @@ namespace CStubMKGui.Model
         }
 
         /// <summary>
-        /// Create stub method body.
-        /// </summary>
-        /// <returns>Stub body.</returns>
-        public virtual String GetStubMethod()
-        {
-            String stubMethod = "";
-            stubMethod = this.GetCodeLine(this.GetMethodDef() + "(");
-            stubMethod += this.GetCodeLine(this.GetArgDef());
-            stubMethod += this.GetCodeLine(")");
-            stubMethod += this.GetCodeLine("{");
-            stubMethod += this.GetReturnLatchPart();
-            stubMethod += this.GetArgLatchPart();
-            stubMethod += this.GetCodeLine(this.GetMethodCalledCounterName() + "++;", 1);
-            stubMethod += this.GetReturnPart();
-            stubMethod += this.GetCodeLine("}");
-
-            return stubMethod;
-        }
-
-        /// <summary>
         /// Create code of line.
         /// </summary>
         /// <param name="code">Code of line</param>
@@ -180,6 +406,8 @@ namespace CStubMKGui.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:メンバーを static に設定します", Justification = "<保留中>")]
         public virtual String GetCodeLine(String code, int indentLevel = 0)
         {
+            string codeToReplace = ChangeLineCode;
+
             String codeLine = "";
             for (int indentIndex = 0; indentIndex < indentLevel; indentIndex++)
             {
@@ -189,123 +417,6 @@ namespace CStubMKGui.Model
             codeLine += ChangeLineCode;
 
             return codeLine;
-        }
-
-        /// <summary>
-        /// Create method to initialize buffer to latch argumet and counter.
-        /// </summary>
-        /// <returns>Code of method to initialize stub.</returns>
-        public virtual String GetStubInitMethod()
-        {
-            String initMethod = "";
-            initMethod = this.GetCodeLine(this.GetArgInitEntryPoint());
-            initMethod += this.GetCodeLine("{");
-            initMethod += this.GetCodeLine($"int {BuffInitIdVariableName} = 0;", 1);
-            initMethod += this.GetCodeLine("");
-            initMethod += this.GetCodeLine(
-                @$"for ({BuffInitIdVariableName} = 0; {BuffInitIdVariableName} < {BuffSizeMacroName}; {BuffInitIdVariableName}++) {{",
-                1);
-            initMethod += this.GetArgInitPart();
-            initMethod += this.GetRetValInitPart();
-            initMethod += this.GetCodeLine("}", 1);
-            initMethod += this.GetCodeLine($"{this.GetMethodCalledCounterName()} = 0;", 1);
-            initMethod += this.GetCodeLine("}");
-
-            return initMethod;
-        }
-
-        /// <summary>
-        /// Create method definition part.
-        /// </summary>
-        /// <returns>String to define function.</returns>
-        /// <remarks>
-        /// The definition is in format below
-        /// (Prefix) DataType(NumOfPointer) (Postfix)FunctionName
-        /// </remarks>
-        public virtual String GetMethodDef()
-        {
-            Debug.Assert(null != this.Parameter);
-
-            return this.CommonFormat(this.Parameter);
-        }
-
-        /// <summary>
-        /// Create argument definition part for function, method.
-        /// </summary>
-        /// <returns>String of argument definition part</returns>
-        public virtual String GetArgDef()
-        {
-            String argDef = "";
-            int paramIndex = 0;
-            foreach (var param in this.Parameter.Parameters)
-            {
-                if (0 < paramIndex)
-                {
-                    argDef += "," + StubDirectorForCStyle.ChangeLineCode;
-                }
-                argDef += "\t";
-                argDef += this.CommonFormat(param);
-
-                paramIndex++;
-            }
-            return argDef;
-        }
-
-        /// <summary>
-        /// Create code to latch argument value of stub.
-        /// </summary>
-        /// <returns>Code to latch argument value.</returns>
-        public virtual String GetArgLatchPart()
-        {
-            String argLatchPart = "";
-            foreach (var arg in this.Parameter.Parameters)
-            {
-                String latchPart = this.GetArgLatchPart(arg);
-                argLatchPart += this.GetCodeLine(latchPart, 1);
-            }
-            return argLatchPart;
-        }
-
-        /// <summary>
-        /// Create code to latch argument into buffer.
-        /// </summary>
-        /// <param name="argument">Argument information to latch.</param>
-        /// <returns>Code to latch argument into buffer.</returns>
-        /// <remarks>
-        /// The code is in format below:
-        /// {FunctinName}_{ArgumentName}[{MethodName}_called_count] = {ArgumentName};
-        /// </remarks>
-        public virtual String GetArgLatchPart(Param argument)
-        {
-            if (null == argument)
-            {
-                throw new ArgumentNullException(nameof(argument));
-            }
-            else
-            {
-                String latchPart = $"{this.GetArgBuffName(argument)}[{this.GetMethodCalledCounterName()}] = {argument.Name};";
-                return latchPart;
-            }
-        }
-
-        /// <summary>
-        /// Create code of entry point to initialize stub buffer.
-        /// </summary>
-        /// <returns>Code of entry point to initialize buffer.</returns>
-        public virtual String GetArgInitEntryPoint()
-        {
-            Debug.Assert(null != this.Parameter);
-
-            return $"void {this.Parameter.Name}_init()";
-        }
-
-        /// <summary>
-        /// Create code of extern declaration of function to initialize buffer for stub.
-        /// </summary>
-        /// <returns>Code of extern declaration of intialize function.</returns>
-        public virtual String GetStubInitMethodExtern()
-        {
-            return $"extern {this.GetArgInitEntryPoint()};";
         }
 
         /// <summary>
@@ -374,26 +485,6 @@ namespace CStubMKGui.Model
             return retValInitPart;
         }
 
-        /// <summary>
-        /// Create code to latch return value.
-        /// </summary>
-        /// <returns>Code to latch return value.</returns>
-        /// <remarks>
-        /// The code is in format below:
-        /// {DataTypeOfFunction} retval = {FunctionName}_ret_val[{FunctionName}_called_count];
-        /// </remarks>
-        public virtual String GetReturnLatchPart()
-        {
-            String returnLatchPart = "";
-            if (this.HasReturnValue())
-            {
-                String latchPart = $"{this.Parameter.DataType} ret_val = {this.GetRetValBuffName()}[{this.GetMethodCalledCounterName()}];";
-                returnLatchPart = this.GetCodeLine(latchPart, 1);
-
-            }
-            return returnLatchPart;
-        }
-
 
         /// <summary>
         /// Check whether the parameter the Director holds has value to return or not.
@@ -412,24 +503,6 @@ namespace CStubMKGui.Model
                 ((!(this.Parameter.DataType.ToLower().Equals("void"))) ||
                 ((0 < this.Parameter.PointerNum)));
             return isHasReturnValue;
-        }
-
-        /// <summary>
-        /// Create code to return latched return value.
-        /// </summary>
-        /// <returns>Code to return latched value.</returns>
-        /// <remarks>
-        /// If the data type of method set into this director is "void" and its number of pointer is lower,
-        /// this method return empty line string.
-        /// </remarks>
-        public virtual String GetReturnPart()
-        {
-            String returnPart = "";
-            if (this.HasReturnValue())
-            {
-                returnPart = this.GetCodeLine("return ret_val;", 1);
-            }
-            return returnPart;
         }
 
 
@@ -510,6 +583,37 @@ namespace CStubMKGui.Model
         }
 
         /// <summary>
+        /// Create code of data type with prefix, postifx and pointer.
+        /// If the argument does not have pointer, the data type to be returned has no postfix.
+        /// And if the pointer num of the argument is one or more, the postfix showing the pointer
+        /// "*" is smaller than by one.
+        /// For example, an argument whose pointer num is 2 returns a string with one "*", like "int*".
+        /// </summary>
+        /// <param name="argument">Argument information.</param>
+        /// <returns>Code of data type.</returns>
+        public virtual String GetDataTypeRemoveOnePointer(Param argument)
+        {
+            if (null == argument)
+            {
+                throw new ArgumentNullException(nameof(argument));
+            }
+            else
+            {
+                String dataType = argument.DataType;
+                byte pointerNum = argument.PointerNum;
+                if (0 < pointerNum)
+                {
+                    pointerNum--;
+                }
+                for (int index = 0; index < pointerNum; index++)
+                {
+                    dataType += "*";
+                }
+                return dataType;
+            }
+        }
+
+        /// <summary>
         /// Create variable name to latch and return.
         /// </summary>
         /// <returns>Variable name to latch and return.</returns>
@@ -517,18 +621,5 @@ namespace CStubMKGui.Model
         {
             return $"{this.Parameter.Name}_ret_val";
         }
-
-        /// <summary>
-        /// Create variable name to store method called count;
-        /// </summary>
-        /// <returns>Variable name to store method called count</returns>
-        /// <remarks>The variable name is in fomrat below:
-        /// {MethodName}_called_count
-        /// </remarks>
-        public virtual String GetMethodCalledCounterName()
-        {
-            return $"{this.Parameter.Name}_called_count";
-        }
-        #endregion
     }
 }

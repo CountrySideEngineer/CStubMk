@@ -56,7 +56,7 @@ namespace CStubMKGui.Model
             Debug.Assert(null != stream);
 
 #pragma warning disable CA1062 // Varable stream is null-checked.
-            stream.WriteLine(this.Director.GetMethodHeader());
+            stream.Write(this.Director.GetMethodHeader());
 #pragma warning restore CA1062 // Varable stream is null-checked.
         }
 

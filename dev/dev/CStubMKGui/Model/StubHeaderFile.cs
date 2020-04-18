@@ -96,7 +96,7 @@ namespace CStubMKGui.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:パブリック メソッドの引数の検証", Justification = "<保留中>")]
         protected void BufferInitExtern(TextWriter stream)
         {
-            stream.Write(this.Director.GetStubInitMethodExtern());
+            stream.Write(this.Director.GetStubInitMethod());
         }
 
         /// <summary>

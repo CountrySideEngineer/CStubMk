@@ -24,8 +24,17 @@ namespace CStubMKGui.Model
         /// <param name="parameters">Parameters to create stub.</param>
         public virtual void Create(String outputPath, IEnumerable<Param> parameters)
         {
-            var director = new StubDirectorForCStyle();
+            this.CreatSource(outputPath, parameters, new StubSourceDirectorForCStyle());
+            this.CreatHeader(outputPath, parameters, new StubHeaderDirectorForCStyle());
+        }
+
+        protected virtual void CreatSource(String outputPath, IEnumerable<Param> parameters, StubDirectorForCStyle director)
+        {
             this.Create(new StubSourceFile(director), outputPath, parameters);
+        }
+
+        protected virtual void CreatHeader(String outputPath, IEnumerable<Param> parameters, StubDirectorForCStyle director)
+        {
             this.Create(new StubHeaderFile(director), outputPath, parameters);
         }
 

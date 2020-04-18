@@ -83,7 +83,7 @@ namespace CStubMKGui.Model
             }
             else
             {
-                stream.Write(this.Director.GetDefinePart());
+                stream.Write(this.Director.GetStartPart());
                 stream.WriteLine("");
             }
         }
@@ -121,7 +121,7 @@ namespace CStubMKGui.Model
             }
             else
             {
-                stream.Write(this.Director.GetStubBufferDeclare());
+                stream.Write(this.Director.GetBufferSection());
             }
         }
 
@@ -138,7 +138,7 @@ namespace CStubMKGui.Model
             }
             else
             {
-                stream.Write(this.Director.GetStubMethod());
+                stream.Write(this.Director.StubBodySection());
             }
         }
 
