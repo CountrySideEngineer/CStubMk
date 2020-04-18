@@ -19,7 +19,7 @@ namespace CStubMKGui.Model
         }
 
         protected static string ModeInput = "in";
-        protected static string ModeOutput = "output";
+        protected static string ModeOutput = "out";
         protected static string ModeBoth = "both";
         #endregion
 
