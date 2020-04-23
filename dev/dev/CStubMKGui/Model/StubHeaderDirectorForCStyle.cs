@@ -73,10 +73,6 @@ namespace CStubMKGui.Model
         {
             return $"extern {base.GetArgInitEntryPoint()};";
         }
-
-
-
-
         #endregion
     }
 }
