@@ -13,57 +13,6 @@ namespace CStubMKGui.Model.Tests
     public class StubDirectorForCStyleMockForTest : StubDirectorForCStyle
     {
         public static int BuffSize = 100;
-        public int GetDefinePartCalledCount;
-        public string[] GetDefinePartRetVal = new string[BuffSize];
-        public override string GetDefinePart()
-        {
-            var RetVal = this.GetDefinePartRetVal[GetDefinePartCalledCount];
-            this.GetDefinePartCalledCount++;
-
-            return RetVal;
-        }
-        public void GetDefinePartInit()
-        {
-            for (int index = 0; index < BuffSize; index++)
-            {
-                GetDefinePartRetVal[index] = string.Empty;
-            }
-            GetDefinePartCalledCount = 0;
-        }
-
-        public int GetStubBufferDeclareCalledCount;
-        public string[] GetStubBufferDeclareRetVal = new string[BuffSize];
-        public override string GetStubBufferDeclare()
-        {
-            var RetVal = this.GetStubBufferDeclareRetVal[GetStubBufferDeclareCalledCount];
-            GetStubBufferDeclareCalledCount++;
-            return RetVal;
-        }
-        public void GetStubBufferDeclareInit()
-        {
-            for (int index = 0; index < BuffSize; index++)
-            {
-                GetStubBufferDeclareRetVal[index] = string.Empty;
-            }
-            GetStubBufferDeclareCalledCount = 0;
-        }
-
-        public int GetStubMethodCalledCount;
-        public string[] GetStubMethodRetVal = new string[BuffSize];
-        public override string GetStubMethod()
-        {
-            var RetVal = this.GetStubMethodRetVal[GetStubMethodCalledCount];
-            GetStubMethodCalledCount++;
-            return RetVal;
-        }
-        public void GetStubMethodInit()
-        {
-            for (int index = 0; index < BuffSize; index++)
-            {
-                GetStubMethodRetVal[index] = string.Empty;
-            }
-            GetStubMethodCalledCount = 0;
-        }
 
         public int GetStubInitMethodCalledCount;
         public string[] GetStubInitMethodRetVal = new string[BuffSize];
@@ -118,32 +67,12 @@ namespace CStubMKGui.Model.Tests
 
         public int GetStubInitMethodExternCalledCount;
         public string[] GetStubInitMethodExternRetVal = new string[BuffSize];
-        public override string GetStubInitMethodExtern()
-        {
-            var retVal = GetStubInitMethodExternRetVal[GetStubInitMethodExternCalledCount];
-            GetStubInitMethodExternCalledCount++;
-
-            return retVal;
-        }
-        public void GetStubInitMethodExternInit()
-        {
-            for (int index = 0; index < BuffSize; index++)
-            {
-                GetStubBufferDeclareRetVal[index] = string.Empty;
-            }
-            GetStubBufferDeclareCalledCount = 0;
-
-        }
 
         public void StubDirectorForCStyleInit()
         {
-            this.GetDefinePartInit();
-            this.GetStubBufferDeclareInit();
-            this.GetStubMethodInit();
             this.GetStubInitMethodInit();
             this.GetMethodHeaderInit();
             this.GetStubBufferExternDeclareInit();
-            this.GetStubInitMethodExternInit();
         }
     }
 
