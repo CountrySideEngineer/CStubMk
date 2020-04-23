@@ -64,7 +64,6 @@ namespace CStubMKGui.Model
             }
         }
 
-
         /// <summary>
         /// Run a sequence to extract parameters of method and that of argument.
         /// </summary>
