@@ -38,6 +38,22 @@ namespace CStubMKGui.Model
             this.Parameters = null;
             this.Mode = AccessMode.None;
         }
+
+        /// <summary>
+        /// Copy constuctor.
+        /// </summary>
+        /// <param name="src">Source Parameter object.</param>
+        public Param(Param src)
+        {
+            this.Name = src.Name;
+            this.Description = src.Description;
+            this.DataType = src.DataType;
+            this.Prefix = src.Prefix;
+            this.Postifx = src.Postifx;
+            this.PointerNum = src.PointerNum;
+            this.Parameters = src.Parameters;
+            this.Mode = src.Mode;
+        }
         #endregion
 
         #region Public properties
