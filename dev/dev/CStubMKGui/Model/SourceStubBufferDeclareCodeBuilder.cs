@@ -25,11 +25,22 @@ namespace CStubMKGui.Model
 		/// <param name="codeSrc"></param>
 		public override void CreateCode(object codeSrc)
 		{
-			var function = (Param)codeSrc;
+			try
+			{
+				if (null == codeSrc)
+				{
+					throw new ArgumentNullException(nameof(this.CreateCode));
+				}
+				var function = (Param)codeSrc;
 
-			this.CreateCalledCounter(function);
-			this.CreateBufferDeclare(function);
-			this.CreateReturnValueBufferDeclare(function);
+				this.CreateCalledCounter(function);
+				this.CreateBufferDeclare(function);
+				this.CreateReturnValueBufferDeclare(function);
+			}
+			catch (InvalidCastException)
+			{
+				Debug.WriteLine("Input is invalid / SKIP");
+			}
 		}
 
 		/// <summary>

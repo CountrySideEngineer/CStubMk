@@ -387,5 +387,28 @@ namespace UnitTest_SourceStubBufferDeclareCodeBuilder_Test
 			Assert.AreEqual("ArgType Function_Argument[STUB_BUFFER_SIZE];", result.ElementAt(1));
 			Assert.AreEqual("DataType Function_ret_val[STUB_BUFFER_SIZE];", result.ElementAt(2));
 		}
+
+		[TestMethod]
+		[TestCategory("public")]
+		[Description("CreateCode/not parameter")]
+		public void CreateCode_Test_003()
+		{
+			int codeSrc = 0;
+			var builder = new SourceStubBufferDeclareCodeBuilder();
+			builder.CreateCode(codeSrc);
+			var result = (IEnumerable<string>)builder.GetResult();
+
+			Assert.AreEqual(0, result.Count());
+		}
+
+		[TestMethod]
+		[TestCategory("public")]
+		[Description("CreateCode/null")]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void CreateCode_Test_004()
+		{
+			var builder = new SourceStubBufferDeclareCodeBuilder();
+			builder.CreateCode(null);
+		}
 	}
 }
