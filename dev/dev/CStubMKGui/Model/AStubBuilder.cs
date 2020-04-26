@@ -21,6 +21,7 @@ namespace CStubMKGui.Model
 		protected const string CalledCountModifier = "called_count";
 		protected const string ReturnValueModifier = "ret_val";
 		protected const string PointerValueModifier = "value";
+		protected const string PointerAmpasandModifier = "&";
 		#endregion
 
 		#region Constructor
