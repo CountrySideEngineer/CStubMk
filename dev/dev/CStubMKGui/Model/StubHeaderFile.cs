@@ -26,6 +26,7 @@ namespace CStubMKGui.Model
         /// <param name="stream">Stream to output stub declaration part.</param>
         /// <param name="parameters">Informations for stub.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:パブリック メソッドの引数の検証", Justification = "<保留中>")]
+#if false
         protected override void RunCreateFileSequence(TextWriter stream, IEnumerable<Param> parameters)
         {
             this.DefineHeaderMacro(stream);
@@ -39,7 +40,7 @@ namespace CStubMKGui.Model
             this.DeclareExternCppEnd(stream);
             this.EndIfMacro(stream);
         }
-
+#endif
         /// <summary>
         /// Output "define" part to prevent from duplicate including.
         /// </summary>
@@ -73,9 +74,9 @@ namespace CStubMKGui.Model
         protected void CreateStubDeclare(TextWriter stream)
         {
             //関数ヘッダー
-            this.StubHeader(stream);
-            this.BufferExtern(stream);
-            this.BufferInitExtern(stream);
+            //this.StubHeader(stream);
+            //this.BufferExtern(stream);
+            //this.BufferInitExtern(stream);
             stream.WriteLine("");
         }
 
@@ -120,6 +121,11 @@ namespace CStubMKGui.Model
         {
             stream.WriteLine("#endif /* _STUB_H_ */");
         }
-        #endregion
+
+        protected override IEnumerable<ICodeBuilder> GetCodeBuilders()
+        {
+            throw new NotImplementedException();
+        }
+#endregion
     }
 }

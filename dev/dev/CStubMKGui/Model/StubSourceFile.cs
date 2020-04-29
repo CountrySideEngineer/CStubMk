@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace CStubMKGui.Model
@@ -20,143 +21,16 @@ namespace CStubMKGui.Model
         #endregion
 
         #region Other methods and private properties in calling order
-        /// <summary>
-        /// Sequence to create stub file.
-        /// </summary>
-        /// <param name="stream">Stream to output stub data.</param>
-        /// <param name="parameters">Informations for stub.</param>
-        /// <exception cref="ArgumentNullException">
-        /// Argument <para>stream</para> and/or <para>parameters</para> are null.
-        /// </exception>
-        protected override void RunCreateFileSequence(TextWriter stream, IEnumerable<Param> parameters)
-        {
-            if (null == parameters) 
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            } 
-            else if (null == stream)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            else
-            {
-                this.IncludePart(stream);
-                this.DefinePart(stream);
-                foreach (var param in parameters)
-                {
-                    this.Director.Parameter = param;
-                    this.CreateFunctionStub(stream);
-                    stream.WriteLine(); //Insert an empty line between stub method.
-                }
-            }
 
-        }
-
-        /// <summary>
-        /// Output "include" part of source code.
-        /// </summary>
-        /// <param name="stream">Stream to output stub data.</param>
-        /// <exception cref="ArgumentNullException">Argument <para>stream</para> is null.</exception>
-        protected virtual void IncludePart(TextWriter stream)
+        protected override IEnumerable<ICodeBuilder> GetCodeBuilders()
         {
-            if (null == stream)
+            var builders = new List<ICodeBuilder>
             {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            else
-            {
-                stream.WriteLine("#include <stdio.h>");
-                stream.WriteLine("");
-            }
-        }
-
-        /// <summary>
-        /// Create code to define macro.
-        /// </summary>
-        /// <param name="stream">Stream to output stub data.</param>
-        /// <exception cref="ArgumentNullException">Argument <para>stream</para> is null.</exception>
-        protected virtual void DefinePart(TextWriter stream)
-        {
-            if (null == stream)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            else
-            {
-                stream.Write(this.Director.GetStartPart());
-                stream.WriteLine("");
-            }
-        }
-
-        /// <summary>
-        /// Output stub of function.
-        /// </summary>
-        /// <param name="stream">Stream to output stub data.</param>
-        /// <exception cref="ArgumentNullException">Argument <para>stream</para> is null.</exception>
-        protected virtual void CreateFunctionStub(TextWriter stream)
-        {
-            if (null == stream)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            else
-            {
-                this.StubHeader(stream);
-                this.BufferDeclare(stream);
-                this.StubBody(stream);
-                this.StubInitPart(stream);
-            }
-        }
-
-        /// <summary>
-        /// Output declaration of buffer used to latch, store, argument 
-        /// </summary>
-        /// <param name="stream">Stream to output stub data.</param>
-        /// <exception cref="ArgumentNullException">Argument <para>stream</para> is null.</exception>
-        protected virtual void BufferDeclare(TextWriter stream)
-        {
-            if (null == stream)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            else
-            {
-                stream.Write(this.Director.GetBufferSection());
-            }
-        }
-
-        /// <summary>
-        /// Output body of stub.
-        /// </summary>
-        /// <param name="stream">Stream to output stub data.</param>
-        /// <exception cref="ArgumentNullException">Argument <para>stream</para> is null.</exception>
-        protected virtual void StubBody(TextWriter stream)
-        {
-            if (null == stream)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            else
-            {
-                stream.Write(this.Director.StubBodySection());
-            }
-        }
-
-        /// <summary>
-        /// Output method to initialize buffer of stub.
-        /// </summary>
-        /// <param name="stream">Stream to output stub data.</param>
-        /// <exception cref="ArgumentNullException">Argument <para>stream</para> is null.</exception>
-        protected virtual void StubInitPart(TextWriter stream)
-        {
-            if (null == stream)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            else
-            {
-                stream.Write(this.Director.GetStubInitMethod());
-            }
+                new SourceStubBufferDeclareCodeBuilder(),
+                new SourceStubEntryPointCodeBuilder(),
+                new SourceStubBodyCodeBuilder()
+            };
+            return builders;
         }
         #endregion
     }

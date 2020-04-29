@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace CStubMKGui.Model
@@ -24,30 +26,64 @@ namespace CStubMKGui.Model
         /// <param name="parameters">Parameters to create stub.</param>
         public virtual void Create(String outputPath, IEnumerable<Param> parameters)
         {
-            this.CreatSource(outputPath, parameters, new StubSourceDirectorForCStyle());
-            this.CreatHeader(outputPath, parameters, new StubHeaderDirectorForCStyle());
-        }
-
-        protected virtual void CreatSource(String outputPath, IEnumerable<Param> parameters, StubDirectorForCStyle director)
-        {
-            this.Create(new StubSourceFile(director), outputPath, parameters);
-        }
-
-        protected virtual void CreatHeader(String outputPath, IEnumerable<Param> parameters, StubDirectorForCStyle director)
-        {
-            this.Create(new StubHeaderFile(director), outputPath, parameters);
+            this.CreateSourceFile(outputPath, parameters);
         }
 
         /// <summary>
-        /// Call sequence to create source files (including header file) of stub.
+        /// Create source file of stub in C language style.
         /// </summary>
-        /// <param name="stubFile">Object to create source file.</param>
-        /// <param name="outputPath">Path to output source file.</param>
+        /// <param name="outputPath">Path to directory to output source file.</param>
         /// <param name="parameters">Parameters to create stub.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:パブリック メソッドの引数の検証", Justification = "<保留中>")]
-        protected virtual void Create(AStubFile stubFile, String outputPath, IEnumerable<Param> parameters)
+        protected void CreateSourceFile(string outputPath, IEnumerable<Param> parameters)
         {
-            stubFile.CreateFile(outputPath, parameters);
+            var codes = this.CreateSourceCode(parameters);
+            this.WriteCodes(outputPath, codes);
+        }
+
+        /// <summary>
+        /// Create list of codes to write to source code file.
+        /// </summary>
+        /// <param name="parameters">Parameters to output soruce file.</param>
+        /// <returns>List fo codes to write to source.</returns>
+        protected IEnumerable<string> CreateSourceCode(IEnumerable<Param> parameters)
+        {
+            var creater = new CLangSourceStubCodeCreater();
+            var codes = this.CreateCodes(creater, parameters);
+
+            return codes;
+        }
+
+        /// <summary>
+        /// Create list of codes to write to source code file.
+        /// </summary>
+        /// <param name="codeCreater">ICodeCreater concrete object to create code.</param>
+        /// <param name="parameters">Parameters to output soruce file.</param>
+        /// <returns>List fo codes to write to source.</returns>
+        protected virtual IEnumerable<string> CreateCodes(ICodeCreater codeCreater, IEnumerable<Param> parameters)
+        {
+            var codes = codeCreater.Create(parameters);
+            return codes;
+        }
+
+        /// <summary>
+        /// Write codes into file or directory specified by argument outputPath.
+        /// </summary>
+        /// <param name="outputPath">Path to directory or file to output codes.</param>
+        /// <param name="codes"></param>
+        protected virtual void WriteCodes(string outputPath, IEnumerable<string> codes)
+        {
+            var codeWrtier = new CLangSourceStubCodeWriter(outputPath);
+            this.WriteCodes(codeWrtier, codes);
+        }
+
+        /// <summary>
+        /// Write codes into file or directory specified by argument outputPath.
+        /// </summary>
+        /// <param name="codeWriter">ICodeWriter concrete object to write codes into files.</param>
+        /// <param name="codes">List of codes to write into a file.</param>
+        protected virtual void WriteCodes(ICodeWriter codeWriter, IEnumerable<string> codes)
+        {
+            codeWriter.WriteCode(codes);
         }
         #endregion
     }

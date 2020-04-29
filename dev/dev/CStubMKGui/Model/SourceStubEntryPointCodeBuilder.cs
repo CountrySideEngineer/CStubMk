@@ -16,8 +16,7 @@ namespace CStubMKGui.Model
 		/// </summary>
 		public SourceStubEntryPointCodeBuilder()
 		{
-			this.Codes = new List<string>();
-			this.Codes.Clear();
+			this.Codes = null;
 		}
 		#endregion
 
@@ -39,6 +38,9 @@ namespace CStubMKGui.Model
 					throw new ArgumentNullException(nameof(this.CreateCode));
 				}
 				var function = (Param)codeSrc;
+
+				this.Codes = new List<string>();
+				this.Codes.Clear();
 
 				this.CreateEntryPoint(function);
 				this.Codes.Add("(");

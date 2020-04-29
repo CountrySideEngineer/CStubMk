@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace CStubMKGui.Model
@@ -17,6 +18,12 @@ namespace CStubMKGui.Model
         /// Property of filea name.
         /// </summary>
         public String FileName { get; set; }
+
+        /// <summary>
+        /// List of ICodeBuilder to create codes of stub.
+        /// </summary>
+        /// <returns>List of code.</returns>
+        protected abstract IEnumerable<ICodeBuilder> GetCodeBuilders();
 
         /// <summary>
         /// Method to create stub file.
@@ -35,30 +42,85 @@ namespace CStubMKGui.Model
         /// </summary>
         /// <param name="writer">Output stream to write code of stub.</param>
         /// <param name="parameters">Parameters of stub file.</param>
-        public virtual void CreateFile(TextWriter writer, IEnumerable<Param> parameters)
+        protected virtual void CreateFile(TextWriter writer, IEnumerable<Param> parameters)
         {
-            this.RunCreateFileSequence(writer, parameters);
+            var codes = this.CreateCodes(parameters);
+            this.TextWrite(writer, codes);
         }
 
         /// <summary>
-        /// Pure virtual method running sequence to 
+        /// Write codes from Params into text file.
         /// </summary>
-        /// <param name="stream">Stream that the stub file output.</param>
-        /// <param name="parameters">Parameters of stub file.</param>
-        protected abstract void RunCreateFileSequence(TextWriter stream, IEnumerable<Param> parameters);
-
-        /// <summary>
-        /// Output stub header part.
-        /// </summary>
-        /// <param name="stream">Stream to output stub data.</param>
-        protected virtual void StubHeader(TextWriter stream)
+        /// <param name="writer">Text stream to output the codes.</param>
+        /// <param name="codes">Codes to be Written into text.</param>
+        protected virtual void TextWrite(TextWriter writer, IEnumerable<string> codes)
         {
-            Debug.Assert(null != stream);
-
-#pragma warning disable CA1062 // Varable stream is null-checked.
-            stream.Write(this.Director.GetMethodHeader());
-#pragma warning restore CA1062 // Varable stream is null-checked.
+            foreach (var code in codes )
+            {
+                writer.WriteLine(code);
+            }
         }
 
+        /// <summary>
+        /// Create codes from parameters.
+        /// </summary>
+        /// <param name="parameters">Parameters for stub codes.</param>
+        /// <returns>Codes of stub.</returns>
+        protected IEnumerable<string> CreateCodes(IEnumerable<Param> parameters)
+        {
+            IEnumerable<string> codes = null;
+            foreach (var parameter in parameters)
+            {
+                var tempCodes = this.CreateCodes(this.GetCodeBuilders(), parameter);
+                if (null == codes)
+                {
+                    codes = tempCodes;
+                }
+                else
+                {
+                    codes = codes.Concat(tempCodes);
+                }
+            }
+            return codes;
+        }
+
+        /// <summary>
+        /// Creates code from builders and parameter.
+        /// </summary>
+        /// <param name="builders">Builders to create code.</param>
+        /// <param name="parameter">Parameters for stub code.</param>
+        /// <returns>Codes of stub.</returns>
+        protected IEnumerable<string> CreateCodes(IEnumerable<ICodeBuilder> builders, Param parameter)
+        {
+            IEnumerable<string> codes = null;
+            foreach (var builder in builders)
+            {
+                var tempCodes = this.CreateCodes(builder, parameter);
+                if (null == codes)
+                {
+                    codes = tempCodes;
+                }
+                else
+                {
+                    codes = codes.Concat(tempCodes);
+                }
+            }
+            return codes;
+        }
+
+        /// <summary>
+        /// Creaets codes from Param objects by builder.
+        /// </summary>
+        /// <param name="builder">Builder to creat codes</param>
+        /// <param name="parameter">Parameters for codes.</param>
+        /// <returns>Enumerator of code.</returns>
+        protected IEnumerable<string> CreateCodes(ICodeBuilder builder, Param parameter)
+        {
+            var director = new SourceCodeDirector(builder);
+            director.Construct(parameter);
+            var codes = builder.GetResult();
+
+            return (IEnumerable<string>)codes;
+        }
     }
 }

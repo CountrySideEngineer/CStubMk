@@ -13,8 +13,7 @@ namespace CStubMKGui.Model
 		/// </summary>
 		public SourceStubBufferDeclareCodeBuilder() : base(100)
 		{
-			this.Codes = new List<string>();
-			this.Codes.Clear();
+			this.Codes = null;
 		}
 		#endregion
 
@@ -32,6 +31,9 @@ namespace CStubMKGui.Model
 					throw new ArgumentNullException(nameof(this.CreateCode));
 				}
 				var function = (Param)codeSrc;
+
+				this.Codes = new List<string>();
+				this.Codes.Clear();
 
 				this.CreateCalledCounter(function);
 				this.CreateBufferDeclare(function);
