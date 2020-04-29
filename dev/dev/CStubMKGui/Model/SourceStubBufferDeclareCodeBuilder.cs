@@ -5,6 +5,9 @@ using System.Text;
 
 namespace CStubMKGui.Model
 {
+	/// <summary>
+	/// Builder class to create code to declare buffers for method in C language.
+	/// </summary>
 	public class SourceStubBufferDeclareCodeBuilder : AStubBuilder
 	{
 		#region Constructor

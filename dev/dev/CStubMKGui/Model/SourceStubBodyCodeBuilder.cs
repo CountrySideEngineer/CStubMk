@@ -5,6 +5,9 @@ using System.Text;
 
 namespace CStubMKGui.Model
 {
+	/// <summary>
+	/// Builder class to create code of stub body.
+	/// </summary>
 	public class SourceStubBodyCodeBuilder : AStubBuilder
 	{
 		#region Constructor

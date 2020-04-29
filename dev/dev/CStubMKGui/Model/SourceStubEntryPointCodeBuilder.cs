@@ -6,7 +6,7 @@ using System.Text;
 namespace CStubMKGui.Model
 {
 	/// <summary>
-	/// Class to create code 
+	/// Builder class to create code of stub entry point.
 	/// </summary>
 	public class SourceStubEntryPointCodeBuilder : AStubBuilder
 	{
