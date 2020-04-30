@@ -43,6 +43,7 @@ namespace CStubMKGui.Model
 		{
 			var builders = new List<ICodeBuilder>
 				{
+					new SourceFunctionHeaderCodeBuilder(),
 					new SourceStubBufferDeclareCodeBuilder(),
 					new SourceStubEntryPointCodeBuilder(),
 					new SourceStubBodyCodeBuilder()
