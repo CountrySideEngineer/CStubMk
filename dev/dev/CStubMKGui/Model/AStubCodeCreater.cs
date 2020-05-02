@@ -12,7 +12,7 @@ namespace CStubMKGui.Model
 	{
 		#region Factory methods
 		/// <summary>
-		/// Create director to create code using bilder, ICodeBuilder object
+		/// Create director to create code using builder, ICodeBuilder object
 		/// </summary>
 		/// <returns>Director to create code by builder</returns>
 		protected abstract SourceCodeDirector GetDirector(ICodeBuilder builder);
@@ -20,14 +20,37 @@ namespace CStubMKGui.Model
 
 		#region Methods and private properties in calling order
 		/// <summary>
+		/// Create list of builders , ICodeBuilder, to create stub code.
+		/// </summary>
+		/// <returns>List of builders to create stub code.</returns>
+		protected abstract IEnumerable<ICodeBuilder> GetBuilders();
+		#endregion
+
+		#region Override of interface.
+
+		/// <summary>
 		/// Method to create codes.
 		/// </summary>
 		/// <param name="parameters">Source information for code.</param>
 		/// <returns>List of codes, a code in a line.</returns>
-		public abstract IEnumerable<string> Create(IEnumerable<Param> parameters);
+		public virtual IEnumerable<string> Create(IEnumerable<Param> parameters)
+		{
+			return this.CreateCode(parameters);
+		}
 		#endregion
 
 		#region Protected or private method in calling order
+		/// <summary>
+		/// Create code from parameters.
+		/// </summary>
+		/// <param name="parameters">Parameters for create stub codes.</param>
+		/// <returns>List of stub codes.</returns>
+		protected virtual IEnumerable<string> CreateCode(IEnumerable<Param> parameters)
+		{
+			var builders = this.GetBuilders();
+			return this.Create(builders, parameters);
+		}
+
 		/// <summary>
 		/// Create code from builders and parameters.
 		/// </summary>

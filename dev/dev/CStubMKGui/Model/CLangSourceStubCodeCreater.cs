@@ -10,7 +10,7 @@ namespace CStubMKGui.Model
 	/// </summary>
 	public class CLangSourceStubCodeCreater : ACLangStubCodeCreater
 	{
-		#region Factory method.
+		#region Override of interface / Factory method.
 		/// <summary>
 		/// Create director to create code using bilder, ICodeBuilder object
 		/// </summary>
@@ -19,40 +19,23 @@ namespace CStubMKGui.Model
 		{
 			return new SourceCodeDirector(builder);
 		}
-		#endregion
 
-		#region Public method of interface.
 		/// <summary>
-		/// Create codes of stub in C language method.
+		/// Create list of builders 
 		/// </summary>
-		/// <param name="parameters">Parameters of method.</param>
-		/// <returns>List of code in C language, a code in a line.</returns>
-		public override IEnumerable<string> Create(IEnumerable<Param> parameters)
-		{
-			return this.CreateCode(parameters);
-		}
-		#endregion
-
-		#region Protecte or private method.
-		/// <summary>
-		/// Create code from parameters.
-		/// </summary>
-		/// <param name="parameters">List of parameters to create codes.</param>
-		/// <returns>List of codes.</returns>
-		protected IEnumerable<string> CreateCode(IEnumerable<Param> parameters)
+		/// <returns></returns>
+		protected override IEnumerable<ICodeBuilder> GetBuilders()
 		{
 			var builders = new List<ICodeBuilder>
-				{
-					new SourceFunctionHeaderCodeBuilder(),
-					new SourceStubBufferDeclareCodeBuilder(),
-					new SourceStubEntryPointCodeBuilder(),
-					new SourceStubBodyCodeBuilder(),
-					new SourceStubInitBufferEntryPointCodeBuilder(),
-					new SourceStubInitBufferBodyCodeBuilder()
-				};
-			var codes = base.Create(builders, parameters);
-
-			return codes;
+			{
+				new SourceFunctionHeaderCodeBuilder(),
+				new SourceStubBufferDeclareCodeBuilder(),
+				new SourceStubEntryPointCodeBuilder(),
+				new SourceStubBodyCodeBuilder(),
+				new SourceStubInitBufferEntryPointCodeBuilder(),
+				new SourceStubInitBufferBodyCodeBuilder()
+			};
+			return builders;
 		}
 		#endregion
 	}
