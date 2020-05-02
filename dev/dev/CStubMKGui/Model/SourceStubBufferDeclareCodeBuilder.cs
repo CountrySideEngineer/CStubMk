@@ -14,10 +14,7 @@ namespace CStubMKGui.Model
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public SourceStubBufferDeclareCodeBuilder() : base(100)
-		{
-			this.Codes = null;
-		}
+		public SourceStubBufferDeclareCodeBuilder() : base(100) { }
 		#endregion
 
 		#region Public methods
@@ -143,10 +140,6 @@ namespace CStubMKGui.Model
 				this.Codes.Add(code);
 			}
 		}
-		#endregion
-
-		#region Properties
-		protected List<string> Codes;
 		#endregion
 	}
 }

@@ -190,26 +190,6 @@ namespace CStubMKGui.Model
 				this.SetCode(code);
 			}
 		}
-
-		/// <summary>
-		/// Add code to list with indent, the "TAB".
-		/// </summary>
-		/// <param name="code">Code to add to list.</param>
-		/// <param name="indentLevel">Indent level. Default value is 1</param>
-		protected void SetCode(string code, int indentLevel = 1)
-		{
-			string codeToSet = "";
-			for (int level = 0; level < indentLevel; level++)
-			{
-				codeToSet += "\t";
-			}
-			codeToSet += code;
-			this.Codes.Add(codeToSet);
-		}
-		#endregion
-
-		#region Properties
-		protected List<string> Codes;
 		#endregion
 	}
 }

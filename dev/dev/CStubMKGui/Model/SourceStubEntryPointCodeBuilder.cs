@@ -14,14 +14,7 @@ namespace CStubMKGui.Model
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		public SourceStubEntryPointCodeBuilder()
-		{
-			this.Codes = null;
-		}
-		#endregion
-
-		#region Properties
-		protected List<string> Codes;
+		public SourceStubEntryPointCodeBuilder() : base(100) { }
 		#endregion
 
 		#region public methods.

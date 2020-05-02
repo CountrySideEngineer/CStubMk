@@ -23,10 +23,7 @@ namespace CStubMKGui.Model
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		public SourceFunctionHeaderCodeBuilder() : base(100)
-		{
-			this.Codes = null;
-		}
+		public SourceFunctionHeaderCodeBuilder() : base(100) { }
 		#endregion
 
 		#region Public methods
@@ -137,13 +134,6 @@ namespace CStubMKGui.Model
 			spaceLine += CommentLineEndTag;
 			return spaceLine;
 		}
-		#endregion
-
-		#region Properties
-		/// <summary>
-		/// List of code.
-		/// </summary>
-		protected List<string> Codes;
 		#endregion
 	}
 }
