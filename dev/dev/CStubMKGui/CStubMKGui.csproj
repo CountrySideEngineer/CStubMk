@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Compile Remove="Model\ISourceCode.cs" />
+    <Compile Remove="Model\SourceStubFileCreater.cs" />
     <Compile Remove="Model\StubSourceCode.cs" />
   </ItemGroup>
 

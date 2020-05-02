@@ -29,6 +29,11 @@ namespace CStubMKGui.Model
             this.CreateStub(outputPath, parameters);
         }
 
+        /// <summary>
+        /// Run sequence to create stub files.
+        /// </summary>
+        /// <param name="outputPath">Path to output source file.</param>
+        /// <param name="parameters">Parameters to create stub.</param>
         protected virtual void CreateStub(string outputPath, IEnumerable<Param> parameters)
         {
             var sourceFileCreaters = new List<ISourceFileCreater>
@@ -39,6 +44,12 @@ namespace CStubMKGui.Model
             this.CreateStub(outputPath, sourceFileCreaters, parameters);
         }
 
+        /// <summary>
+        /// Run sequence to create stub files by running "Create" method 
+        /// </summary>
+        /// <param name="outputPath">Path to output source file.</param>
+        /// <param name="createres">List of creaters to create stub source and header file.</param>
+        /// <param name="parameters">Parameters to create stub.</param>
         protected virtual void CreateStub(string outputPath, IEnumerable<ISourceFileCreater> createres, IEnumerable<Param> parameters)
         {
             foreach (var creater in createres)
