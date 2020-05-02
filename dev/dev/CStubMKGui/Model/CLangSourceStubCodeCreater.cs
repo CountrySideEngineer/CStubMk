@@ -46,7 +46,9 @@ namespace CStubMKGui.Model
 					new SourceFunctionHeaderCodeBuilder(),
 					new SourceStubBufferDeclareCodeBuilder(),
 					new SourceStubEntryPointCodeBuilder(),
-					new SourceStubBodyCodeBuilder()
+					new SourceStubBodyCodeBuilder(),
+					new SourceStubInitBufferEntryPointCodeBuilder(),
+					new SourceStubInitBufferBodyCodeBuilder()
 				};
 			var codes = base.Create(builders, parameters);
 
