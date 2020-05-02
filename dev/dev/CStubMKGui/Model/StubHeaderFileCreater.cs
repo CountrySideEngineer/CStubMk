@@ -4,6 +4,9 @@ using System.Text;
 
 namespace CStubMKGui.Model
 {
+	/// <summary>
+	/// Class to create header file for stub.
+	/// </summary>
 	public class StubHeaderFileCreater : ASourceFileCreater
 	{
 		#region Override abstract methods.

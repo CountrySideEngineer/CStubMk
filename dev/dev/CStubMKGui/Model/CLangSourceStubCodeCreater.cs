@@ -12,7 +12,7 @@ namespace CStubMKGui.Model
 	{
 		#region Override of interface / Factory method.
 		/// <summary>
-		/// Create director to create code using bilder, ICodeBuilder object
+		/// Create director to create code using builder, ICodeBuilder object
 		/// </summary>
 		/// <returns>Director to create code by </returns>
 		protected override SourceCodeDirector GetDirector(ICodeBuilder builder)
