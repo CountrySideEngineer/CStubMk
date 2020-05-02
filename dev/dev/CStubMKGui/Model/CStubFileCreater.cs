@@ -27,6 +27,7 @@ namespace CStubMKGui.Model
         public virtual void Create(String outputPath, IEnumerable<Param> parameters)
         {
             this.CreateSourceFile(outputPath, parameters);
+            this.CreateHeaderFile(outputPath, parameters);
         }
 
         /// <summary>
@@ -37,7 +38,7 @@ namespace CStubMKGui.Model
         protected void CreateSourceFile(string outputPath, IEnumerable<Param> parameters)
         {
             var codes = this.CreateSourceCode(parameters);
-            this.WriteCodes(outputPath, codes);
+            this.WriteSourceCodes(outputPath, codes);
         }
 
         /// <summary>
@@ -48,6 +49,20 @@ namespace CStubMKGui.Model
         protected IEnumerable<string> CreateSourceCode(IEnumerable<Param> parameters)
         {
             var creater = new CLangSourceStubCodeCreater();
+            var codes = this.CreateCodes(creater, parameters);
+
+            return codes;
+        }
+
+        protected void CreateHeaderFile(string outputPath, IEnumerable<Param> parameters)
+        {
+            var codes = this.CreateHeaderCode(parameters);
+            this.WriteHeaderCodes(outputPath, codes);
+        }
+
+        protected IEnumerable<string> CreateHeaderCode(IEnumerable<Param> parameters)
+        {
+            var creater = new CLangHeaderStubCodeCreater();
             var codes = this.CreateCodes(creater, parameters);
 
             return codes;
@@ -70,9 +85,15 @@ namespace CStubMKGui.Model
         /// </summary>
         /// <param name="outputPath">Path to directory or file to output codes.</param>
         /// <param name="codes"></param>
-        protected virtual void WriteCodes(string outputPath, IEnumerable<string> codes)
+        protected virtual void WriteSourceCodes(string outputPath, IEnumerable<string> codes)
         {
             var codeWrtier = new CLangSourceStubCodeWriter(outputPath);
+            this.WriteCodes(codeWrtier, codes);
+        }
+
+        protected virtual void WriteHeaderCodes(string outputPath, IEnumerable<string> codes)
+        {
+            var codeWrtier = new CLangHeaderStubCodeWriter(outputPath);
             this.WriteCodes(codeWrtier, codes);
         }
 
