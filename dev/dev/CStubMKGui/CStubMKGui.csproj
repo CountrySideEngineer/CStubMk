@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Compile Remove="Model\ISourceCode.cs" />
+    <Compile Remove="Model\SourceStubFileCreater.cs" />
     <Compile Remove="Model\StubSourceCode.cs" />
   </ItemGroup>
 
@@ -19,10 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.94.2" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="OpenCover" Version="4.7.922" />
   </ItemGroup>
 
 </Project>

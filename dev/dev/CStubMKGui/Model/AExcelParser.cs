@@ -28,9 +28,12 @@ namespace CStubMKGui.Model
         {
             try
             {
-                using var workBook = new XLWorkbook(funcDefPath);
-                var workSheet = workBook.Worksheet(funcDefSheetName);
-                return AExcelParser.GetParser(workSheet);
+                using (var fileStream = new FileStream(funcDefPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+                    var workBook = new XLWorkbook(fileStream, XLEventTracking.Disabled);//Read only
+                    var workSheet = workBook.Worksheet(funcDefSheetName);
+                    return AExcelParser.GetParser(workSheet);
+                }
             }
             catch (Exception ex)
             when ((ex is ArgumentNullException) || (ex is FileNotFoundException))

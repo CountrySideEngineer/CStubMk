@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using ClosedXML.Excel;
 using System.Linq;
+using System.IO;
 
 namespace CStubMKGui.Model
 {
@@ -42,6 +43,7 @@ namespace CStubMKGui.Model
             DataType,
             Prefix,
             PostFix,
+            Mode,
             Max,
         };
 #pragma warning restore CA1051 // 参照可能なインスタンス フィールドを宣言しません
@@ -54,13 +56,13 @@ namespace CStubMKGui.Model
         /// <returns>Parameters for function.</returns>
         public override IEnumerable<Param> Parse(String functionDefinition)
         {
-            using (var workBook = new XLWorkbook(functionDefinition))
+            using (var fileStream = new StreamReader(functionDefinition))
             {
+                var workBook = new XLWorkbook(functionDefinition);
                 var workSheet = workBook.Worksheet("FunctionDefinition");
                 return this.ExtractSequence(workSheet);
             }
         }
-
 
         /// <summary>
         /// Run a sequence to extract parameters of method and that of argument.
@@ -151,6 +153,7 @@ namespace CStubMKGui.Model
         /// <param name="startColIndex">Index of column to start extract parameters.</param>
         /// <returns>Param object contains extracted parameters.</returns>
         /// <exception cref="ArgumentNullException">The argument workSheet is null.</exception>
+        /// <exception cref="InvalidOperationException">The data in sheet is invalid.</exception>
         protected virtual Param ExtractParam(IXLWorksheet workSheet, int startRowIndx, int startColIndex)
         {
             if (null == workSheet)
@@ -163,14 +166,26 @@ namespace CStubMKGui.Model
                 var dataType = workSheet.Cell(startRowIndx, startColIndex + (int)TableColIndex.DataType).GetString();
                 var prefix = workSheet.Cell(startRowIndx, startColIndex + (int)TableColIndex.Prefix).GetString();
                 var postfix = workSheet.Cell(startRowIndx, startColIndex + (int)TableColIndex.PostFix).GetString();
+                var mode = workSheet.Cell(startRowIndx, startColIndex + (int)TableColIndex.Mode).GetString();
                 var pointerNum = this.RemovePointer(ref dataType);
+                var accessMode = Param.AccessMode.None;
+                try
+                {
+                    accessMode = Param.ToMode(mode);
+                }
+                catch (InvalidOperationException)
+                {
+
+                    Debug.WriteLine($"Invvaid mode : Set as None");
+                }
                 var param = new Param
                 {
                     Name = name,
                     DataType = dataType,
                     Prefix = prefix,
                     Postifx = postfix,
-                    PointerNum = (Byte)pointerNum
+                    PointerNum = (Byte)pointerNum,
+                    Mode = accessMode
                 };
                 return param;
             }

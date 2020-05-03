@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace CStubMKGui.Model
@@ -22,24 +24,38 @@ namespace CStubMKGui.Model
         /// </summary>
         /// <param name="outputPath">Path to output source file.</param>
         /// <param name="parameters">Parameters to create stub.</param>
-        public virtual void Create(String outputPath, IEnumerable<Param> parameters)
+        public virtual void Create(string outputPath, IEnumerable<Param> parameters)
         {
-            var director = new StubDirectorForCStyle();
-            this.Create(new StubSourceFile(director), outputPath, parameters);
-            this.Create(new StubHeaderFile(director), outputPath, parameters);
+            this.CreateStub(outputPath, parameters);
         }
 
-
         /// <summary>
-        /// Call sequence to create source files (including header file) of stub.
+        /// Run sequence to create stub files.
         /// </summary>
-        /// <param name="stubFile">Object to create source file.</param>
         /// <param name="outputPath">Path to output source file.</param>
         /// <param name="parameters">Parameters to create stub.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:パブリック メソッドの引数の検証", Justification = "<保留中>")]
-        protected virtual void Create(AStubFile stubFile, String outputPath, IEnumerable<Param> parameters)
+        protected virtual void CreateStub(string outputPath, IEnumerable<Param> parameters)
         {
-            stubFile.CreateFile(outputPath, parameters);
+            var sourceFileCreaters = new List<ISourceFileCreater>
+            {
+                new StubSourceFileCreater(),
+                new StubHeaderFileCreater()
+            };
+            this.CreateStub(outputPath, sourceFileCreaters, parameters);
+        }
+
+        /// <summary>
+        /// Run sequence to create stub files by running "Create" method 
+        /// </summary>
+        /// <param name="outputPath">Path to output source file.</param>
+        /// <param name="createres">List of creaters to create stub source and header file.</param>
+        /// <param name="parameters">Parameters to create stub.</param>
+        protected virtual void CreateStub(string outputPath, IEnumerable<ISourceFileCreater> createres, IEnumerable<Param> parameters)
+        {
+            foreach (var creater in createres)
+            {
+                creater.Create(outputPath, parameters);
+            }
         }
         #endregion
     }

@@ -9,6 +9,20 @@ namespace CStubMKGui.Model
     /// </summary>
     public class Param
     {
+        #region Private fields and constants
+        public enum AccessMode
+        {
+            In,     //Input
+            Out,    //Output
+            Both,   //Input and Output
+            None,   //No access, error mode.
+        }
+
+        protected static string ModeInput = "in";
+        protected static string ModeOutput = "out";
+        protected static string ModeBoth = "both";
+        #endregion
+
         #region Constructors and the finalizer
         /// <summary>
         /// Default constructor.
@@ -22,6 +36,23 @@ namespace CStubMKGui.Model
             this.Postifx = "";
             this.PointerNum = 0;
             this.Parameters = null;
+            this.Mode = AccessMode.None;
+        }
+
+        /// <summary>
+        /// Copy constuctor.
+        /// </summary>
+        /// <param name="src">Source Parameter object.</param>
+        public Param(Param src)
+        {
+            this.Name = src.Name;
+            this.Description = src.Description;
+            this.DataType = src.DataType;
+            this.Prefix = src.Prefix;
+            this.Postifx = src.Postifx;
+            this.PointerNum = src.PointerNum;
+            this.Parameters = src.Parameters;
+            this.Mode = src.Mode;
         }
         #endregion
 
@@ -67,6 +98,39 @@ namespace CStubMKGui.Model
         /// Collection of sub data.
         /// </summary>
         public IEnumerable<Param> Parameters { get; set; }
+
+        /// <summary>
+        /// Access mode, input, output, or both.
+        /// </summary>
+        public AccessMode Mode { get; set; }
+
+        /// <summary>
+        /// Convert string into value in AccessMode data type.
+        /// </summary>
+        /// <param name="mode">String to convert into the AccessMode,</param>
+        /// <returns>AccessMode conveted.</returns>
+        /// <exception cref="InvalidOperationException">The source string is invalid.</exception>
+        public static AccessMode ToMode(string mode)
+        {
+            AccessMode accessMode = AccessMode.None;
+            if (0 == string.Compare(mode, Param.ModeInput, true))
+            {
+                accessMode = AccessMode.In;
+            }
+            else if (0 == string.Compare(mode, Param.ModeOutput, true))
+            {
+                accessMode = AccessMode.Out;
+            }
+            else if (0 == string.Compare(mode, Param.ModeBoth, true))
+            {
+                accessMode = AccessMode.Both;
+            }
+            else
+            {
+                throw new InvalidOperationException(nameof(ToMode));
+            }
+            return accessMode;
+        }
         #endregion
 
     }
