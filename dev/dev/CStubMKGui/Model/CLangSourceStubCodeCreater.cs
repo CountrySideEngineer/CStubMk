@@ -23,7 +23,7 @@ namespace CStubMKGui.Model
 		/// <summary>
 		/// Create list of builders 
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>List of builders.</returns>
 		protected override IEnumerable<ICodeBuilder> GetBuilders()
 		{
 			var builders = new List<ICodeBuilder>
@@ -40,6 +40,11 @@ namespace CStubMKGui.Model
 		#endregion
 
 		#region Protected or private method in calling order
+		/// <summary>
+		/// Create code from parameters.
+		/// </summary>
+		/// <param name="parameters">Source informations for code.</param>
+		/// <returns>List of codes.</returns>
 		protected override IEnumerable<string> CreateCode(IEnumerable<Param> parameters)
 		{
 			var builders = new List<ICodeBuilder>
@@ -53,7 +58,6 @@ namespace CStubMKGui.Model
 
 			return code;
 		}
-
 		#endregion
 	}
 }
