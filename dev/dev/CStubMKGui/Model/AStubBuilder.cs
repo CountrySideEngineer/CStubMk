@@ -35,6 +35,7 @@ namespace CStubMKGui.Model
 		public AStubBuilder(int buffSize = 100)
 		{
 			this.Codes = null;
+			this.BuffSize = buffSize;
 		}
 
 		/// <summary>
@@ -77,7 +78,15 @@ namespace CStubMKGui.Model
 		#endregion
 
 		#region Properties
-		protected List<string> Codes;
+		/// <summary>
+		/// List of codes.
+		/// </summary>
+		protected List<string> Codes { get; set; }
+
+		/// <summary>
+		/// Size of stub buffer.
+		/// </summary>
+		protected int BuffSize { get; set; }
 		#endregion
 	}
 }

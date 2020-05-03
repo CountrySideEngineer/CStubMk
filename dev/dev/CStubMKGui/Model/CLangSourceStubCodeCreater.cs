@@ -38,5 +38,22 @@ namespace CStubMKGui.Model
 			return builders;
 		}
 		#endregion
+
+		#region Protected or private method in calling order
+		protected override IEnumerable<string> CreateCode(IEnumerable<Param> parameters)
+		{
+			var builders = new List<ICodeBuilder>
+			{
+				new SourceIncludeCodeBuilder(),
+				new SourceDefineCodeBuilder()
+			};
+			var startOfCodes = this.Create(builders, new Param());//The "new"ed Param object is not used.
+			var createdCode = base.CreateCode(parameters);
+			var code = startOfCodes.Concat(createdCode);
+
+			return code;
+		}
+
+		#endregion
 	}
 }
