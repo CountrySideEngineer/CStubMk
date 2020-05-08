@@ -160,7 +160,7 @@ namespace CStubMKGui.Model
 		protected void CreateSetValueToDoublePointerCode(Param function, Param argument)
 		{
 			string code = $"{PointerModifier}{argument.Name}"
-				+ $" = {PointerAmpasandModifier}{function.Name}_{argument.Name}_{PointerValueModifier}"
+				+ $" = {function.Name}_{argument.Name}_{PointerValueModifier}"
 				+ $"[{base.GetCalledCounterName(function)}];";
 			this.SetCode(code);
 		}
