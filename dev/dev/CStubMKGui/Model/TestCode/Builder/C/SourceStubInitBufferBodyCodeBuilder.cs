@@ -264,7 +264,7 @@ namespace CStubMKGui.Model
 			string code =
 				$"{base.GetBufferName(function, argument)}_{PointerValueModifier}" +
 				$"[{BufferInitForLoopCounter}][{BufferInitForSubLoopCounter}]" +
-				$" = {PointerInitialValue};";
+				$" = 0;";
 			base.SetCode(code, 3);
 		}
 
@@ -304,7 +304,7 @@ namespace CStubMKGui.Model
 			{
 				throw new NotSupportedException(nameof(CreateInitRetValBufferCode));
 			}
-			string code = $"{function.Name}_{ReturnValueModifier}[{BufferInitForLoopCounter}] = {retValInitValue}";
+			string code = $"{function.Name}_{ReturnValueModifier}[{BufferInitForLoopCounter}] = {retValInitValue};";
 			base.SetCode(code, 2);
 		}
 

@@ -91,7 +91,7 @@ namespace CStubMKGui.Model
 			string code =
 				$"{BufferExternModifier} " +
 				$"{argument.DataType} " +
-				$"{base.GetBufferName(function, argument)}_{PointerValueModifier}[]";
+				$"{base.GetBufferName(function, argument)}_{PointerValueModifier}[];";
 			this.SetCode(code, 0);
 		}
 
@@ -109,7 +109,7 @@ namespace CStubMKGui.Model
 			string code = 
 				$"{BufferExternModifier} " +
 				$"{argument.DataType} " +
-				$"{base.GetBufferName(function, argument)}_{PointerValueModifier}[]";
+				$"{base.GetBufferName(function, argument)}_{PointerValueModifier}[];";
 			this.SetCode(code, 0);
 		}
 
@@ -127,7 +127,7 @@ namespace CStubMKGui.Model
 			string code = 
 				$"{BufferExternModifier} " +
 				$"{argument.DataType}{PointerModifier} " +
-				$"{base.GetBufferName(function, argument)}_{PointerValueModifier}[]";
+				$"{base.GetBufferName(function, argument)}_{PointerValueModifier}[];";
 			this.SetCode(code, 0);
 		}
 
