@@ -100,6 +100,34 @@ namespace CStubMKGui.Model
         public String DataType { get; set; }
 
         /// <summary>
+        /// Actual, true data type.
+        /// This property returns data type with pre/post fix like const and pointer.
+        /// </summary>
+        public String ActualDataType
+		{
+            get
+			{
+                String dataType = "";
+                if ((!(String.IsNullOrWhiteSpace(this.Prefix))) ||
+                    (!(String.IsNullOrEmpty(this.Prefix))))
+				{
+                    dataType += (this.Prefix + " ");
+				}
+                dataType += this.DataType;
+                for (int index = 0; index < this.PointerNum; index++)
+				{
+                    dataType += "*";
+				}
+                if ((!(String.IsNullOrWhiteSpace(this.Postifx))) ||
+                    (!(String.IsNullOrEmpty(this.Postifx))))
+                {
+                    dataType += (" " + this.Postifx);
+                }
+                return dataType;
+			}
+		}
+
+        /// <summary>
         /// Prefix for data type.
         /// It assumes words "static" or "const" 
         /// </summary>
