@@ -1,0 +1,92 @@
+﻿<#@ template language="C#" inherits="StubCodeTemplateBase" #>
+<#@ import namespace="CStubMKGui.Model" #>
+<#@ import namespace="System.Linq" #>
+<#
+	PushIndent("    ");
+	var indent = CurrentIndent;
+	ClearIndent();
+#>
+#include <stdio.h>
+
+//スタブのバッファの宣言
+<# foreach (var func in Functions) { #>
+<#
+	foreach (var argument in func.Parameters) {
+		WriteLine($"{argument.DataType}{indent}{func.Name}_{argument.Name}[100];");
+	}
+#>
+<# } #>
+
+//スタブの初期化関数
+<# foreach (var func in Functions) { #>
+<#
+	WriteLine($"void {func.Name}_Stub_Init()");
+	WriteLine("{");
+
+	//呼び出し回数の初期化
+	WriteLine($"{indent}{func.Name}_called_count = 0;");
+	WriteLine($"{indent}for (int index = 0; index < 100; index++) {{");
+	foreach (var argument in func.Parameters) {
+		if (IsVariable(argument)) {
+			WriteLine($"{indent}{indent}{func.Name}_{argument.Name}[index] = 0;");
+		}
+	}
+	WriteLine($"{indent}}}");
+	WriteLine($"{indent}{func.Name}_return[index] = 0;");
+	WriteLine("}");
+#>
+<# } #>
+//スタブ本体
+<# foreach (var func in Functions) { #>
+<#= func.ToString() #>
+(
+<# 
+	//スタブの引数一覧
+	int paramCount = func.Parameters.Count();
+	for (int index = 0; index < paramCount; index++) {
+		var paramItem = func.Parameters.ElementAt(index);
+		Write($"{indent}{paramItem.ToString()}");
+		if (index != (paramCount - 1)) {
+			WriteLine(",");
+		}
+		else
+		{
+			WriteLine("");
+		}
+	}
+#>
+)
+{
+<#
+	//スタブの戻り値の確認
+	if (IsVariable(func)) {
+		WriteLine($"{indent}{func.DataType} returnLatch = {func.Name}[{func.Name}_called_count];");
+	}
+#>
+<#
+	//引数の格納
+	foreach (var argument in func.Parameters) {
+		if (IsVariable(argument)) {
+			WriteLine($"{indent}{func.Name}_{argument.Name}[{func.Name}_called_count] = {argument.Name};");
+		}
+	}
+#>
+<#
+	//値の出力
+	var outputArgs = func.Parameters.Where(argument => argument.Mode == Param.AccessMode.Out);
+	foreach (var outputArg in outputArgs) {
+		WriteLine($"{indent}*{outputArg.Name} = {func.Name}_{outputArg.Name}_value[{func.Name}_called_count];");
+	}
+#>
+<#
+	//呼び出し回数の更新
+	WriteLine($"{indent}{func.Name}_called_count++;");
+#>
+<#
+	//スタブの戻り値を返す。
+	if (IsVariable(func)) {
+		WriteLine($"{indent}return returnLatch;");
+	}
+#>
+}
+<# } #>

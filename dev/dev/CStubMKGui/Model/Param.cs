@@ -54,6 +54,32 @@ namespace CStubMKGui.Model
             this.Parameters = src.Parameters;
             this.Mode = src.Mode;
         }
+		#endregion
+
+		#region Public methods.
+        public override string ToString()
+		{
+            string toString = "";
+            if ((!string.IsNullOrEmpty(this.Prefix)) || 
+                (!string.IsNullOrWhiteSpace(this.Prefix)))
+            {
+                toString += (this.Prefix + " ");
+			}
+            toString += this.DataType;
+            if (!(string.IsNullOrEmpty(this.Postifx)) ||
+                !(string.IsNullOrWhiteSpace(this.Postifx)))
+            {
+                toString += (" " + this.Postifx);
+            }
+            for (int index = 0; index < this.PointerNum; index++)
+			{
+                toString += "*";
+			}
+            toString += (" " + this.Name);
+
+            return toString;
+        }
+
         #endregion
 
         #region Public properties
