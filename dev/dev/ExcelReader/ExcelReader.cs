@@ -50,6 +50,7 @@ namespace ExcelReader
         /// </summary>
         /// <param name="item">Item to find.</param>
         /// <returns>A cell position which contains item as Range object.</returns>
+        /// <exception cref="ExcelReaderException">An exception occurred while reading excel sheet.</exception>
         public virtual Range FindFirstItem(string item)
 		{
             try
@@ -80,6 +81,7 @@ namespace ExcelReader
         /// <param name="item">Item to find.</param>
         /// <param name="range">Range to scan.</param>
         /// <returns>A cell position which contains item as Range object.</returns>
+        /// <exception cref="ExcelReaderException">An exception occurred while reading excel sheet.</exception>
         public virtual Range FindFirstItem(string item, Range range)
 		{
             try
@@ -114,6 +116,7 @@ namespace ExcelReader
         /// <param name="item">Item to find.</param>
         /// <param name="range">Range to scan.</param>
         /// <returns>A cell position which contains item as Range object.</returns>
+        /// <exception cref="ExcelReaderException">An exception occurred while reading excel sheet.</exception>
         public virtual Range FindFirstItemInColumn(string item, Range range)
 		{
             try
@@ -147,6 +150,7 @@ namespace ExcelReader
         /// <param name="item">Item to find.</param>
         /// <param name="range">Range to scan.</param>
         /// <returns>A cell position which contains item as Range object.</returns>
+        /// <exception cref="ExcelReaderException">An exception occurred while reading excel sheet.</exception>
         public virtual Range FindFirstitemInRow(string item, Range range)
         {
             try
@@ -179,6 +183,7 @@ namespace ExcelReader
         /// </summary>
         /// <param name="item">Item to find.</param>
         /// <returns>Collection of Range object wihch contains item.</returns>
+        /// <exception cref="ExcelReaderException">An exception occurred while reading excel sheet.</exception>
         public virtual IEnumerable<Range> FindItem(string item)
 		{
             try
@@ -216,6 +221,7 @@ namespace ExcelReader
         /// </summary>
         /// <param name="range">Range to read.</param>
         /// <returns>Collection of row items</returns>
+        /// <exception cref="ExcelReaderException">Exception occurred while reading excel file.</exception>
         public virtual IEnumerable<string> ReadRow(Range range)
 		{
             try
@@ -246,6 +252,7 @@ namespace ExcelReader
         /// </summary>
         /// <param name="range">Range to read</param>
         /// <returns>Collection of column items.</returns>
+        /// <exception cref="ExcelReaderException">An exception occurred while reading excel sheet.</exception>
         public virtual IEnumerable<string> ReadColumn(Range range)
 		{
             try
@@ -275,6 +282,7 @@ namespace ExcelReader
         /// Get range of row in used.
         /// </summary>
         /// <param name="range">Reference to Range object to set the result.</param>
+        /// <exception cref="ExcelReaderException">An exception occurred while reading excel sheet.</exception>
         public virtual void GetRowRange(ref Range range)
 		{
             try
@@ -300,6 +308,7 @@ namespace ExcelReader
         /// Get range of column in used.
         /// </summary>
         /// <param name="range">Reference to Range object to set the result.</param>
+        /// <exception cref="ExcelReaderException">An exception occurred while reading excel sheet.</exception>
         public virtual void GetColumnRange(ref Range range)
 		{
             try
@@ -307,8 +316,11 @@ namespace ExcelReader
                 var workBook = new XLWorkbook(_excelStream);
                 var workSheet = workBook.Worksheet(SheetName);
 
-                var firstUsedCell = workSheet.FirstCellUsed();
-                var lastUsedCell = workSheet.LastCellUsed();
+                var firstUsedCell = workSheet.FirstColumnUsed();
+                var lastUsedCell = workSheet.LastColumnUsed();
+
+                range.StartColumn = Convert.ToUInt64(firstUsedCell.ColumnNumber());
+                range.ColumnCount = Convert.ToUInt64(lastUsedCell.ColumnNumber()) - range.StartColumn;
 
             }
             catch (System.Exception ex)
@@ -318,6 +330,5 @@ namespace ExcelReader
                 throw exception;
             }
         }
-
     }
 }
