@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D601BB6B-4C22-4879-B77A-A3BF806A33F1}</ProjectGuid>
+    <ProjectGuid>{BBEC0566-075E-4196-9497-3923A562AA51}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Parser.SDK</RootNamespace>
-    <AssemblyName>Parser.SDK</AssemblyName>
+    <RootNamespace>FunctionParser</RootNamespace>
+    <AssemblyName>FunctionParser</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -44,12 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exception\ParserException.cs" />
-    <Compile Include="Interface\IParser.cs" />
-    <Compile Include="Model\Function.cs" />
-    <Compile Include="Model\Parameter.cs" />
-    <Compile Include="Model\Variable.cs" />
+    <Compile Include="FunctionParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Parser.SDK\Parser.SDK.csproj">
+      <Project>{D601BB6B-4C22-4879-B77A-A3BF806A33F1}</Project>
+      <Name>Parser.SDK</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
