@@ -1,0 +1,18 @@
+﻿<#@ template language="C#" 
+	inherits="StubCodeTemplateCommonBase" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+//関数の呼び出し回数
+<#= FuncCalledCounterBufferDeclare() #>
+
+//関数の戻り値
+<#= FuncReturnValueDeclare() #>
+
+//引数
+<#= ReturnValueViaArgumentBufferDeclare() #>
+
+//引数経由の戻り値
+<#= ReturnValueSizeViaArgumentBufferDeclare() #>

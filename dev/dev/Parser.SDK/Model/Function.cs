@@ -8,6 +8,13 @@ namespace Parser.SDK.Model
 {
 	public class Function : Variable
 	{
+		public Function() :base()
+		{
+			var arguments = new List<Parameter>();
+			arguments.Clear();
+			Arguments = arguments;
+		}
+
 		/// <summary>
 		/// Arguments.
 		/// </summary>
@@ -30,13 +37,23 @@ namespace Parser.SDK.Model
 			toString += $" {Name}";
 			toString += "(";
 			bool isTop = true;
-			foreach (var item in Arguments)
+			try
 			{
-				if (!isTop)
+				foreach (var item in Arguments)
 				{
-					toString += ", ";
+					if (!isTop)
+					{
+						toString += ", ";
+					}
+					toString += item.ToString();
 				}
-				toString += item.ToString();
+			}
+			catch (NullReferenceException)
+			{
+				/*
+				 * It is that the method has no argument.
+				 * So the exception can be ignore.
+				 */
 			}
 			toString += ")";
 
