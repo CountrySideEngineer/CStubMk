@@ -276,6 +276,8 @@ namespace CodeTemplate.Builder
 		/// The format of code this method will return is below:
 		/// {function.Name}_{argument.Name}_value_size
 		/// </remarks>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="NullReferenceException"></exception>
 		public virtual string CreateReturnValueSizeBufferViaArgName(Function function, Variable argument)
 		{
 			if (((string.IsNullOrEmpty(function.Name)) || (string.IsNullOrWhiteSpace(function.Name))) ||

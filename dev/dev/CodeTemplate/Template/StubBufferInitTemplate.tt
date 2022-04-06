@@ -14,9 +14,6 @@
 	//戻り値の初期化
 	<#= FuncReturnValueInit() #>
 
-	//引数バッファの初期化
+	//各バッファの初期化
 	<#= ArgBufferInit() #>
-
-	//ポインタ引数の戻り値
-	<#= PointerArgBufferInit() #>
 }

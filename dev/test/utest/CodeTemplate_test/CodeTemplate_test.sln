@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StubCodeBuilder_test", "Stu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StubBufferDeclarationTemplate_test", "StubBufferDeclarationTemplate_test\StubBufferDeclarationTemplate_test.csproj", "{A75F9351-2A15-4127-92AF-302C88B8E92D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StubBufferInitTemplate_test", "StubBufferInitTemplate_test\StubBufferInitTemplate_test.csproj", "{0893C9B5-2B77-433E-BD8F-5A55D8AD419B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A75F9351-2A15-4127-92AF-302C88B8E92D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A75F9351-2A15-4127-92AF-302C88B8E92D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A75F9351-2A15-4127-92AF-302C88B8E92D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0893C9B5-2B77-433E-BD8F-5A55D8AD419B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0893C9B5-2B77-433E-BD8F-5A55D8AD419B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0893C9B5-2B77-433E-BD8F-5A55D8AD419B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0893C9B5-2B77-433E-BD8F-5A55D8AD419B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

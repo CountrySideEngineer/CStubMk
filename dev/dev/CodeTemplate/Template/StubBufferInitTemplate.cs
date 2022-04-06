@@ -49,17 +49,10 @@ namespace CodeTemplate.Template
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n\t//引数バッファの初期化\r\n\t");
+            this.Write("\r\n\r\n\t//各バッファの初期化\r\n\t");
             
             #line 18 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ArgBufferInit()));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\r\n\t//ポインタ引数の戻り値\r\n\t");
-            
-            #line 21 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(PointerArgBufferInit()));
             
             #line default
             #line hidden
