@@ -54,6 +54,7 @@
     <Compile Include="Template\Part\StubBufferDeclarationTemplate_part.cs" />
     <Compile Include="Template\Part\StubBufferInitTemplate_part.cs" />
     <Compile Include="Template\Part\StubCodeTemplateCommonBase_part.cs" />
+    <Compile Include="Template\Part\StubSourceBodyTemplate_part.cs" />
     <Compile Include="Template\SourceStubTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -74,6 +75,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StubCodeTemplateCommonBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Template\StubSourceBodyTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StubSourceBodyTemplate.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Template\SourceStubTemplate.tt">
@@ -91,6 +97,10 @@
     <Content Include="Template\StubCodeTemplateCommonBase.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>StubCodeTemplateCommonBase.cs</LastGenOutput>
+    </Content>
+    <Content Include="Template\StubSourceBodyTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>StubSourceBodyTemplate.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

@@ -219,9 +219,7 @@ namespace CodeTemplate.Builder
 		public virtual string CreateReturnValueBufferViaArgName(Function function, Variable argument)
 		{
 			if (((string.IsNullOrEmpty(function.Name)) || (string.IsNullOrWhiteSpace(function.Name))) ||
-				((string.IsNullOrEmpty(function.DataType)) || (string.IsNullOrWhiteSpace(function.DataType))) ||
-				((string.IsNullOrEmpty(argument.Name)) || (string.IsNullOrWhiteSpace(argument.Name))) ||
-				((string.IsNullOrEmpty(argument.DataType)) || (string.IsNullOrWhiteSpace(argument.DataType))))
+				((string.IsNullOrEmpty(argument.Name)) || (string.IsNullOrWhiteSpace(argument.Name))))
 			{
 				throw new ArgumentException("Data type property of function or argument is invalid.");
 			}
@@ -281,9 +279,7 @@ namespace CodeTemplate.Builder
 		public virtual string CreateReturnValueSizeBufferViaArgName(Function function, Variable argument)
 		{
 			if (((string.IsNullOrEmpty(function.Name)) || (string.IsNullOrWhiteSpace(function.Name))) ||
-				((string.IsNullOrEmpty(function.DataType)) || (string.IsNullOrWhiteSpace(function.DataType))) ||
-				((string.IsNullOrEmpty(argument.Name)) || (string.IsNullOrWhiteSpace(argument.Name))) ||
-				((string.IsNullOrEmpty(argument.DataType)) || (string.IsNullOrWhiteSpace(argument.DataType))))
+				((string.IsNullOrEmpty(argument.Name)) || (string.IsNullOrWhiteSpace(argument.Name))))
 			{
 				throw new ArgumentException("Data type property of function or argument is invalid.");
 			}

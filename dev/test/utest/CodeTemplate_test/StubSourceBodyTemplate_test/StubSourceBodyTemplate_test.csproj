@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0893C9B5-2B77-433E-BD8F-5A55D8AD419B}</ProjectGuid>
+    <ProjectGuid>{FA0CEED3-7942-4DED-8B6A-BCAC703453DA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StubBufferInitTemplate_test</RootNamespace>
-    <AssemblyName>StubBufferInitTemplate_test</AssemblyName>
+    <RootNamespace>StubSourceBodyTemplate_test</RootNamespace>
+    <AssemblyName>StubSourceBodyTemplate_test</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -55,21 +55,51 @@
     <Compile Include="..\..\..\..\dev\CodeTemplate\Builder\StubCodeBuilder.cs">
       <Link>StubCodeBuilder.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\dev\CodeTemplate\Template\Part\StubBufferInitTemplate_part.cs">
-      <Link>StubBufferInitTemplate_part.cs</Link>
-    </Compile>
     <Compile Include="..\..\..\..\dev\CodeTemplate\Template\Part\StubCodeTemplateCommonBase_part.cs">
       <Link>StubCodeTemplateCommonBase_part.cs</Link>
     </Compile>
-    <Compile Include="StubBufferInitTemplate_StubInitializeEntryPoint_test.cs" />
-    <Compile Include="StubBufferInitTemplate_ArgBufferInit_test.cs" />
-    <Compile Include="StubBufferInitTemplate_ReturnValueViaPointerBufferInit_test.cs" />
-    <Compile Include="StubBufferInitTemplate_ReturnValueSizeViaPointerInit_test.cs" />
-    <Compile Include="StubBufferInitTemplate_test.cs" />
+    <Compile Include="..\..\..\..\dev\CodeTemplate\Template\Part\StubSourceBodyTemplate_part.cs">
+      <Link>StubSourceBodyTemplate_part.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\dev\CodeTemplate\Template\StubCodeTemplateCommonBase.cs">
+      <Link>StubCodeTemplateCommonBase.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StubCodeTemplateCommonBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\..\..\dev\CodeTemplate\Template\StubSourceBodyTemplate.cs">
+      <Link>StubSourceBodyTemplate.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StubSourceBodyTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StubSourceBodyTemplate_LatchReturnValue_test.cs" />
+    <Compile Include="StubSourceBodyTemplate_ReturnValueViaDoublePointer_test.cs" />
+    <Compile Include="StubSourceBodyTemplate_ReturnValueViaSinglePointer_test.cs" />
+    <Compile Include="StubSourceBodyTemplate_ReturnValue_test.cs" />
+    <Compile Include="StubSourceBodyTemplate_StubBodyEntryPoint_test.cs" />
+    <Compile Include="StubSourceBodyTemplate_test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StubSourceBodyTemplate_TransformText_test.cs" />
+    <Compile Include="StubSourceBodyTemplate_UpdateCalledCounter_test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\..\dev\CodeTemplate\Template\StubCodeTemplateCommonBase.tt">
+      <Link>StubCodeTemplateCommonBase.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>StubCodeTemplateCommonBase.cs</LastGenOutput>
+    </Content>
+    <Content Include="..\..\..\..\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt">
+      <Link>StubSourceBodyTemplate.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>StubSourceBodyTemplate.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

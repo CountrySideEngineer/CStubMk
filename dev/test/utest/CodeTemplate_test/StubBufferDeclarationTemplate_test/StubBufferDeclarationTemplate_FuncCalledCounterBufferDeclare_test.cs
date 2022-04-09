@@ -20,7 +20,7 @@ namespace StubBufferDeclarationTemplate_test
 			};
 			var template = new StubBufferDeclarationTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			string code = template.FuncCalledCounterBufferDeclare();
 			Assert.AreEqual("long TargetFunction_called_count;", code);

@@ -21,7 +21,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			string code = template.StubInitializeEntryPoint();
 			string expect = "void TestFunction_init()";

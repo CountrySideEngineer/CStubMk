@@ -31,7 +31,7 @@ namespace StubBufferDeclarationTemplate_test
 			};
 			var template = new StubBufferDeclarationTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ReturnValueViaArgumentBufferDeclare");
@@ -69,7 +69,7 @@ namespace StubBufferDeclarationTemplate_test
 			};
 			var template = new StubBufferDeclarationTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ReturnValueViaArgumentBufferDeclare");
@@ -102,7 +102,7 @@ namespace StubBufferDeclarationTemplate_test
 			};
 			var template = new StubBufferDeclarationTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ReturnValueViaArgumentBufferDeclare");
@@ -133,7 +133,7 @@ namespace StubBufferDeclarationTemplate_test
 			};
 			var template = new StubBufferDeclarationTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ReturnValueViaArgumentBufferDeclare");
@@ -170,7 +170,7 @@ namespace StubBufferDeclarationTemplate_test
 			};
 			var template = new StubBufferDeclarationTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ReturnValueViaArgumentBufferDeclare");
@@ -213,7 +213,7 @@ namespace StubBufferDeclarationTemplate_test
 			};
 			var template = new StubBufferDeclarationTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ReturnValueViaArgumentBufferDeclare");
@@ -255,7 +255,7 @@ namespace StubBufferDeclarationTemplate_test
 			};
 			var template = new StubBufferDeclarationTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ReturnValueViaArgumentBufferDeclare");

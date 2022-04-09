@@ -31,7 +31,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ArgBufferInit", argument);
@@ -67,7 +67,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ArgBufferInit", function.Arguments);
@@ -112,7 +112,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ArgBufferInit", function.Arguments);
@@ -146,7 +146,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = template.ArgBufferInit();
@@ -179,7 +179,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = template.ArgBufferInit();
@@ -222,7 +222,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = template.ArgBufferInit();
@@ -266,7 +266,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = template.ArgBufferInit();
@@ -318,7 +318,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = template.ArgBufferInit();
@@ -371,7 +371,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = template.ArgBufferInit();
@@ -425,7 +425,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = template.ArgBufferInit();

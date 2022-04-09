@@ -8,16 +8,14 @@ using System.Threading.Tasks;
 
 namespace CodeTemplate.Template
 {
-	public partial class StubBufferDeclarationTemplate
+	public partial class StubBufferDeclarationTemplate : StubCodeTemplateCommonBase
 	{
-		public Function Function { get; set; }
-
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
 		public StubBufferDeclarationTemplate() : base()
 		{
-			Function = null;
+			TargetFunc = null;
 		}
 
 		/// <summary>
@@ -31,7 +29,7 @@ namespace CodeTemplate.Template
 			try
 			{
 				var builder = new StubCodeBuilder();
-				string bufferDeclare = builder.CreateFuncCalledCounterBuffer(Function);
+				string bufferDeclare = builder.CreateFuncCalledCounterBuffer(TargetFunc);
 				string code = $"{bufferDeclare};";
 				return code;
 			}
@@ -59,14 +57,14 @@ namespace CodeTemplate.Template
 			try
 			{
 				var builder = new StubCodeBuilder();
-				string retValueDeclare = builder.CreateReturnValueBuffer(Function);
-				string buffSizeMacro = builder.CreateBufferSizeMacro1(Function);
+				string retValueDeclare = builder.CreateReturnValueBuffer(TargetFunc);
+				string buffSizeMacro = builder.CreateBufferSizeMacro1(TargetFunc);
 				string code = $"{retValueDeclare}[{buffSizeMacro}];";
 				return code;
 			}
 			catch (FormatException)
 			{
-				string code = $"//{Function.Name} returns no value.";
+				string code = $"//{TargetFunc.Name} returns no value.";
 				return code;
 			}
 			catch (ArgumentException)
@@ -81,7 +79,7 @@ namespace CodeTemplate.Template
 		/// <returns>Code to declare buffer to holds argument values.</returns>
 		public virtual string ArgBufferDeclare()
 		{
-			var arguments = Function.Arguments;
+			var arguments = TargetFunc.Arguments;
 			string code = ArgBufferDeclare(arguments);
 			return code;
 		}
@@ -132,8 +130,8 @@ namespace CodeTemplate.Template
 			try
 			{
 				var builder = new StubCodeBuilder();
-				string declare = builder.CreateArgBuffer(Function, argument);
-				string macro = builder.CreateBufferSizeMacro1(Function);
+				string declare = builder.CreateArgBuffer(TargetFunc, argument);
+				string macro = builder.CreateBufferSizeMacro1(TargetFunc);
 				string code = $"{declare}[{macro}];";
 				return code;
 			}
@@ -156,7 +154,7 @@ namespace CodeTemplate.Template
 		public virtual string ReturnValueViaArgumentBufferDeclare()
 		{
 			string code = string.Empty;
-			IEnumerable<Parameter> arguments = Function.Arguments;
+			IEnumerable<Parameter> arguments = TargetFunc.Arguments;
 			IEnumerable<Parameter> argumentsWithPointer = arguments.Where(_ => (0 < (_ as Variable).PointerNum));
 			if (0 < argumentsWithPointer.Count())
 			{
@@ -192,9 +190,9 @@ namespace CodeTemplate.Template
 		protected virtual string ReturnValueViaArgumentBufferDeclare(Variable argument)
 		{
 			var builder = new StubCodeBuilder();
-			string declare = builder.CreateReturnValueBufferViaArg(Function, argument);
-			string macro1 = builder.CreateBufferSizeMacro1(Function);
-			string macro2 = builder.CreateBufferSizeMacro2(Function);
+			string declare = builder.CreateReturnValueBufferViaArg(TargetFunc, argument);
+			string macro1 = builder.CreateBufferSizeMacro1(TargetFunc);
+			string macro2 = builder.CreateBufferSizeMacro2(TargetFunc);
 			string code = $"{declare}[{macro1}][{macro2}];";
 			return code;
 		}
@@ -206,9 +204,9 @@ namespace CodeTemplate.Template
 		public virtual string ReturnValueSizeViaArgumentBufferDeclare()
 		{
 			string code = string.Empty;
-			if (0 < Function.Arguments.Count())
+			if (0 < TargetFunc.Arguments.Count())
 			{
-				var arguments = Function.Arguments;
+				var arguments = TargetFunc.Arguments;
 				code = ReturnValueSizeViaArgumentBufferDeclare(arguments);
 			}
 			return code;
@@ -244,8 +242,8 @@ namespace CodeTemplate.Template
 		protected virtual string ReturnValueSizeViaArgumentBufferDeclare(Variable argument)
 		{
 			var builder = new StubCodeBuilder();
-			string declare = builder.CreateReturnValueSizeBufferViaArg(Function, argument);
-			string macro = builder.CreateBufferSizeMacro1(Function);
+			string declare = builder.CreateReturnValueSizeBufferViaArg(TargetFunc, argument);
+			string macro = builder.CreateBufferSizeMacro1(TargetFunc);
 			string code = $"{declare}[{macro}];";
 			return code;
 		}

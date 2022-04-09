@@ -31,7 +31,7 @@ namespace StubBufferDeclarationTemplate_test
 			};
 			var template = new StubBufferDeclarationTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ArgBufferDeclare", argument);
@@ -66,7 +66,7 @@ namespace StubBufferDeclarationTemplate_test
 			};
 			var template = new StubBufferDeclarationTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ArgBufferDeclare", function.Arguments);
@@ -99,7 +99,7 @@ namespace StubBufferDeclarationTemplate_test
 			};
 			var template = new StubBufferDeclarationTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			string code = template.ArgBufferDeclare();
 			Assert.AreEqual($"ArgDataType TargetFunction_argument[TARGETFUNCTION_STUB_BUFF_SIZE_1];{Environment.NewLine}", code);

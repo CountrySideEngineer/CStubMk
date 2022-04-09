@@ -31,7 +31,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ReturnValueSizeViaPointerBufferInit", argument);
@@ -61,7 +61,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ReturnValueSizeViaPointerBufferInit", function.Arguments);
@@ -98,7 +98,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ReturnValueSizeViaPointerBufferInit", function.Arguments);
@@ -142,7 +142,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ReturnValueSizeViaPointerBufferInit", function.Arguments);
@@ -187,7 +187,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ReturnValueSizeViaPointerBufferInit", function.Arguments);
@@ -231,7 +231,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ReturnValueSizeViaPointerBufferInit", function.Arguments);
@@ -275,7 +275,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ReturnValueSizeViaPointerBufferInit", function.Arguments);
@@ -319,7 +319,7 @@ namespace StubBufferInitTemplate_test
 			};
 			var template = new StubBufferInitTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			var privateTemplate = new PrivateObject(template);
 			string code = (string)privateTemplate.Invoke("ReturnValueSizeViaPointerBufferInit", function.Arguments);

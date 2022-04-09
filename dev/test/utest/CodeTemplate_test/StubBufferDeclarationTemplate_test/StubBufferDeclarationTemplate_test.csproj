@@ -58,6 +58,12 @@
     <Compile Include="..\..\..\..\dev\CodeTemplate\Template\Part\StubBufferDeclarationTemplate_part.cs">
       <Link>StubBufferDeclarationTemplate_part.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\..\dev\CodeTemplate\Template\Part\StubCodeTemplateCommonBase_part.cs">
+      <Link>StubCodeTemplateCommonBase_part.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\dev\CodeTemplate\Template\StubCodeTemplateCommonBase.cs">
+      <Link>StubCodeTemplateCommonBase.cs</Link>
+    </Compile>
     <Compile Include="StubBufferDeclarationTemplate_ArgBufferDeclare_test.cs" />
     <Compile Include="StubBufferDeclarationTemplate_FuncCalledCounterBufferDeclare_test.cs" />
     <Compile Include="StubBufferDeclarationTemplate_FuncReturnValueDeclare_test.cs" />

@@ -1,0 +1,25 @@
+﻿<#@ template language="C#" 
+	inherits="StubCodeTemplateCommonBase" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+//スタブの本体
+<#= StubBodyEntryPoint() #>
+{
+	//スタブの戻り値のラッチ
+<#= LatchReturnValue() #>
+
+	//引数のバッファへの格納
+<#= BackupArgToBuffer() #>
+
+	//ポインタ引数を介した戻り値
+<#= ReturnValueViaPointer() #>
+
+	//呼び出し回数の更新
+<#= UpdateCalledCounter() #>
+
+	//関数戻り値
+<#= ReturnValue() #>
+}

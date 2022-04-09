@@ -21,7 +21,7 @@ namespace StubBufferDeclarationTemplate_test
 			};
 			var template = new StubBufferDeclarationTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			string code = template.FuncReturnValueDeclare();
 			Assert.AreEqual("DataType TargetFunction_return_value[TARGETFUNCTION_STUB_BUFF_SIZE_1];", code);
@@ -40,7 +40,7 @@ namespace StubBufferDeclarationTemplate_test
 			};
 			var template = new StubBufferDeclarationTemplate()
 			{
-				Function = function
+				TargetFunc = function
 			};
 			string code = template.FuncReturnValueDeclare();
 			Assert.AreEqual("//TargetFunction returns no value.", code);

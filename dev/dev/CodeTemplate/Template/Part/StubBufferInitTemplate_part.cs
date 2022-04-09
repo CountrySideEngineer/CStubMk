@@ -8,16 +8,11 @@ using System.Threading.Tasks;
 
 namespace CodeTemplate.Template
 {
-	public partial class StubBufferInitTemplate
+	public partial class StubBufferInitTemplate : StubCodeTemplateCommonBase
 	{
 		protected static string INDEXER_1 = "index1";
 
 		protected static string INDEXER_2 = "index2";
-
-		/// <summary>
-		/// Target function.
-		/// </summary>
-		public Function Function { get; set; }
 
 		/// <summary>
 		/// Default constructor.
@@ -33,11 +28,11 @@ namespace CodeTemplate.Template
 		{
 			try
 			{
-				if ((string.IsNullOrEmpty(Function.Name)) || (string.IsNullOrWhiteSpace(Function.Name)))
+				if ((string.IsNullOrEmpty(TargetFunc.Name)) || (string.IsNullOrWhiteSpace(TargetFunc.Name)))
 				{
 					throw new ArgumentException("Name property is invalid.");
 				}
-				string code = $"void {Function.Name}_init()";
+				string code = $"void {TargetFunc.Name}_init()";
 				return code;
 			}
 			catch (NullReferenceException)
@@ -51,7 +46,7 @@ namespace CodeTemplate.Template
 			try
 			{
 				var builder = new StubCodeBuilder();
-				string calledCount = builder.CreateFuncCalledCounterBufferName(Function);
+				string calledCount = builder.CreateFuncCalledCounterBufferName(TargetFunc);
 				string code = $"{calledCount} = 0;";
 				return code;
 			}
@@ -66,9 +61,9 @@ namespace CodeTemplate.Template
 			try
 			{
 				var builder = new StubCodeBuilder();
-				string returnValue = builder.CreateReturnValueBufferName(Function);
+				string returnValue = builder.CreateReturnValueBufferName(TargetFunc);
 				string code = string.Empty;
-				if (0 == Function.PointerNum)
+				if (0 == TargetFunc.PointerNum)
 				{
 					code = $"{returnValue} = 0;";
 				}
@@ -80,7 +75,7 @@ namespace CodeTemplate.Template
 			}
 			catch (FormatException)
 			{
-				string code = $"//{Function.Name} has no return value.";
+				string code = $"//{TargetFunc.Name} has no return value.";
 				return code;
 			}
 			catch (Exception)
@@ -94,14 +89,14 @@ namespace CodeTemplate.Template
 			try
 			{
 				string code = string.Empty;
-				code += ArgBufferInit(Function.Arguments);
+				code += ArgBufferInit(TargetFunc.Arguments);
 				code += ReturnValueViaPointerBufferInit();
-				code += ReturnValueSizeViaPointerBufferInit(Function.Arguments);
+				code += ReturnValueSizeViaPointerBufferInit(TargetFunc.Arguments);
 
 				if (!(string.IsNullOrEmpty(code)))
 				{
 					var builder = new StubCodeBuilder();
-					string bufferSizeMacro = builder.CreateBufferSizeMacro1(Function);
+					string bufferSizeMacro = builder.CreateBufferSizeMacro1(TargetFunc);
 
 					/*
 					 * for (int index1 = 0; index1 < MACRO; index1++) {
@@ -116,7 +111,7 @@ namespace CodeTemplate.Template
 				}
 				else
 				{
-					code = $"//{Function.Name} has no argument.";
+					code = $"//{TargetFunc.Name} has no argument.";
 				}
 				return code;
 			}
@@ -152,7 +147,7 @@ namespace CodeTemplate.Template
 			try
 			{
 				var builder = new StubCodeBuilder();
-				string bufferName = builder.CreateArgBufferName(Function, argument);
+				string bufferName = builder.CreateArgBufferName(TargetFunc, argument);
 				string code = $"{bufferName}[{INDEXER_1}] = 0;";
 				return code;
 			}
@@ -187,7 +182,7 @@ namespace CodeTemplate.Template
 		protected virtual string ReturnValueSizeViaPointerBufferInit(Variable argument)
 		{
 			var builder = new StubCodeBuilder();
-			string bufferName = builder.CreateReturnValueSizeBufferViaArgName(Function, argument);
+			string bufferName = builder.CreateReturnValueSizeBufferViaArgName(TargetFunc, argument);
 			string code = $"{bufferName}[{INDEXER_1}] = 1;";
 			return code;
 		}
@@ -195,12 +190,12 @@ namespace CodeTemplate.Template
 		public virtual string ReturnValueViaPointerBufferInit()
 		{
 			string code = string.Empty;
-			IEnumerable<Parameter> arguments = Function.Arguments;
+			IEnumerable<Parameter> arguments = TargetFunc.Arguments;
 			code = ReturnValueViaPointerBufferInit(arguments);
 			if (!(string.IsNullOrEmpty(code)))
 			{
 				var builder = new StubCodeBuilder();
-				string bufferSizeMacro2 = builder.CreateBufferSizeMacro2(Function);
+				string bufferSizeMacro2 = builder.CreateBufferSizeMacro2(TargetFunc);
 				string forLoopStart =
 					$"\tfor (int {INDEXER_2} = 0; " +
 					$"{INDEXER_2} < {bufferSizeMacro2}; " +
@@ -231,7 +226,7 @@ namespace CodeTemplate.Template
 			try
 			{
 				var builder = new StubCodeBuilder();
-				string valueBuffer = builder.CreateReturnValueBufferViaArgName(Function, argument);
+				string valueBuffer = builder.CreateReturnValueBufferViaArgName(TargetFunc, argument);
 				string code = $"{valueBuffer}[{INDEXER_1}][{INDEXER_2}] = 0;";
 				return code;
 			}
