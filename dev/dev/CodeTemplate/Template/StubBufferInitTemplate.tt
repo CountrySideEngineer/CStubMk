@@ -4,16 +4,14 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-
-//バッファの初期化関数
 <#= StubInitializeEntryPoint() #>
 {
 	//呼び出し回数の初期化
-	<#= FuncCalledCountInit() #>
+<#= FuncCalledCountInit() #>
 	
 	//戻り値の初期化
-	<#= FuncReturnValueInit() #>
+<#= FuncReturnValueInit() #>
 
 	//各バッファの初期化
-	<#= ArgBufferInit() #>
+<#= ArgBufferInit() #>
 }

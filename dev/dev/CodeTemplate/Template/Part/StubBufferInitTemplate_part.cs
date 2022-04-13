@@ -47,7 +47,7 @@ namespace CodeTemplate.Template
 			{
 				var builder = new StubCodeBuilder();
 				string calledCount = builder.CreateFuncCalledCounterBufferName(TargetFunc);
-				string code = $"{calledCount} = 0;";
+				string code = $"\t{calledCount} = 0;";
 				return code;
 			}
 			catch (Exception)
@@ -65,11 +65,11 @@ namespace CodeTemplate.Template
 				string code = string.Empty;
 				if (0 == TargetFunc.PointerNum)
 				{
-					code = $"{returnValue} = 0;";
+					code = $"\t{returnValue} = 0;";
 				}
 				else
 				{
-					code = $"{returnValue} = null;";
+					code = $"\t{returnValue} = null;";
 				}
 				return code;
 			}
@@ -111,7 +111,7 @@ namespace CodeTemplate.Template
 				}
 				else
 				{
-					code = $"//{TargetFunc.Name} has no argument.";
+					code = $"\t//{TargetFunc.Name} has no argument.";
 				}
 				return code;
 			}

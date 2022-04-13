@@ -28,30 +28,30 @@ namespace CodeTemplate.Template
         /// </summary>
         public override string TransformText()
         {
-            this.Write("\r\n//関数の呼び出し回数\r\n");
+            this.Write("//関数の呼び出し回数\r\n");
             
-            #line 9 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
+            #line 8 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FuncCalledCounterBufferDeclare()));
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n//関数の戻り値\r\n");
+            this.Write("\r\n//関数の戻り値\r\n");
             
-            #line 12 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
+            #line 10 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FuncReturnValueDeclare()));
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n//引数\r\n");
+            this.Write("\r\n//引数\r\n");
             
-            #line 15 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
+            #line 12 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ReturnValueViaArgumentBufferDeclare()));
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n//引数経由の戻り値\r\n");
+            this.Write("\r\n//引数経由の戻り値\r\n");
             
-            #line 18 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
+            #line 14 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ReturnValueSizeViaArgumentBufferDeclare()));
             
             #line default

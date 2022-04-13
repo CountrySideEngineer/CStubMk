@@ -28,23 +28,23 @@ namespace CodeTemplate.Template
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("\r\n//関数のバッファサイズのマクロ\r\n");
+            this.Write("//関数のバッファサイズのマクロ\r\n");
             
-            #line 8 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\HeaderStubTemplate.tt"
+            #line 7 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\HeaderStubTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GenerateStubBufferSizeMacroDefine()));
             
             #line default
             #line hidden
             this.Write("\r\n\r\n//スタブのバッファの外部宣言\r\n");
             
-            #line 11 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\HeaderStubTemplate.tt"
+            #line 10 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\HeaderStubTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GenerateBufferDeclareCode()));
             
             #line default
             #line hidden
             this.Write("\r\n\r\n//スタブの初期化関数\r\n");
             
-            #line 14 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\HeaderStubTemplate.tt"
+            #line 13 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\HeaderStubTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GenerateBufferInitCode()));
             
             #line default

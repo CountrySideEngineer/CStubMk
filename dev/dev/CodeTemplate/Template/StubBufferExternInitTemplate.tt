@@ -4,6 +4,4 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-
-//バッファの初期化関数
 <#= StubInitializeEntryPoint() #>

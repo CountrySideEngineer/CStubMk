@@ -51,7 +51,7 @@ namespace CodeTemplate.Template
 				var builder = new StubCodeBuilder();
 				string returnValue = builder.CreateReturnValueBufferName(TargetFunc);
 				string calledCounter = builder.CreateFuncCalledCounterBufferName(TargetFunc);
-				code =$"{dataType} {RETURN_LATCH_VARIABLE} = {returnValue}[{calledCounter}];";
+				code =$"\t{dataType} {RETURN_LATCH_VARIABLE} = {returnValue}[{calledCounter}];";
 			}
 			return code;
 		}
@@ -174,7 +174,7 @@ namespace CodeTemplate.Template
 		{
 			var builder = new StubCodeBuilder();
 			string calledCounter = builder.CreateFuncCalledCounterBufferName(TargetFunc);
-			string code = $"{calledCounter}++;";
+			string code = $"\t{calledCounter}++;";
 			return code;
 		}
 
@@ -187,7 +187,7 @@ namespace CodeTemplate.Template
 			}
 			else
 			{
-				code = $"return {RETURN_LATCH_VARIABLE};";
+				code = $"\treturn {RETURN_LATCH_VARIABLE};";
 			}
 			return code;
 		}

@@ -3,12 +3,17 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-
-//スタブのバッファの宣言
+/*
+ * スタブのバッファの宣言
+ */
 <#= GenerateBufferDeclareCode() #>
 
-//スタブの初期化関数
+/*
+ * スタブの初期化関数
+ */
 <#= GenerateBufferInitCode() #>
 
-//スタブの本体
+/*
+ * スタブの本体
+ */
 <#= GenerateStubCode() #>

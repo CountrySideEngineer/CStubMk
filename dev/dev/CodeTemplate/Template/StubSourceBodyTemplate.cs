@@ -28,44 +28,43 @@ namespace CodeTemplate.Template
         /// </summary>
         public override string TransformText()
         {
-            this.Write("\r\n//スタブの本体\r\n");
             
-            #line 9 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
+            #line 7 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(StubBodyEntryPoint()));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n\t//スタブの戻り値のラッチ\r\n");
             
-            #line 12 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
+            #line 10 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(LatchReturnValue()));
             
             #line default
             #line hidden
             this.Write("\r\n\r\n\t//引数のバッファへの格納\r\n");
             
-            #line 15 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
+            #line 13 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BackupArgToBuffer()));
             
             #line default
             #line hidden
             this.Write("\r\n\r\n\t//ポインタ引数を介した戻り値\r\n");
             
-            #line 18 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
+            #line 16 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ReturnValueViaPointer()));
             
             #line default
             #line hidden
             this.Write("\r\n\r\n\t//呼び出し回数の更新\r\n");
             
-            #line 21 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
+            #line 19 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(UpdateCalledCounter()));
             
             #line default
             #line hidden
             this.Write("\r\n\r\n\t//関数戻り値\r\n");
             
-            #line 24 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
+            #line 22 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ReturnValue()));
             
             #line default

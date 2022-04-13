@@ -28,35 +28,34 @@ namespace CodeTemplate.Template
         /// </summary>
         public override string TransformText()
         {
-            this.Write("\r\n//バッファの初期化関数\r\n");
             
-            #line 9 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
+            #line 7 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(StubInitializeEntryPoint()));
             
             #line default
             #line hidden
-            this.Write("\r\n{\r\n\t//呼び出し回数の初期化\r\n\t");
+            this.Write("\r\n{\r\n\t//呼び出し回数の初期化\r\n");
             
-            #line 12 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
+            #line 10 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FuncCalledCountInit()));
             
             #line default
             #line hidden
-            this.Write("\r\n\t\r\n\t//戻り値の初期化\r\n\t");
+            this.Write("\r\n\t\r\n\t//戻り値の初期化\r\n");
             
-            #line 15 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
+            #line 13 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FuncReturnValueInit()));
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n\t//各バッファの初期化\r\n\t");
+            this.Write("\r\n\r\n\t//各バッファの初期化\r\n");
             
-            #line 18 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
+            #line 16 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ArgBufferInit()));
             
             #line default
             #line hidden
-            this.Write("\r\n}\r\n");
+            this.Write("\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

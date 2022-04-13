@@ -4,7 +4,6 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-
 //関数の呼び出し回数
 <#= FuncCalledCounterBufferDeclare() #>
 

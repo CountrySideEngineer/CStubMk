@@ -28,9 +28,8 @@ namespace CodeTemplate.Template
         /// </summary>
         public override string TransformText()
         {
-            this.Write("\r\n//バッファの初期化関数\r\n");
             
-            #line 9 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferExternInitTemplate.tt"
+            #line 7 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferExternInitTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(StubInitializeEntryPoint()));
             
             #line default

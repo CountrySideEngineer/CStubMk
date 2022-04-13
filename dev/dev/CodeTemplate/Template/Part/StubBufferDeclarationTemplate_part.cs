@@ -30,7 +30,7 @@ namespace CodeTemplate.Template
 			{
 				var builder = new StubCodeBuilder();
 				string bufferDeclare = builder.CreateFuncCalledCounterBuffer(TargetFunc);
-				string code = $"{bufferDeclare};";
+				string code = $"{bufferDeclare};{Environment.NewLine}";
 				return code;
 			}
 			catch (ArgumentException)
@@ -59,7 +59,7 @@ namespace CodeTemplate.Template
 				var builder = new StubCodeBuilder();
 				string retValueDeclare = builder.CreateReturnValueBuffer(TargetFunc);
 				string buffSizeMacro = builder.CreateBufferSizeMacro1(TargetFunc);
-				string code = $"{retValueDeclare}[{buffSizeMacro}];";
+				string code = $"{retValueDeclare}[{buffSizeMacro}];{Environment.NewLine}";
 				return code;
 			}
 			catch (FormatException)
@@ -132,7 +132,7 @@ namespace CodeTemplate.Template
 				var builder = new StubCodeBuilder();
 				string declare = builder.CreateArgBuffer(TargetFunc, argument);
 				string macro = builder.CreateBufferSizeMacro1(TargetFunc);
-				string code = $"{declare}[{macro}];";
+				string code = $"\t{declare}[{macro}];{Environment.NewLine}";
 				return code;
 			}
 			catch (Exception ex)
@@ -193,7 +193,7 @@ namespace CodeTemplate.Template
 			string declare = builder.CreateReturnValueBufferViaArg(TargetFunc, argument);
 			string macro1 = builder.CreateBufferSizeMacro1(TargetFunc);
 			string macro2 = builder.CreateBufferSizeMacro2(TargetFunc);
-			string code = $"{declare}[{macro1}][{macro2}];";
+			string code = $"\t{declare}[{macro1}][{macro2}];{Environment.NewLine}";
 			return code;
 		}
 
@@ -244,7 +244,7 @@ namespace CodeTemplate.Template
 			var builder = new StubCodeBuilder();
 			string declare = builder.CreateReturnValueSizeBufferViaArg(TargetFunc, argument);
 			string macro = builder.CreateBufferSizeMacro1(TargetFunc);
-			string code = $"{declare}[{macro}];";
+			string code = $"\t{declare}[{macro}];{Environment.NewLine}";
 			return code;
 		}
 
