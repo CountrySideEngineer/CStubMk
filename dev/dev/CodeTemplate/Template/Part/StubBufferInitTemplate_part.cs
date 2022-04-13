@@ -189,9 +189,8 @@ namespace CodeTemplate.Template
 
 		public virtual string ReturnValueViaPointerBufferInit()
 		{
-			string code = string.Empty;
 			IEnumerable<Parameter> arguments = TargetFunc.Arguments;
-			code = ReturnValueViaPointerBufferInit(arguments);
+			string code = ReturnValueViaPointerBufferInit(arguments);
 			if (!(string.IsNullOrEmpty(code)))
 			{
 				var builder = new StubCodeBuilder();

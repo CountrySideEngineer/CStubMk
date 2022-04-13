@@ -50,9 +50,18 @@
     <Compile Include="Builder\StubCodeBuilder.cs" />
     <Compile Include="CodeGenerator\ICodeGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Template\HeaderStubTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HeaderStubTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\Part\HeaderStubTemplate_part.cs" />
     <Compile Include="Template\Part\SourceStubTemplate_part.cs" />
     <Compile Include="Template\Part\StubBufferDeclarationTemplate_part.cs" />
+    <Compile Include="Template\Part\StubBufferExternDeclarationTemplate_part.cs" />
+    <Compile Include="Template\Part\StubBufferExternInitTemplate_part.cs" />
     <Compile Include="Template\Part\StubBufferInitTemplate_part.cs" />
+    <Compile Include="Template\Part\StubBufferSizeMacroDefineTemplate_part.cs" />
     <Compile Include="Template\Part\StubCodeTemplateCommonBase_part.cs" />
     <Compile Include="Template\Part\StubSourceBodyTemplate_part.cs" />
     <Compile Include="Template\SourceStubTemplate.cs">
@@ -65,10 +74,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StubBufferDeclarationTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="Template\StubBufferExternDeclarationTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StubBufferExternDeclarationTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\StubBufferExternInitTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StubBufferExternInitTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Include="Template\StubBufferInitTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>StubBufferInitTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\StubBufferSizeMacroDefineTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StubBufferSizeMacroDefineTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="Template\StubCodeTemplateCommonBase.cs">
       <AutoGen>True</AutoGen>
@@ -82,6 +106,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Template\HeaderStubTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>HeaderStubTemplate.cs</LastGenOutput>
+    </Content>
     <Content Include="Template\SourceStubTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>SourceStubTemplate.cs</LastGenOutput>
@@ -90,9 +118,21 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>StubBufferDeclarationTemplate.cs</LastGenOutput>
     </Content>
+    <Content Include="Template\StubBufferExternDeclarationTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>StubBufferExternDeclarationTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Template\StubBufferExternInitTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>StubBufferExternInitTemplate.cs</LastGenOutput>
+    </Content>
     <Content Include="Template\StubBufferInitTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>StubBufferInitTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Template\StubBufferSizeMacroDefineTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>StubBufferSizeMacroDefineTemplate.cs</LastGenOutput>
     </Content>
     <Content Include="Template\StubCodeTemplateCommonBase.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
