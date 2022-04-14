@@ -9,8 +9,6 @@ namespace CodeTemplate.Template
 {
 	public partial class SourceStubTemplate
 	{
-		public Function TargetFunc { get; set; }
-
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
