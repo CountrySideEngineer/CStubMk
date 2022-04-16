@@ -77,12 +77,27 @@ namespace CodeTemplate.Template
 
 		protected virtual string BackupArgToBuffer(Variable argument)
 		{
-			var builder = new StubCodeBuilder();
-			string calledCounter = builder.CreateFuncCalledCounterBufferName(TargetFunc);
-			string argBuffer = builder.CreateArgBufferName(TargetFunc, argument);
-			string code = $"{argBuffer}[{calledCounter}] = {argument.Name};";
+			try
+			{
+				var builder = new StubCodeBuilder();
+				string calledCounter = builder.CreateFuncCalledCounterBufferName(TargetFunc);
+				string argBuffer = builder.CreateArgBufferName(TargetFunc, argument);
+				string code = $"{argBuffer}[{calledCounter}] = {argument.Name};";
 
-			return code;
+				return code;
+			}
+			catch (ArgumentException)
+			{
+				if (argument.DataType.ToLower().Equals("void"))
+				{
+					string code = string.Empty;
+					return code;
+				}
+				else
+				{
+					throw;
+				}
+			}
 		}
 
 		public virtual string ReturnValueViaPointer()

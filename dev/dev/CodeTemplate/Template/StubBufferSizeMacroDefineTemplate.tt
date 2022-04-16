@@ -4,5 +4,5 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-#define	<#= StubBufferSizeMacro1() #>		<#= StubBufferSize1() #>
-#define	<#= StubBufferSizeMacro2() #>		<#= StubBufferSize2() #>
+#define	<#= StubBufferSizeMacro1() #>		(<#= StubBufferSize1() #>)
+#define	<#= StubBufferSizeMacro2() #>		(<#= StubBufferSize2() #>)

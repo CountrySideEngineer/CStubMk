@@ -45,7 +45,15 @@ namespace Parser.SDK.Model
 					{
 						toString += ", ";
 					}
-					toString += item.ToString();
+					string itemString = item.ToString();
+					if (itemString.ToLower().Equals("void "))
+					{
+						toString += "void";
+					}
+					else
+					{
+						toString += item.ToString();
+					}
 				}
 			}
 			catch (NullReferenceException)

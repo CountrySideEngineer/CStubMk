@@ -72,25 +72,5 @@ namespace CodeTemplate.Template
 				throw;
 			}
 		}
-
-		/// <summary>
-		/// Generate code using template.
-		/// </summary>
-		/// <param name="template">Code template file.</param>
-		/// <returns>Generated code.</returns>
-		/// <exception cref="NullReferenceException"></exception>
-		protected virtual string GenerateCode(StubCodeTemplateCommonBase template)
-		{
-			try
-			{
-				template.TargetFunc = TargetFunc;
-				string code = template.TransformText();
-				return code;
-			}
-			catch (NullReferenceException)
-			{
-				throw;
-			}
-		}
 	}
 }

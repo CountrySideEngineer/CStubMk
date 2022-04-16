@@ -199,6 +199,18 @@ namespace CodeTemplate.Builder
 
 				return code;
 			}
+			catch (ArgumentException)
+			{
+				if (argument.DataType.ToLower().Equals("void"))
+				{
+					string code = string.Empty;
+					return code;
+				}
+				else
+				{
+					throw;
+				}
+			}
 			catch (NullReferenceException)
 			{
 				throw;

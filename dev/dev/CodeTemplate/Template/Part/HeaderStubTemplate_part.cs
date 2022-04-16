@@ -21,17 +21,23 @@ namespace CodeTemplate.Template
 
 		public virtual string GenerateStubBufferSizeMacroDefine()
 		{
-			return string.Empty;
+			var template = new StubBufferSizeMacroDefineTemplate();
+			string code = base.GenerateCode(template);
+			return code;
 		}
 
 		public virtual string GenerateBufferDeclareCode()
 		{
-			return string.Empty;
+			var template = new StubBufferExternDeclarationTemplate();
+			string code = base.GenerateCode(template);
+			return code;
 		}
 
 		public virtual string GenerateBufferInitCode()
 		{
-			return string.Empty;
+			var template = new StubBufferExternInitTemplate();
+			string code = base.GenerateCode(template);
+			return code;
 		}
 	}
 }

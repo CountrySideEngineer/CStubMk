@@ -33,7 +33,7 @@ namespace Parser.SDK.Model
 				pointers += "*";
 			}
 
-			string toString = $"{DataType}{pointers} {DataType}";
+			string toString = $"{DataType}{pointers} {Name}";
 			return toString;
 		}
 	}

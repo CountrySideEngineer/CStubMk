@@ -66,11 +66,11 @@ namespace Reader.FunctionReader
 				};
 				var tableRange = new ExcelReader.Range()
 				{
-					StartColumn = 2,
-					ColumnCount = 2
+					StartColumn = 3,
+					ColumnCount = 3
 				};
 				excelReader.GetRowRange(ref tableRange);
-				tableRange.StartRow = 4;
+				tableRange.StartRow = 3;
 				IEnumerable<ParameterInformation> paramInfos = ReadFunctinoDefinitions(excelReader, tableRange);
 				return paramInfos;
 			}
@@ -110,12 +110,16 @@ namespace Reader.FunctionReader
 						{
 							StartRow = range.StartRow + rowIndex
 						};
-						ParameterInformation paramInfo = ReadFunctionDefinition(reader, range);
+						ParameterInformation paramInfo = ReadFunctionDefinition(reader, rowRange);
 						paramInfos.Add(paramInfo);
 					}
 					catch (FormatException)
 					{
 						DEBUG($"SKIP the row {range.StartRow + rowIndex} (\"Definition\" or \"FileName\" is empty.)");
+					}
+					catch (ArgumentOutOfRangeException)
+					{
+						DEBUG($"No data has been set to ({range.StartRow + rowIndex}, {range.StartColumn}), SKIP!");
 					}
 				}
 				return paramInfos;

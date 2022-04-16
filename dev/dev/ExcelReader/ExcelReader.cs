@@ -294,7 +294,7 @@ namespace ExcelReader
                 var lastUsedCell = workSheet.LastRowUsed();
 
                 range.StartRow = Convert.ToUInt64(firstUsedCell.RowNumber());
-                range.RowCount = Convert.ToUInt64(lastUsedCell.RowNumber()) - range.StartColumn;
+                range.RowCount = Convert.ToUInt64(lastUsedCell.RowNumber()) - range.StartColumn + 1;
             }
             catch (System.Exception ex)
             when ((ex is NullReferenceException) || (ex is ArgumentException))
@@ -320,7 +320,7 @@ namespace ExcelReader
                 var lastUsedCell = workSheet.LastColumnUsed();
 
                 range.StartColumn = Convert.ToUInt64(firstUsedCell.ColumnNumber());
-                range.ColumnCount = Convert.ToUInt64(lastUsedCell.ColumnNumber()) - range.StartColumn;
+                range.ColumnCount = Convert.ToUInt64(lastUsedCell.ColumnNumber()) - range.StartColumn + 1;
 
             }
             catch (System.Exception ex)

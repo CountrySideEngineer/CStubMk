@@ -136,12 +136,32 @@ namespace CodeTemplate.Template
 				}
 				return code;
 			}
+			catch (ArgumentException)
+			{
+				Parameter param = arguments.ElementAt(0);
+				if (param.DataType.ToLower().Equals("void"))
+				{
+					string code = string.Empty;
+					return code;
+				}
+				else
+				{
+					throw;
+				}
+			}
 			catch (NullReferenceException)
 			{
 				return string.Empty;
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="argument"></param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="NullReferenceException"></exception>
 		protected virtual string ArgBufferInit(Variable argument)
 		{
 			try
@@ -151,10 +171,9 @@ namespace CodeTemplate.Template
 				string code = $"{bufferName}[{INDEXER_1}] = 0;";
 				return code;
 			}
-			catch (Exception ex)
-			when ((ex is ArgumentException) || (ex is NullReferenceException))
+			catch (NullReferenceException)
 			{
-				throw ex;
+				throw;
 			}
 		}
 

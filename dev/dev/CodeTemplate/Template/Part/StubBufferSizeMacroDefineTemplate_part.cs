@@ -15,7 +15,7 @@ namespace CodeTemplate.Template
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		StubBufferSizeMacroDefineTemplate() : base()
+		public StubBufferSizeMacroDefineTemplate() : base()
 		{
 			BufferSize1 = 100;
 			BufferSize2 = 100;

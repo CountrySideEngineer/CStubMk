@@ -35,28 +35,28 @@ namespace CodeTemplate.Template
             
             #line default
             #line hidden
-            this.Write("\t\t");
+            this.Write("\t\t(");
             
             #line 7 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferSizeMacroDefineTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(StubBufferSize1()));
             
             #line default
             #line hidden
-            this.Write("\r\n#define\t");
+            this.Write(")\r\n#define\t");
             
             #line 8 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferSizeMacroDefineTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(StubBufferSizeMacro2()));
             
             #line default
             #line hidden
-            this.Write("\t\t");
+            this.Write("\t\t(");
             
             #line 8 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferSizeMacroDefineTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(StubBufferSize2()));
             
             #line default
             #line hidden
-            this.Write("\r\n");
+            this.Write(")\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }
