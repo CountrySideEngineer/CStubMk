@@ -5,16 +5,14 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 /*
- * スタブのバッファの宣言
+ * <#= TargetFunc.Name #>のスタブのバッファの宣言
  */
 <#= GenerateBufferDeclareCode() #>
-
 /*
- * スタブの初期化関数
+ * <#= TargetFunc.Name #>のスタブの初期化関数
  */
 <#= GenerateBufferInitCode() #>
-
 /*
- * スタブの本体
+ * <#= TargetFunc.Name #>のスタブの本体
  */
 <#= GenerateStubCode() #>

@@ -5,10 +5,24 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 //関数の呼び出し回数
-<#= FuncCalledCounterBufferDeclare() #>
+<#= FuncCalledCounterBufferDeclareCode #>
+<#	if (!(string.IsNullOrEmpty(FuncCalledCounterBufferDeclareCode))) {	#>
+
 //関数の戻り値
-<#= FuncReturnValueDeclare() #>
+<#= FuncReturnValueDeclareCode #>
+<#	}	#>
+<#	if (!(string.IsNullOrEmpty(ArgBufferDeclareCode))) {	#>
+
 //引数
-<#= ReturnValueViaArgumentBufferDeclare() #>
-//引数経由の戻り値
-<#= ReturnValueSizeViaArgumentBufferDeclare() #>
+<#= ArgBufferDeclareCode #>
+<#	}	#>
+<#	if (!(string.IsNullOrEmpty(FuncReturnValueViaArgBufferDeclareCode))) {	#>
+
+//ポインタ経由での戻り値
+<#= FuncReturnValueViaArgBufferDeclareCode #>
+<#	}	#>
+<#	if (!(string.IsNullOrEmpty(FuncReturnValueSizeViaArgBufferDeclareCode))) {	#>
+
+//ポインタ経由での戻り値のサイズ
+<#=	FuncReturnValueSizeViaArgBufferDeclareCode #>
+<#	}	#>

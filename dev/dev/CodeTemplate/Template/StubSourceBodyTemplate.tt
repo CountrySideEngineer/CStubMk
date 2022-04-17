@@ -6,18 +6,26 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#= StubBodyEntryPoint() #>
 {
+<#	if (!(string.IsNullOrEmpty(LatchReturnValueCode))) {	#>
 	//スタブの戻り値のラッチ
-<#= LatchReturnValue() #>
+<#= LatchReturnValueCode #>
 
+<#	}	#>
+<#	if (!(string.IsNullOrEmpty(BackupArgToBufferCode))) {	#>
 	//引数のバッファへの格納
-<#= BackupArgToBuffer() #>
+<#= BackupArgToBufferCode #>
 
+<#	}	#>
+<#	if (!(string.IsNullOrEmpty(ReturnValueViaPointerCode))) {	#>
 	//ポインタ引数を介した戻り値
-<#= ReturnValueViaPointer() #>
+<#= ReturnValueViaPointerCode #>
 
+<#	}	#>
 	//呼び出し回数の更新
 <#= UpdateCalledCounter() #>
+<#	if (!(string.IsNullOrEmpty(ReturnValueCode))) {	#>
 
 	//関数戻り値
 <#= ReturnValue() #>
+<#	}	#>
 }

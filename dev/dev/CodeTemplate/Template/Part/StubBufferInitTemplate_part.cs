@@ -14,10 +14,28 @@ namespace CodeTemplate.Template
 
 		protected static string INDEXER_2 = "index2";
 
+		public string FuncCalledCountInitCode { get; protected set; }
+
+		public string FuncReturnValueInitCode { get; protected set; }
+
+		public string ArgBufferInitCode { get; protected set; }
+
+		public override void SetUpCode()
+		{
+			FuncCalledCountInitCode = FuncCalledCountInit();
+			FuncReturnValueInitCode = FuncReturnValueInit();
+			ArgBufferInitCode = ArgBufferInit();
+		}
+
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		public StubBufferInitTemplate() : base() { }
+		public StubBufferInitTemplate() : base()
+		{
+			FuncCalledCountInitCode = string.Empty;
+			FuncReturnValueInitCode = string.Empty;
+			ArgBufferInitCode = string.Empty;
+		}
 
 		/// <summary>
 		/// Create entry point code to initialize stub buffers.
@@ -90,8 +108,22 @@ namespace CodeTemplate.Template
 			{
 				string code = string.Empty;
 				code += ArgBufferInit(TargetFunc.Arguments);
-				code += ReturnValueViaPointerBufferInit();
-				code += ReturnValueSizeViaPointerBufferInit(TargetFunc.Arguments);
+				if (!(string.IsNullOrEmpty(code)))
+				{
+					code += Environment.NewLine;
+				}
+				string pointerBufferInitCode = ReturnValueViaPointerBufferInit();
+				if (!string.IsNullOrEmpty(pointerBufferInitCode))
+				{
+					code += pointerBufferInitCode;
+					code += Environment.NewLine;
+				}
+				string returnValueSizeInitCode = ReturnValueSizeViaPointerBufferInit(TargetFunc.Arguments);
+				if (!(string.IsNullOrEmpty(returnValueSizeInitCode)))
+				{
+					code += returnValueSizeInitCode;
+					code += Environment.NewLine;
+				}
 
 				if (!(string.IsNullOrEmpty(code)))
 				{
@@ -101,17 +133,13 @@ namespace CodeTemplate.Template
 					/*
 					 * for (int index1 = 0; index1 < MACRO; index1++) {
 					 */
-					string forLoopStart = $"for (int {INDEXER_1} = 0; " +
+					string forLoopStart = $"\tfor (int {INDEXER_1} = 0; " +
 						$"{INDEXER_1} < {bufferSizeMacro}; " +
-						$"{INDEXER_1}++) {{" +
-						Environment.NewLine;
-					string forLoopEnd = $"}}{Environment.NewLine}";
-
-					code = $"{forLoopStart}{code}{forLoopEnd}";
-				}
-				else
-				{
-					code = $"\t//{TargetFunc.Name} has no argument.";
+						$"{INDEXER_1}++) {{";
+					string forLoopEnd = $"\t}}";
+					code = $"{forLoopStart}" + Environment.NewLine +
+						$"{code}" + 
+						$"{forLoopEnd}";
 				}
 				return code;
 			}
@@ -129,10 +157,13 @@ namespace CodeTemplate.Template
 				string code = string.Empty;
 				foreach (var item in arguments)
 				{
+					if (!(string.IsNullOrEmpty(code)))
+					{
+						code += Environment.NewLine;
+					}
 					var argument = item as Variable;
 					string initializeCode = ArgBufferInit(argument);
-					code += $"\t{initializeCode}";
-					code += Environment.NewLine;
+					code += $"\t\t{initializeCode}";
 				}
 				return code;
 			}
@@ -185,10 +216,13 @@ namespace CodeTemplate.Template
 			{
 				foreach (var item in argumentsWithPointer)
 				{
+					if (!(string.IsNullOrEmpty(code)))
+					{
+						code += Environment.NewLine;
+					}
 					var argItem = item as Variable;
 					string initializeCode = ReturnValueSizeViaPointerBufferInit(argItem);
-					code += $"\t{initializeCode}";
-					code += Environment.NewLine;
+					code += $"\t\t{initializeCode}";
 				}
 			}
 			catch (NullReferenceException)
@@ -212,15 +246,20 @@ namespace CodeTemplate.Template
 			string code = ReturnValueViaPointerBufferInit(arguments);
 			if (!(string.IsNullOrEmpty(code)))
 			{
+				code += Environment.NewLine;
 				var builder = new StubCodeBuilder();
 				string bufferSizeMacro2 = builder.CreateBufferSizeMacro2(TargetFunc);
+				/*
+				 * for (int index2 = 0; index2 < MACRO; index2++) {
+				 */
 				string forLoopStart =
-					$"\tfor (int {INDEXER_2} = 0; " +
+					$"\t\tfor (int {INDEXER_2} = 0; " +
 					$"{INDEXER_2} < {bufferSizeMacro2}; " +
-					$"{INDEXER_2}++) {{" +
-					Environment.NewLine;
-				string forLoopEnd = "\t}" + Environment.NewLine;
-				code = $"{forLoopStart}{code}{forLoopEnd}";
+					$"{INDEXER_2}++) {{";
+				string forLoopEnd = "\t\t}";
+				code = $"{forLoopStart}" + Environment.NewLine +
+					$"{code}" +
+					$"{forLoopEnd}";
 			}
 			return code;
 		}
@@ -231,10 +270,13 @@ namespace CodeTemplate.Template
 			string code = string.Empty;
 			foreach (var item in argumentsWithPointer)
 			{
+				if (!(string.IsNullOrEmpty(code)))
+				{
+					code += Environment.NewLine;
+				}
 				var argumentItem = item as Variable;
 				string initializeCode = ReturnValueViaPointerBufferInit(argumentItem);
-				code += $"\t\t{initializeCode}";
-				code += Environment.NewLine;
+				code += $"\t\t\t{initializeCode}";
 			}
 			return code;
 		}

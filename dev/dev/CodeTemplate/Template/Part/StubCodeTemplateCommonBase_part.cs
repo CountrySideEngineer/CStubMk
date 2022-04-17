@@ -39,6 +39,7 @@ namespace CodeTemplate.Template
 			try
 			{
 				template.TargetFunc = TargetFunc;
+				template.SetUpCode();
 				string code = template.TransformText();
 				return code;
 			}
@@ -47,5 +48,7 @@ namespace CodeTemplate.Template
 				throw;
 			}
 		}
+
+		public virtual void SetUpCode() { }
 	}
 }

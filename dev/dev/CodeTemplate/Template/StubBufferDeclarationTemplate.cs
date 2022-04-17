@@ -31,28 +31,88 @@ namespace CodeTemplate.Template
             this.Write("//関数の呼び出し回数\r\n");
             
             #line 8 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(FuncCalledCounterBufferDeclare()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(FuncCalledCounterBufferDeclareCode));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 9 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
+	if (!(string.IsNullOrEmpty(FuncCalledCounterBufferDeclareCode))) {	
             
             #line default
             #line hidden
             this.Write("\r\n//関数の戻り値\r\n");
             
-            #line 10 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(FuncReturnValueDeclare()));
+            #line 12 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(FuncReturnValueDeclareCode));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 13 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
+	}	
+            
+            #line default
+            #line hidden
+            
+            #line 14 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
+	if (!(string.IsNullOrEmpty(ArgBufferDeclareCode))) {	
             
             #line default
             #line hidden
             this.Write("\r\n//引数\r\n");
             
-            #line 12 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ReturnValueViaArgumentBufferDeclare()));
+            #line 17 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ArgBufferDeclareCode));
             
             #line default
             #line hidden
-            this.Write("\r\n//引数経由の戻り値\r\n");
+            this.Write("\r\n");
             
-            #line 14 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ReturnValueSizeViaArgumentBufferDeclare()));
+            #line 18 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
+	}	
+            
+            #line default
+            #line hidden
+            
+            #line 19 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
+	if (!(string.IsNullOrEmpty(FuncReturnValueViaArgBufferDeclareCode))) {	
+            
+            #line default
+            #line hidden
+            this.Write("\r\n//ポインタ経由での戻り値\r\n");
+            
+            #line 22 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(FuncReturnValueViaArgBufferDeclareCode));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 23 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
+	}	
+            
+            #line default
+            #line hidden
+            
+            #line 24 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
+	if (!(string.IsNullOrEmpty(FuncReturnValueSizeViaArgBufferDeclareCode))) {	
+            
+            #line default
+            #line hidden
+            this.Write("\r\n//ポインタ経由での戻り値のサイズ\r\n");
+            
+            #line 27 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(FuncReturnValueSizeViaArgBufferDeclareCode));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 28 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
+	}	
             
             #line default
             #line hidden

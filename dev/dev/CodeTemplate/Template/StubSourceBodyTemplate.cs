@@ -34,42 +34,96 @@ namespace CodeTemplate.Template
             
             #line default
             #line hidden
-            this.Write("\r\n{\r\n\t//スタブの戻り値のラッチ\r\n");
+            this.Write("\r\n{\r\n");
             
-            #line 10 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(LatchReturnValue()));
+            #line 9 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
+	if (!(string.IsNullOrEmpty(LatchReturnValueCode))) {	
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n\t//引数のバッファへの格納\r\n");
+            this.Write("\t//スタブの戻り値のラッチ\r\n");
+            
+            #line 11 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(LatchReturnValueCode));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\r\n");
             
             #line 13 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(BackupArgToBuffer()));
+	}	
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n\t//ポインタ引数を介した戻り値\r\n");
+            
+            #line 14 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
+	if (!(string.IsNullOrEmpty(BackupArgToBufferCode))) {	
+            
+            #line default
+            #line hidden
+            this.Write("\t//引数のバッファへの格納\r\n");
             
             #line 16 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ReturnValueViaPointer()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(BackupArgToBufferCode));
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n\t//呼び出し回数の更新\r\n");
+            this.Write("\r\n\r\n");
+            
+            #line 18 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
+	}	
+            
+            #line default
+            #line hidden
             
             #line 19 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
+	if (!(string.IsNullOrEmpty(ReturnValueViaPointerCode))) {	
+            
+            #line default
+            #line hidden
+            this.Write("\t//ポインタ引数を介した戻り値\r\n");
+            
+            #line 21 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ReturnValueViaPointerCode));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\r\n");
+            
+            #line 23 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
+	}	
+            
+            #line default
+            #line hidden
+            this.Write("\t//呼び出し回数の更新\r\n");
+            
+            #line 25 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(UpdateCalledCounter()));
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n\t//関数戻り値\r\n");
+            this.Write("\r\n");
             
-            #line 22 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
+            #line 26 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
+	if (!(string.IsNullOrEmpty(ReturnValueCode))) {	
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t//関数戻り値\r\n");
+            
+            #line 29 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ReturnValue()));
             
             #line default
             #line hidden
-            this.Write("\r\n}");
+            this.Write("\r\n");
+            
+            #line 30 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubSourceBodyTemplate.tt"
+	}	
+            
+            #line default
+            #line hidden
+            this.Write("}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

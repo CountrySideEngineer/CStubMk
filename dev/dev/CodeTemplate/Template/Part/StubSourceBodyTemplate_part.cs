@@ -15,10 +15,32 @@ namespace CodeTemplate.Template
 
 		static protected string RETURN_LATCH_VARIABLE = "return_latch";
 
+		public string LatchReturnValueCode { get; protected set; }
+
+		public string BackupArgToBufferCode { get; protected set; }
+
+		public string ReturnValueViaPointerCode { get; protected set; }
+
+		public string ReturnValueCode { get; protected set; }
+
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		public StubSourceBodyTemplate() : base() { }
+		public StubSourceBodyTemplate() : base()
+		{
+			LatchReturnValueCode = string.Empty;
+			BackupArgToBufferCode = string.Empty;
+			ReturnValueCode = string.Empty;
+			ReturnValueViaPointerCode = string.Empty;
+		}
+
+		public override void SetUpCode()
+		{
+			LatchReturnValueCode = LatchReturnValue();
+			BackupArgToBufferCode = BackupArgToBuffer();
+			ReturnValueViaPointerCode = ReturnValueViaPointer();
+			ReturnValueCode = ReturnValue();
+		}
 
 		/// <summary>
 		/// Create method entry point to initialize stub buffers.
@@ -63,6 +85,10 @@ namespace CodeTemplate.Template
 			{
 				foreach (var item in TargetFunc.Arguments)
 				{
+					if (!(string.IsNullOrEmpty(code)))
+					{
+						code += Environment.NewLine;
+					}
 					Variable argItem = item as Variable;
 					code += BackupArgToBuffer(argItem);
 				}
@@ -82,7 +108,7 @@ namespace CodeTemplate.Template
 				var builder = new StubCodeBuilder();
 				string calledCounter = builder.CreateFuncCalledCounterBufferName(TargetFunc);
 				string argBuffer = builder.CreateArgBufferName(TargetFunc, argument);
-				string code = $"{argBuffer}[{calledCounter}] = {argument.Name};";
+				string code = $"\t{argBuffer}[{calledCounter}] = {argument.Name};";
 
 				return code;
 			}
@@ -134,9 +160,12 @@ namespace CodeTemplate.Template
 			string code = string.Empty;
 			foreach (var item in singplePointerArguments)
 			{
+				if (!(string.IsNullOrEmpty(code)))
+				{
+					code += Environment.NewLine;
+				}
 				var argItem = item as Variable;
 				code += ReturnValueViaSinglePointer(argItem);
-				code += Environment.NewLine;
 			}
 			return code;
 		}
@@ -148,11 +177,13 @@ namespace CodeTemplate.Template
 			string returnValueSizeName = builder.CreateReturnValueSizeBufferViaArgName(TargetFunc, argument);
 			string returnValueName = builder.CreateReturnValueBufferViaArgName(TargetFunc, argument);
 			string forLoopStartCode = 
-				$"for (int {INDEXER_1} = 0; {INDEXER_1} < {returnValueSizeName}[{calledCounter}]; {INDEXER_1}++) {{";
-			string forLoopEndCode = "}";
+				$"\tfor (int {INDEXER_1} = 0; " +
+				$"{INDEXER_1} < {returnValueSizeName}[{calledCounter}];" +
+				$" {INDEXER_1}++) {{";
+			string forLoopEndCode = "\t}";
 			string code = $"{forLoopStartCode}" +
 				Environment.NewLine +
-				$"\t*({argument.Name} + {INDEXER_1}) = {returnValueName}[{calledCounter}][{INDEXER_1}];" +
+				$"\t\t*({argument.Name} + {INDEXER_1}) = {returnValueName}[{calledCounter}][{INDEXER_1}];" +
 				Environment.NewLine +
 				$"{forLoopEndCode}";
 			return code;
@@ -169,9 +200,12 @@ namespace CodeTemplate.Template
 			string code = string.Empty;
 			foreach (var item in arguments)
 			{
+				if (!(string.IsNullOrEmpty(code)))
+				{
+					code += Environment.NewLine;
+				}
 				Variable argItem = item as Variable;
 				code += ReturnValueViaDoublePointer(argItem);
-				code += Environment.NewLine;
 			}
 			return code;
 		}

@@ -7,11 +7,15 @@
 <#= StubInitializeEntryPoint() #>
 {
 	//呼び出し回数の初期化
-<#= FuncCalledCountInit() #>
-	
+<#=	FuncCalledCountInitCode #>
+<#	if (!(string.IsNullOrEmpty(FuncReturnValueInitCode))) {	#>
+
 	//戻り値の初期化
 <#= FuncReturnValueInit() #>
+<#	}	#>
+<#	if (!(string.IsNullOrEmpty(ArgBufferInitCode))) {	#>
 
 	//各バッファの初期化
 <#= ArgBufferInit() #>
+<#	}	#>
 }

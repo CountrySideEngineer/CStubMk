@@ -37,25 +37,52 @@ namespace CodeTemplate.Template
             this.Write("\r\n{\r\n\t//呼び出し回数の初期化\r\n");
             
             #line 10 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(FuncCalledCountInit()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(FuncCalledCountInitCode));
             
             #line default
             #line hidden
-            this.Write("\r\n\t\r\n\t//戻り値の初期化\r\n");
+            this.Write("\r\n");
             
-            #line 13 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
+            #line 11 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
+	if (!(string.IsNullOrEmpty(FuncReturnValueInitCode))) {	
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t//戻り値の初期化\r\n");
+            
+            #line 14 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FuncReturnValueInit()));
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n\t//各バッファの初期化\r\n");
+            this.Write("\r\n");
+            
+            #line 15 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
+	}	
+            
+            #line default
+            #line hidden
             
             #line 16 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
+	if (!(string.IsNullOrEmpty(ArgBufferInitCode))) {	
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t//各バッファの初期化\r\n");
+            
+            #line 19 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ArgBufferInit()));
             
             #line default
             #line hidden
-            this.Write("\r\n}");
+            this.Write("\r\n");
+            
+            #line 20 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferInitTemplate.tt"
+	}	
+            
+            #line default
+            #line hidden
+            this.Write("}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

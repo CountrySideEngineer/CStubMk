@@ -28,23 +28,44 @@ namespace CodeTemplate.Template
         /// </summary>
         public override string TransformText()
         {
-            this.Write("/*\r\n * スタブのバッファの宣言\r\n */\r\n");
+            this.Write("/*\r\n * ");
+            
+            #line 8 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\SourceStubTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(TargetFunc.Name));
+            
+            #line default
+            #line hidden
+            this.Write("のスタブのバッファの宣言\r\n */\r\n");
             
             #line 10 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\SourceStubTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GenerateBufferDeclareCode()));
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n/*\r\n * スタブの初期化関数\r\n */\r\n");
+            this.Write("\r\n/*\r\n * ");
             
-            #line 15 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\SourceStubTemplate.tt"
+            #line 12 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\SourceStubTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(TargetFunc.Name));
+            
+            #line default
+            #line hidden
+            this.Write("のスタブの初期化関数\r\n */\r\n");
+            
+            #line 14 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\SourceStubTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GenerateBufferInitCode()));
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n/*\r\n * スタブの本体\r\n */\r\n");
+            this.Write("\r\n/*\r\n * ");
             
-            #line 20 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\SourceStubTemplate.tt"
+            #line 16 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\SourceStubTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(TargetFunc.Name));
+            
+            #line default
+            #line hidden
+            this.Write("のスタブの本体\r\n */\r\n");
+            
+            #line 18 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\SourceStubTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GenerateStubCode()));
             
             #line default
