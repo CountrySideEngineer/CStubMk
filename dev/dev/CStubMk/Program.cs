@@ -42,9 +42,6 @@ namespace CStubMk
 
 		static void exec(string filePath, string dirPath)
 		{
-			Debug.WriteLine(filePath);
-			Debug.WriteLine(dirPath);
-
 			var inputInfo = new InputInfo()
 			{
 				TargetFilePath = filePath,
