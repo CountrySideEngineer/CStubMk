@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="FunctionReader\AFunctionReader.cs" />
     <Compile Include="FunctionReader\FunctionInExcelReader.cs" />
+    <Compile Include="FunctionReader\FunctionInTextReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
