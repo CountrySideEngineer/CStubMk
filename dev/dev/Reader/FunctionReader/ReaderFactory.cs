@@ -16,12 +16,12 @@ namespace Reader.FunctionReader
 			}
 
 			AFunctionReader reader = null;
-			string extention = System.IO.Path.GetExtension(inputFile).ToLower();
-			if (extention.Equals(".xlsx"))
+			string extension = System.IO.Path.GetExtension(inputFile).ToLower();
+			if (extension.Equals(".xlsx"))
 			{
 				reader = new FunctionInExcelReader();
 			}
-			else if (extention.Equals(".txt"))
+			else if (extension.Equals(".txt"))
 			{
 				reader = new FunctionInTextReader();
 			}
