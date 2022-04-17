@@ -38,7 +38,7 @@ namespace CodeTemplate.Template
             this.Write("\r\n");
             
             #line 9 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\StubBufferDeclarationTemplate.tt"
-	if (!(string.IsNullOrEmpty(FuncCalledCounterBufferDeclareCode))) {	
+	if (!(string.IsNullOrEmpty(FuncReturnValueDeclareCode))) {	
             
             #line default
             #line hidden

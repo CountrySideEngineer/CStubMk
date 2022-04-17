@@ -34,11 +34,51 @@ namespace CodeTemplate.Template
 			}
 		}
 
+		/// <summary>
+		/// Create code to declare buffer to holds argumet value.
+		/// </summary>
+		/// <param name="argument">Argument data.</param>
+		/// <returns>Code to declare buffer to hold argument value.</returns>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="FormatException"></exception>
+		/// <exception cref="NullReferenceException"></exception>
+		protected override string ArgBufferDeclare(Variable argument)
+		{
+			try
+			{
+				var builder = new StubCodeBuilder();
+				string declare = builder.CreateArgBuffer(TargetFunc, argument);
+				string macro = builder.CreateBufferSizeMacro1(TargetFunc);
+				string code = $"extern {declare}[];";
+				return code;
+			}
+			catch (Exception ex)
+			when ((ex is ArgumentException) ||
+				(ex is FormatException) ||
+				(ex is NullReferenceException))
+			{
+				throw;
+			}
+		}
+
 		public override string FuncReturnValueDeclare()
 		{
-			string baseCode = base.FuncReturnValueDeclare();
-			string code = $"extern {baseCode}";
-			return code;
+			try
+			{
+				var builder = new StubCodeBuilder();
+				string retValueDeclare = builder.CreateReturnValueBuffer(TargetFunc);
+				string code = $"extern {retValueDeclare}[];";
+				return code;
+			}
+			catch (FormatException)
+			{
+				string code = string.Empty;
+				return code;
+			}
+			catch (ArgumentException)
+			{
+				throw;
+			}
 		}
 
 		protected override string ReturnValueViaArgumentBufferDeclare(Variable argument)

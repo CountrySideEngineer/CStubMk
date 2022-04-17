@@ -35,16 +35,16 @@ namespace CodeTemplate.Template
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n//スタブのバッファの外部宣言\r\n");
+            this.Write("\r\n//スタブのバッファの外部宣言\r\n");
             
-            #line 11 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\HeaderStubTemplate.tt"
+            #line 10 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\HeaderStubTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GenerateBufferDeclareCode()));
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n//スタブの初期化関数\r\n");
+            this.Write("\r\n//スタブの初期化関数\r\n");
             
-            #line 14 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\HeaderStubTemplate.tt"
+            #line 12 "E:\development\CStubMk\dev\dev\CodeTemplate\Template\HeaderStubTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GenerateBufferInitCode()));
             
             #line default

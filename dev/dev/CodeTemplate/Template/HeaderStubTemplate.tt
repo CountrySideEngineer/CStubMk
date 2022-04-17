@@ -6,9 +6,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 //関数のバッファサイズのマクロ
 <#= GenerateStubBufferSizeMacroDefine() #>
-
 //スタブのバッファの外部宣言
 <#= GenerateBufferDeclareCode() #>
-
 //スタブの初期化関数
 <#= GenerateBufferInitCode() #>

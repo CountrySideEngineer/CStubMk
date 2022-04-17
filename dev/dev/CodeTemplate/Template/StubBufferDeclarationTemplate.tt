@@ -6,7 +6,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 //関数の呼び出し回数
 <#= FuncCalledCounterBufferDeclareCode #>
-<#	if (!(string.IsNullOrEmpty(FuncCalledCounterBufferDeclareCode))) {	#>
+<#	if (!(string.IsNullOrEmpty(FuncReturnValueDeclareCode))) {	#>
 
 //関数の戻り値
 <#= FuncReturnValueDeclareCode #>

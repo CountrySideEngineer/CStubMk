@@ -140,7 +140,13 @@ namespace CodeTemplate.Template
 			}
 			try
 			{
-				code += ReturnValueViaDoublePointer(TargetFunc.Arguments);
+				string doublePointerCode = ReturnValueViaDoublePointer(TargetFunc.Arguments);
+				if (!(string.IsNullOrEmpty(code)))
+				{
+					code += Environment.NewLine;
+				}
+				code += doublePointerCode;
+
 			}
 			catch (ArgumentException)
 			{
@@ -198,7 +204,7 @@ namespace CodeTemplate.Template
 			}
 
 			string code = string.Empty;
-			foreach (var item in arguments)
+			foreach (var item in doublePointerArguments)
 			{
 				if (!(string.IsNullOrEmpty(code)))
 				{
@@ -215,7 +221,7 @@ namespace CodeTemplate.Template
 			var builder = new StubCodeBuilder();
 			string calledCounter = builder.CreateFuncCalledCounterBufferName(TargetFunc);
 			string returnValueName = builder.CreateReturnValueBufferViaArgName(TargetFunc, argument);
-			string code = $"*{argument.Name} = &{returnValueName}[{calledCounter}][0];";
+			string code = $"\t*{argument.Name} = &{returnValueName}[{calledCounter}][0];";
 			return code;
 		}
 

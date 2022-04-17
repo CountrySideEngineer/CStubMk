@@ -54,6 +54,7 @@ namespace Parser.SDK.Model
 					{
 						toString += item.ToString();
 					}
+					isTop = false;
 				}
 			}
 			catch (NullReferenceException)

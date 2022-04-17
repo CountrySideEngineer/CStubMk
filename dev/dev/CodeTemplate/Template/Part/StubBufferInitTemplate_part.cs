@@ -79,21 +79,40 @@ namespace CodeTemplate.Template
 			try
 			{
 				var builder = new StubCodeBuilder();
-				string returnValue = builder.CreateReturnValueBufferName(TargetFunc);
 				string code = string.Empty;
-				if (0 == TargetFunc.PointerNum)
+				string returnValueBuffName = builder.CreateReturnValueBufferName(TargetFunc);
+				if (!(string.IsNullOrEmpty(returnValueBuffName)))
 				{
-					code = $"\t{returnValue} = 0;";
+					string bufferSizeMacro = builder.CreateBufferSizeMacro1(TargetFunc);
+					string calledCount = builder.CreateFuncCalledCounterBufferName(TargetFunc);
+					string initialValue = string.Empty;
+					if (0 == TargetFunc.PointerNum)
+					{
+						initialValue = "0";
+					}
+					else
+					{
+						initialValue = "null";
+					}
+					string forLoopStart = $"\tfor (int {INDEXER_1} = 0; " +
+						$"{INDEXER_1} < {bufferSizeMacro}; " +
+						$"{INDEXER_1}++) {{";
+					string forLoopEnd = "\t}";
+					code = $"{forLoopStart}" + 
+						Environment.NewLine +
+						$"\t\t{returnValueBuffName}[{INDEXER_1}] = {initialValue};" + 
+						Environment.NewLine +
+						$"{forLoopEnd}";
 				}
 				else
 				{
-					code = $"\t{returnValue} = null;";
+					code = string.Empty;
 				}
 				return code;
 			}
 			catch (FormatException)
 			{
-				string code = $"//{TargetFunc.Name} has no return value.";
+				string code = string.Empty;
 				return code;
 			}
 			catch (Exception)

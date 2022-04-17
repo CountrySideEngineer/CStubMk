@@ -87,7 +87,7 @@ namespace CodeTemplate.Template
 			}
 			catch (FormatException)
 			{
-				string code = $"//{TargetFunc.Name} returns no value.";
+				string code = string.Empty;
 				return code;
 			}
 			catch (ArgumentException)
