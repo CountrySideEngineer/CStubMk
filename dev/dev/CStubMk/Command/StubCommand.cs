@@ -2,6 +2,7 @@
 using CStubMk.Model;
 using Parser;
 using Parser.SDK.Model;
+using Reader;
 using Reader.FunctionReader;
 using Reader.SDK.Model;
 using System;
@@ -37,7 +38,7 @@ namespace CStubMk.Command
 
 		protected virtual IEnumerable<ParameterInformation> GetInformations(InputInfo input)
 		{
-			var reader = new FunctionInExcelReader();
+			AFunctionReader reader = ReaderFactory.Factory(input.TargetFilePath);
 			IEnumerable<ParameterInformation> infos = reader.Read(input.TargetFilePath);
 			return infos;
 		}
