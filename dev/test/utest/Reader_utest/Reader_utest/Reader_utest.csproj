@@ -53,6 +53,7 @@
     </Compile>
     <Compile Include="FunctionInTextReader_UnitTest.cs" />
     <Compile Include="FunctionInTextReader_UnitTest_ToCodes_test.cs" />
+    <Compile Include="FunctionInTextReader_UnitTest_ToParameterInfoCollection_test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
