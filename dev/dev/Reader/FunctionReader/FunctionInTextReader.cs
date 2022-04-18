@@ -15,7 +15,17 @@ namespace Reader.FunctionReader
 			string allCode = GetAllCode(path);
 			IEnumerable<string> codes = ToCodes(allCode);
 
-			throw new NotImplementedException();
+			var paramInformations = new List<ParameterInformation>();
+			foreach (var code in codes)
+			{
+				var paramInformation = new ParameterInformation()
+				{
+					Code = code,
+					File = string.Empty
+				};
+				paramInformations.Add(paramInformation);
+			}
+			return paramInformations;
 		}
 
 		protected virtual string GetAllCode(string path)
@@ -36,7 +46,14 @@ namespace Reader.FunctionReader
 			{
 				';'
 			};
-			IEnumerable<string> codes = replacedCode.Split(deliminators);
+			IEnumerable<string> splittedCode = replacedCode.Split(deliminators);
+			/*
+			 * The item at tail of splittedCode will be empty.
+			 * If an item is empty or all white space, it rasie an exception.
+			 * To avoid it, all item in the collection should not be empty.
+			 * So, remove the empty item from the list.
+			 */
+			IEnumerable<string> codes = splittedCode.Where(_ => !string.IsNullOrEmpty(_));
 			return codes;
 		}
 	}
