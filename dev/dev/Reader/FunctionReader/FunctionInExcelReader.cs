@@ -28,7 +28,8 @@ namespace Reader.FunctionReader
 		/// <param name="path">Path to file to read.</param>
 		/// <returns>
 		/// Collection of ParameterInformation object which contains the data of method,
-		/// defition and file name.</returns>
+		/// defition and file name.
+		/// </returns>
 		/// <exception cref="ReaderException">Exception detected while reading excel file.</exception>
 		public override IEnumerable<ParameterInformation> Read(string path)
 		{

@@ -1,4 +1,5 @@
-﻿using Reader.SDK.Model;
+﻿using Reader.SDK.Exception;
+using Reader.SDK.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,25 +11,59 @@ namespace Reader.FunctionReader
 {
 	public class FunctionInTextReader : AFunctionReader
 	{
+		/// <summary>
+		/// Read function definition from a file.
+		/// </summary>
+		/// <param name="path">Path to file to read.</param>
+		/// <returns>
+		/// Collection of ParameterInformation object which contains the data of method,
+		/// defition and file name.
+		/// </returns>
+		/// <exception cref="ReaderException">Exception detected while reading excel file.</exception>
 		public override IEnumerable<ParameterInformation> Read(string path)
 		{
-			string allCode = GetAllCode(path);
-			IEnumerable<string> codes = ToCodes(allCode);
-			IEnumerable<ParameterInformation> paramterInformations = ToParameterInformation(codes);
+			try
+			{
+				string allCode = GetAllCode(path);
+				IEnumerable<string> codes = ToCodes(allCode);
+				IEnumerable<ParameterInformation> paramterInformations = ToParameterInformation(codes);
 
-			return paramterInformations;
+				return paramterInformations;
+			}
+			catch (ReaderException)
+			{
+				throw;
+			}
 		}
 
+		/// <summary>
+		/// Read all content in a file specified by path.
+		/// </summary>
+		/// <param name="path">Path to file to read.</param>
+		/// <returns>All content in a file.</returns>
 		protected virtual string GetAllCode(string path)
 		{
-			string allCode = string.Empty;
-			using (var reader = new StreamReader(path, System.Text.Encoding.GetEncoding("shift_jis")))
+			try
 			{
-				allCode = reader.ReadToEnd();
+				string allCode = string.Empty;
+				using (var reader = new StreamReader(path, System.Text.Encoding.GetEncoding("shift_jis")))
+				{
+					allCode = reader.ReadToEnd();
+				}
+				return allCode;
 			}
-			return allCode;
+			catch (IOException ex)
+			{
+				var exception = new ReaderException("The file can not open.", ex);
+				throw ex;
+			}
 		}
 
+		/// <summary>
+		/// Convert text data argument srcCode to collection of string.
+		/// </summary>
+		/// <param name="srcCode">Code to convert.</param>
+		/// <returns>Collection of string code.</returns>
 		protected virtual IEnumerable<string> ToCodes(string srcCode)
 		{
 			//改行を削除
@@ -49,6 +84,11 @@ namespace Reader.FunctionReader
 			return codes;
 		}
 
+		/// <summary>
+		/// Convert collectoin of text code into collection of ParameterInformation object.
+		/// </summary>
+		/// <param name="codes">Collection of code.</param>
+		/// <returns>Collection of ParameterInformation object.</returns>
 		protected virtual IEnumerable<ParameterInformation> ToParameterInformation(IEnumerable<string> codes)
 		{
 			var collection = new List<ParameterInformation>();
@@ -60,6 +100,11 @@ namespace Reader.FunctionReader
 			return collection;
 		}
 
+		/// <summary>
+		/// Convert text code into collection of ParameterInformatin object.
+		/// </summary>
+		/// <param name="code">Code to convert.</param>
+		/// <returns>ParameterInformation object converted from code.</returns>
 		protected virtual ParameterInformation ToParameterInformation(string code)
 		{
 			var parameterInfo = new ParameterInformation()
