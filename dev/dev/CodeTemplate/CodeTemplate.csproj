@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A2048064-EC96-47D5-9872-F5EEF0E3B81E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CodeTemplate</RootNamespace>
+    <AssemblyName>CodeTemplate</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\lib\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\lib\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CodeWriter.SDK">
+      <HintPath>..\lib\CodeWriter.SDK.dll</HintPath>
+    </Reference>
+    <Reference Include="Parser.SDK">
+      <HintPath>..\lib\Parser.SDK.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Builder\StubCodeBuilder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Template\HeaderStubTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HeaderStubTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\Part\HeaderStubTemplate_part.cs" />
+    <Compile Include="Template\Part\SourceStubTemplate_part.cs" />
+    <Compile Include="Template\Part\StubBufferDeclarationTemplate_part.cs" />
+    <Compile Include="Template\Part\StubBufferExternDeclarationTemplate_part.cs" />
+    <Compile Include="Template\Part\StubBufferExternInitTemplate_part.cs" />
+    <Compile Include="Template\Part\StubBufferInitTemplate_part.cs" />
+    <Compile Include="Template\Part\StubBufferSizeMacroDefineTemplate_part.cs" />
+    <Compile Include="Template\Part\StubCodeTemplateCommonBase_part.cs" />
+    <Compile Include="Template\Part\StubSourceBodyTemplate_part.cs" />
+    <Compile Include="Template\SourceStubTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SourceStubTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\StubBufferDeclarationTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StubBufferDeclarationTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\StubBufferExternDeclarationTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StubBufferExternDeclarationTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\StubBufferExternInitTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StubBufferExternInitTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\StubBufferInitTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StubBufferInitTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\StubBufferSizeMacroDefineTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StubBufferSizeMacroDefineTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\StubCodeTemplateCommonBase.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StubCodeTemplateCommonBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\StubSourceBodyTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StubSourceBodyTemplate.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Template\HeaderStubTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>HeaderStubTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Template\SourceStubTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>SourceStubTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Template\StubBufferDeclarationTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>StubBufferDeclarationTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Template\StubBufferExternDeclarationTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>StubBufferExternDeclarationTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Template\StubBufferExternInitTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>StubBufferExternInitTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Template\StubBufferInitTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>StubBufferInitTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Template\StubBufferSizeMacroDefineTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>StubBufferSizeMacroDefineTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Template\StubCodeTemplateCommonBase.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>StubCodeTemplateCommonBase.cs</LastGenOutput>
+    </Content>
+    <Content Include="Template\StubSourceBodyTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>StubSourceBodyTemplate.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

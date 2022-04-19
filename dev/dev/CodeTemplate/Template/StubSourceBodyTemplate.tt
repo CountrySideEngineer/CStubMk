@@ -1,0 +1,31 @@
+﻿<#@ template language="C#" 
+	inherits="StubCodeTemplateCommonBase" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#= StubBodyEntryPoint() #>
+{
+<#	if (!(string.IsNullOrEmpty(LatchReturnValueCode))) {	#>
+	//スタブの戻り値のラッチ
+<#= LatchReturnValueCode #>
+
+<#	}	#>
+<#	if (!(string.IsNullOrEmpty(BackupArgToBufferCode))) {	#>
+	//引数のバッファへの格納
+<#= BackupArgToBufferCode #>
+
+<#	}	#>
+<#	if (!(string.IsNullOrEmpty(ReturnValueViaPointerCode))) {	#>
+	//ポインタ引数を介した戻り値
+<#= ReturnValueViaPointerCode #>
+
+<#	}	#>
+	//呼び出し回数の更新
+<#= UpdateCalledCounter() #>
+<#	if (!(string.IsNullOrEmpty(ReturnValueCode))) {	#>
+
+	//関数戻り値
+<#= ReturnValue() #>
+<#	}	#>
+}

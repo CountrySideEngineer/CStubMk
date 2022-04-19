@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CStubMKGui": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
