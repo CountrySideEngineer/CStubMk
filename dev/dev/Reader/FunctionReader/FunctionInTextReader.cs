@@ -30,6 +30,10 @@ namespace Reader.FunctionReader
 
 				return paramterInformations;
 			}
+			catch (ArgumentException ex)
+			{
+				throw new ReaderException(ex.Message);
+			}
 			catch (ReaderException)
 			{
 				throw;
@@ -41,6 +45,7 @@ namespace Reader.FunctionReader
 		/// </summary>
 		/// <param name="path">Path to file to read.</param>
 		/// <returns>All content in a file.</returns>
+		/// <exception cref="ReaderException"></exception>
 		protected virtual string GetAllCode(string path)
 		{
 			try
@@ -64,8 +69,13 @@ namespace Reader.FunctionReader
 		/// </summary>
 		/// <param name="srcCode">Code to convert.</param>
 		/// <returns>Collection of string code.</returns>
+		/// <exception cref="ArgumentException"></exception>
 		protected virtual IEnumerable<string> ToCodes(string srcCode)
 		{
+			if ((string.IsNullOrEmpty(srcCode)) || (string.IsNullOrWhiteSpace(srcCode)))
+			{
+				throw new ArgumentException("The codes are empty.");
+			}
 			//改行を削除
 			string replacedCode = srcCode.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "");
 			char[] deliminators = new char[]

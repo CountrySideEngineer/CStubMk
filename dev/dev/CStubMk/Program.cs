@@ -42,13 +42,20 @@ namespace CStubMk
 
 		static void exec(string filePath, string dirPath)
 		{
-			var inputInfo = new InputInfo()
+			try
 			{
-				TargetFilePath = filePath,
-				OuptutDirPath =dirPath
-			};
-			var command = new StubCommand();
-			command.Execute(inputInfo);
+				var inputInfo = new InputInfo()
+				{
+					TargetFilePath = filePath,
+					OuptutDirPath = dirPath
+				};
+				var command = new StubCommand();
+				command.Execute(inputInfo);
+			}
+			catch (Exception ex)
+			{
+				Console.Write($"[ERROR] - {ex.Message}\n");
+			}
 		}
 
 	}

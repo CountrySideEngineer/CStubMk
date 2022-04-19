@@ -4,6 +4,7 @@ using Parser;
 using Parser.SDK.Model;
 using Reader;
 using Reader.FunctionReader;
+using Reader.SDK.Exception;
 using Reader.SDK.Model;
 using System;
 using System.Collections.Generic;
@@ -19,21 +20,28 @@ namespace CStubMk.Command
 	{
 		public void Execute(InputInfo input)
 		{
-			IEnumerable<ParameterInformation> infos = GetInformations(input);
-			IEnumerable<Parameter> parameters = ParseParameters(infos);
-			(string srcCode, string hdrCode) = GenerateStubCode(parameters);
-			(string srcPath, string hdrPath) = GetStubFilePath(input);
-			if ((CheckFile(srcPath)) && (CheckFile(hdrPath)))
+			try
 			{
-				WriteCode(srcPath, srcCode);
-				WriteCode(hdrPath, hdrCode);
-			}
-			else
-			{
-				throw new FileNotFoundException();
-			}
+				IEnumerable<ParameterInformation> infos = GetInformations(input);
+				IEnumerable<Parameter> parameters = ParseParameters(infos);
+				(string srcCode, string hdrCode) = GenerateStubCode(parameters);
+				(string srcPath, string hdrPath) = GetStubFilePath(input);
+				if ((CheckFile(srcPath)) && (CheckFile(hdrPath)))
+				{
+					WriteCode(srcPath, srcCode);
+					WriteCode(hdrPath, hdrCode);
+				}
+				else
+				{
+					throw new FileNotFoundException();
+				}
 
-			return;
+				return;
+			}
+			catch (ReaderException)
+			{
+				throw new Exception("An exception has been detected while reading input file.");
+			}
 		}
 
 		protected virtual IEnumerable<ParameterInformation> GetInformations(InputInfo input)
