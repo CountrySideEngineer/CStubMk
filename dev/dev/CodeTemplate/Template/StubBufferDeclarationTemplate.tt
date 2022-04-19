@@ -1,0 +1,28 @@
+﻿<#@ template language="C#" 
+	inherits="StubCodeTemplateCommonBase" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+//関数の呼び出し回数
+<#= FuncCalledCounterBufferDeclareCode #>
+<#	if (!(string.IsNullOrEmpty(FuncReturnValueDeclareCode))) {	#>
+
+//関数の戻り値
+<#= FuncReturnValueDeclareCode #>
+<#	}	#>
+<#	if (!(string.IsNullOrEmpty(ArgBufferDeclareCode))) {	#>
+
+//引数
+<#= ArgBufferDeclareCode #>
+<#	}	#>
+<#	if (!(string.IsNullOrEmpty(FuncReturnValueViaArgBufferDeclareCode))) {	#>
+
+//ポインタ経由での戻り値
+<#= FuncReturnValueViaArgBufferDeclareCode #>
+<#	}	#>
+<#	if (!(string.IsNullOrEmpty(FuncReturnValueSizeViaArgBufferDeclareCode))) {	#>
+
+//ポインタ経由での戻り値のサイズ
+<#=	FuncReturnValueSizeViaArgBufferDeclareCode #>
+<#	}	#>
