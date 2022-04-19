@@ -54,6 +54,32 @@ namespace CStubMKGui.Model
             this.Parameters = src.Parameters;
             this.Mode = src.Mode;
         }
+		#endregion
+
+		#region Public methods.
+        public override string ToString()
+		{
+            string toString = "";
+            if ((!string.IsNullOrEmpty(this.Prefix)) || 
+                (!string.IsNullOrWhiteSpace(this.Prefix)))
+            {
+                toString += (this.Prefix + " ");
+			}
+            toString += this.DataType;
+            if (!(string.IsNullOrEmpty(this.Postifx)) ||
+                !(string.IsNullOrWhiteSpace(this.Postifx)))
+            {
+                toString += (" " + this.Postifx);
+            }
+            for (int index = 0; index < this.PointerNum; index++)
+			{
+                toString += "*";
+			}
+            toString += (" " + this.Name);
+
+            return toString;
+        }
+
         #endregion
 
         #region Public properties
@@ -72,6 +98,34 @@ namespace CStubMKGui.Model
         /// If function, data type of return value.
         /// </summary>
         public String DataType { get; set; }
+
+        /// <summary>
+        /// Actual, true data type.
+        /// This property returns data type with pre/post fix like const and pointer.
+        /// </summary>
+        public String ActualDataType
+		{
+            get
+			{
+                String dataType = "";
+                if ((!(String.IsNullOrWhiteSpace(this.Prefix))) ||
+                    (!(String.IsNullOrEmpty(this.Prefix))))
+				{
+                    dataType += (this.Prefix + " ");
+				}
+                dataType += this.DataType;
+                for (int index = 0; index < this.PointerNum; index++)
+				{
+                    dataType += "*";
+				}
+                if ((!(String.IsNullOrWhiteSpace(this.Postifx))) ||
+                    (!(String.IsNullOrEmpty(this.Postifx))))
+                {
+                    dataType += (" " + this.Postifx);
+                }
+                return dataType;
+			}
+		}
 
         /// <summary>
         /// Prefix for data type.

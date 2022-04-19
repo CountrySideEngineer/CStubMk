@@ -34,7 +34,7 @@
                    HorizontalAlignment="Right"
                    VerticalAlignment="Center"
                    TextAlignment="Left"
-                   Text="スタブ定義ファイル：" 
+                   Text="対象関数定義：" 
                    />
         <TextBox x:Name="StubDefFilePathTextBox"
                  Grid.Row="0"
@@ -50,7 +50,7 @@
                    HorizontalAlignment="Right"
                    VerticalAlignment="Center"
                    TextAlignment="Left"
-                   Text="スタブ出力フォルダ：" 
+                   Text="出力フォルダ：" 
                    />
         <TextBox x:Name="StubOutputPathTextBox"
                  Grid.Row="1"

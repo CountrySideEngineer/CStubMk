@@ -6,6 +6,8 @@ using System.Text;
 
 namespace CStubMKGui.Model
 {
+	using System.Diagnostics;
+	using template;
     /// <summary>
     /// Create source file to create C language source file.
     /// </summary>
@@ -26,7 +28,16 @@ namespace CStubMKGui.Model
         /// <param name="parameters">Parameters to create stub.</param>
         public virtual void Create(string outputPath, IEnumerable<Param> parameters)
         {
-            this.CreateStub(outputPath, parameters);
+            var template = new SourceStubTemplate(parameters);
+            var content = template.TransformText();
+
+            Debug.WriteLine(content);
+
+            var headerTemplate = new HeaderStubTemplate(parameters);
+            content = headerTemplate.TransformText();
+
+            Debug.WriteLine(content);
+
         }
 
         /// <summary>

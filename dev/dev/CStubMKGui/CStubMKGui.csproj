@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon />
     <StartupObject>CStubMKGui.App</StartupObject>
@@ -21,6 +21,43 @@
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.94.2" />
     <PackageReference Include="OpenCover" Version="4.7.922" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Model\template\HeaderStubTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>HeaderStubtemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Model\template\SourceStubTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>SourceStubTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Model\template\StubCodeTemplateBase.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>StubCodeTemplateBase.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Model\template\HeaderStubtemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>HeaderStubTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Model\template\SourceStubTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SourceStubTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Model\template\StubCodeTemplateBase.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StubCodeTemplateBase.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>
