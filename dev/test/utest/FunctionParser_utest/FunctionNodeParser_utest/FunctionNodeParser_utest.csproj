@@ -54,8 +54,9 @@
     <Compile Include="..\..\..\..\dev\FunctionParser\VariableNodeParser.cs">
       <Link>VariableNodeParser.cs</Link>
     </Compile>
-    <Compile Include="FunctionNodeParse_utest.cs" />
-    <Compile Include="FunctionNodeParse_utest_SplitToFuncAndArg.cs" />
+    <Compile Include="FunctionNodeParser_utest.cs" />
+    <Compile Include="FunctionNodeParser_utest_Parse.cs" />
+    <Compile Include="FunctionNodeParser_utest_SplitToFuncAndArg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,7 @@ using System;
 namespace FunctionNodeParser_utest
 {
 	[TestClass]
-	public partial class FunctionNodeParse_utest
+	public partial class FunctionNodeParser_utest
 	{
 	}
 }

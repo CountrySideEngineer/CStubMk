@@ -59,6 +59,13 @@ namespace FunctionParser
 			return splittedNode;
 		}
 
+		protected override IEnumerable<string> NodeToCollection(string node, char[] deliminator)
+		{
+			IEnumerable<string> nodes = base.NodeToCollection(node, deliminator);
+			IEnumerable<string> nodesWithoutWhiteSpace = nodes.Where(_ => (!string.IsNullOrEmpty(_)) && (!(string.IsNullOrWhiteSpace(_))));
+			return nodesWithoutWhiteSpace;
+		}
+
 		/// <summary>
 		/// Get the number of pointer character "*" in the data type.
 		/// </summary>
