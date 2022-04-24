@@ -66,7 +66,7 @@ namespace Parser
 		/// <returns>Function object which contains name and data type.</returns>
 		protected Function ParseFunction(string code)
 		{
-			List<string> nodes = codeToNodes(code).ToList();
+			List<string> nodes = CodeToNode(code).ToList();
 			if (nodes.Count() < 2)
 			{
 				throw new ParserException("Function declare invalid.");
@@ -145,7 +145,7 @@ namespace Parser
 			}
 		}
 
-		protected IEnumerable<string> codeToNodes(string code)
+		protected IEnumerable<string> CodeToNode(string code)
 		{
 			string codePointerWithSpace = code.Replace("*", " * ");
 			string codeWithoutLf = codePointerWithSpace.Replace("\r\n", "\n");
@@ -174,7 +174,7 @@ namespace Parser
 		/// <exception cref="ParserException">The argument code is invalid.</exception>
 		protected Variable ParseVariableNode(string code)
 		{
-			List<string> nodes = codeToNodes(code).ToList();
+			List<string> nodes = CodeToNode(code).ToList();
 			if (nodes.Count() < 2)
 			{
 				try
@@ -231,7 +231,7 @@ namespace Parser
 		/// <exception cref="ParserException">The argument code is invalid format.</exception>
 		protected Variable ParseDataTypeNode(string code)
 		{
-			IEnumerable<string> nodes = codeToNodes(code);
+			IEnumerable<string> nodes = CodeToNode(code);
 			if (nodes.Count() < 1)
 			{
 				throw new ParserException("Variable codes invalid.");
