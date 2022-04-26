@@ -44,8 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FunctionNodeParser.cs" />
     <Compile Include="FunctionParser.cs" />
+    <Compile Include="ParameterNodeParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VariableNodeParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Parser.SDK\Parser.SDK.csproj">
