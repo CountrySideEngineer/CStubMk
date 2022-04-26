@@ -67,5 +67,20 @@ namespace VariableNodeParser_utest
 			Assert.AreEqual("Variable", variable.Name);
 			Assert.AreEqual(1, variable.PointerNum);
 		}
+
+		[TestMethod]
+		[TestCategory("VariableNodeParser")]
+		[TestCategory("ParseNode")]
+		public void ParseNode_test_005()
+		{
+			string node = "Type** Variable";
+			var parser = new VariableNodeParser();
+			var privateParser = new PrivateObject(parser);
+			var variable = (Variable)privateParser.Invoke("ParseNode", node);
+
+			Assert.AreEqual("Type", variable.DataType);
+			Assert.AreEqual("Variable", variable.Name);
+			Assert.AreEqual(2, variable.PointerNum);
+		}
 	}
 }

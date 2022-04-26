@@ -52,15 +52,20 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\..\dev\FunctionParser\FunctionNodeParser.cs">
+      <Link>FunctionNodeParser.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\..\dev\FunctionParser\FunctionParser.cs">
       <Link>FunctionParser.cs</Link>
     </Compile>
-    <Compile Include="FunctionParser_UnitTest_ParseDataTypeNode.cs" />
+    <Compile Include="..\..\..\..\dev\FunctionParser\ParameterNodeParser.cs">
+      <Link>ParameterNodeParser.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\dev\FunctionParser\VariableNodeParser.cs">
+      <Link>VariableNodeParser.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FunctionParser_UnitTest_ParseVariableNode_001.cs" />
     <Compile Include="FunctionParser_UnitTest.cs" />
-    <Compile Include="FunctionParser_UnitTest_ParseArguments.cs" />
-    <Compile Include="FunctionParser_UnitTest_ParseVariableNode_002.cs" />
     <Compile Include="FunctionParser_UnitTest_Parse_001.cs" />
   </ItemGroup>
   <ItemGroup>

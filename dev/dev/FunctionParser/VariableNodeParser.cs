@@ -56,7 +56,13 @@ namespace FunctionParser
 		{
 			string pointerSpacedNode = node.Replace("*", " * ");
 			(string dataType, string name) splittedNode = base.SplitToDataTypeAndName(pointerSpacedNode);
-			return splittedNode;
+			/*
+			 * Data type in splittedNode.dataType has white space in front and behind of "*".
+			 * The space make the data type invalid.
+			 * To correct the format of it, remove them.
+			 */
+			string dataTypeWithPointer = System.Text.RegularExpressions.Regex.Replace(splittedNode.dataType, @"[\s]+", "");
+			return (dataTypeWithPointer, splittedNode.name);
 		}
 
 		protected override IEnumerable<string> NodeToCollection(string node, char[] deliminator)

@@ -77,6 +77,11 @@ namespace FunctionParser
 			try
 			{
 				(string dataType, string name) = SplitToDataTypeAndName(node);
+				if ((dataType.ToLower().Equals("void")) && 
+					((string.IsNullOrEmpty(name)) || (string.IsNullOrWhiteSpace(name))))
+				{
+					throw new ArgumentException();
+				}
 				var parameter = new Parameter()
 				{
 					Name = name,
