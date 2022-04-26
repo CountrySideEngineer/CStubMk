@@ -187,7 +187,7 @@ namespace CodeTemplate.Builder
 				}
 				if ((argument.DataType.ToLower().Equals("void")) && (!(0 < argument.PointerNum)))
 				{
-					throw new FormatException("The argument has no return value.");
+					throw new FormatException("The argument has no argument.");
 				}
 				string buffDataType = $"{argument.DataType}";
 				for (int index = 0; index < argument.PointerNum; index++)
