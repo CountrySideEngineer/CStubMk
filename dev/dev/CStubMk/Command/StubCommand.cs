@@ -58,7 +58,7 @@ namespace CStubMk.Command
 			{
 				codes.Add(paramInfo.Code);
 			}
-			var parser = new FunctionParser();
+			var parser = new Parser.FunctionParser();
 			IEnumerable<Parameter> parameters = parser.Parse(codes);
 			return parameters;
 		}
