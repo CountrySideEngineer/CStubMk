@@ -30,7 +30,7 @@ namespace CStubMk
 			};
 			string inputFilePath = string.Empty;
 			string outputDirPath = string.Empty;
-			Action<string, string> handle = exec;
+			Action<string, string> handle = Exec;
 
 			stubCommand.SetHandler(handle, fOption, oOption);
 			rootCommand.AddCommand(stubCommand);
@@ -40,7 +40,7 @@ namespace CStubMk
 			int result = rootCommand.Invoke(args);
 		}
 
-		static void exec(string filePath, string dirPath)
+		static void Exec(string filePath, string dirPath)
 		{
 			try
 			{

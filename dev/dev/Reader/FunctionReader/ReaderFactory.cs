@@ -8,6 +8,9 @@ namespace Reader.FunctionReader
 {
 	public class ReaderFactory
 	{
+		protected static string TextExtention = ".txt";
+		protected static string ExcelExtention = ".xlsx";
+
 		public static AFunctionReader Factory(string inputFile)
 		{
 			if (!(System.IO.File.Exists(inputFile)))
@@ -17,11 +20,11 @@ namespace Reader.FunctionReader
 
 			AFunctionReader reader = null;
 			string extension = System.IO.Path.GetExtension(inputFile).ToLower();
-			if (extension.Equals(".xlsx"))
+			if (extension.Equals(ExcelExtention))
 			{
 				reader = new FunctionInExcelReader();
 			}
-			else if (extension.Equals(".txt"))
+			else if (extension.Equals(TextExtention))
 			{
 				reader = new FunctionInTextReader();
 			}
