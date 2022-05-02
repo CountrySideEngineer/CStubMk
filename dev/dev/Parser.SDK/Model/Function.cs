@@ -24,17 +24,17 @@ namespace Parser.SDK.Model
 		/// Convert to string.
 		/// </summary>
 		/// <returns>Function in string data type.</returns>
+		/// <exception cref="FormatException"></exception>
+		/// <remarks>
+		/// 本関数では、引数情報のチェックは実施しない。
+		/// そのため、引数にポインタ無しのvoid型が指定されていた場合にも、エラーとはしない。
+		/// In this method, arguments are not checked.
+		/// So, if argument whose data type is "void" and pointer num is 0 will not be error.
+		/// </remarks>
 		public override string ToString()
 		{
-			string toString = string.Empty;
-
 			//関数宣言
-			toString = $"{DataType}";
-			for (int index = 0; index < PointerNum; index++)
-			{
-				toString += "*";
-			}
-			toString += $" {Name}";
+			string toString = base.ToString();
 			toString += "(";
 			bool isTop = true;
 			try
@@ -46,14 +46,7 @@ namespace Parser.SDK.Model
 						toString += ", ";
 					}
 					string itemString = item.ToString();
-					if (itemString.ToLower().Equals("void "))
-					{
-						toString += "void";
-					}
-					else
-					{
-						toString += item.ToString();
-					}
+					toString += itemString;
 					isTop = false;
 				}
 			}
@@ -67,6 +60,16 @@ namespace Parser.SDK.Model
 			toString += ")";
 
 			return toString;
+		}
+
+		public override void CopyTo(Parameter dst)
+		{
+			base.CopyTo(dst);
+			if (dst is Function)
+			{
+				var function = dst as Function;
+				function.Arguments = new List<Parameter>(Arguments);
+			}
 		}
 	}
 }

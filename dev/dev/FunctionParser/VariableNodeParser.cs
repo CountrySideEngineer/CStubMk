@@ -20,16 +20,10 @@ namespace FunctionParser
 			try
 			{
 				Parameter baseParameter = base.ParseNode(node);
-				string dataType = baseParameter.DataType;
-				int pointerNum = GetPointerNum(dataType);
-				string dataTypeWithoutPointer = RemovePointer(dataType);
-
-				var variable = new Variable()
-				{
-					Name = baseParameter.Name,
-					DataType = dataTypeWithoutPointer,
-					PointerNum = pointerNum
-				};
+				Parameter variable = new Variable();
+				baseParameter.CopyTo(variable);
+				((Variable)variable).PointerNum = GetPointerNum(baseParameter.DataType);
+				((Variable)variable).DataType = RemovePointer(baseParameter.DataType);
 				return variable;
 			}
 			catch (ArgumentException ex)
@@ -55,14 +49,16 @@ namespace FunctionParser
 		protected override (string dataType, string name) SplitToDataTypeAndName(string node)
 		{
 			string pointerSpacedNode = node.Replace("*", " * ");
-			(string dataType, string name) splittedNode = base.SplitToDataTypeAndName(pointerSpacedNode);
+			(string dataType, string name) = base.SplitToDataTypeAndName(pointerSpacedNode);
 			/*
 			 * Data type in splittedNode.dataType has white space in front and behind of "*".
 			 * The space make the data type invalid.
 			 * To correct the format of it, remove them.
 			 */
-			string dataTypeWithPointer = System.Text.RegularExpressions.Regex.Replace(splittedNode.dataType, @"[\s]+", "");
-			return (dataTypeWithPointer, splittedNode.name);
+			string dataTypeWithPointer = dataType
+				.Replace(" *", "*")
+				.Replace("* ", "*");
+			return (dataTypeWithPointer, name);
 		}
 
 		protected override IEnumerable<string> NodeToCollection(string node, char[] deliminator)
