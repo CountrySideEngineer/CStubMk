@@ -22,8 +22,21 @@ namespace CStubMk.Command
 		{
 			try
 			{
-				IEnumerable<ParameterInformation> infos = GetInformations(input);
-				IEnumerable<Parameter> parameters = ParseParameters(infos);
+				CommandSequence(input);
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+		}
+
+		protected virtual void CommandSequence(InputInfo input)
+		{
+			try
+			{
+				AFunctionReader reader = GetReader(input);
+				IEnumerable<ParameterInformation> parameterInfos = GetInformationsByReader(input, reader);
+				IEnumerable<Parameter> parameters = ParseParameters(parameterInfos);
 				(string srcCode, string hdrCode) = GenerateStubCode(parameters);
 				(string srcPath, string hdrPath) = GetStubFilePath(input);
 				if ((CheckFile(srcPath)) && (CheckFile(hdrPath)))
@@ -44,9 +57,14 @@ namespace CStubMk.Command
 			}
 		}
 
-		protected virtual IEnumerable<ParameterInformation> GetInformations(InputInfo input)
+		protected virtual AFunctionReader GetReader(InputInfo input)
 		{
 			AFunctionReader reader = ReaderFactory.Factory(input.TargetFilePath);
+			return reader;
+		}
+
+		protected virtual IEnumerable<ParameterInformation> GetInformationsByReader(InputInfo input, AFunctionReader reader)
+		{
 			IEnumerable<ParameterInformation> infos = reader.Read(input.TargetFilePath);
 			return infos;
 		}

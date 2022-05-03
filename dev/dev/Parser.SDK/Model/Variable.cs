@@ -27,14 +27,37 @@ namespace Parser.SDK.Model
 		/// <returns>Variable in string.</returns>
 		public override string ToString()
 		{
+			string toString = string.Empty;
+			foreach (var item in PreModifiers)
+			{
+				toString += item;
+				toString += " ";
+			}
 			string pointers = string.Empty;
 			for (int index = 0; index < PointerNum; index++)
 			{
 				pointers += "*";
 			}
-
-			string toString = $"{DataType}{pointers} {Name}";
+			toString += $"{DataType}{pointers}";
+			if ((!(string.IsNullOrEmpty(Name))) && (!(string.IsNullOrWhiteSpace(Name))))
+			{
+				toString += $" {Name}";
+			}
 			return toString;
+		}
+
+		/// <summary>
+		/// Copy data to Variable object.
+		/// </summary>
+		/// <param name="dst">Reference to Variable object, Parameter object data type, to copy to.</param>
+		public override void CopyTo(Parameter dst)
+		{
+			base.CopyTo(dst);
+			if (dst is Variable)
+			{
+				var variable = dst as Variable;
+				variable.PointerNum = PointerNum;
+			}
 		}
 	}
 }
