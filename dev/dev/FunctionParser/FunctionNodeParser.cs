@@ -80,13 +80,9 @@ namespace FunctionParser
 			(string func, string arg) = SplitToFuncAndArg(node);
 			IEnumerable<Parameter> args = ParseArgNode(arg);
 			Variable variable = (Variable)base.ParseNode(func);
-			Function function = new Function()
-			{
-				DataType = variable.DataType,
-				Name = variable.Name,
-				PointerNum = variable.PointerNum,
-				Arguments = args
-			};
+			Parameter function = new Function();
+			variable.CopyTo(function);
+			((Function)function).Arguments = args;
 			return function;
 		}
 
@@ -139,12 +135,11 @@ namespace FunctionParser
 		protected virtual (string func, string arg) SplitToFuncAndArg(string node)
 		{
 			string func = string.Empty;
-			string arg = string.Empty;
 			try
 			{
 				IEnumerable<string> splittedNode = NodeToCollection(node, CodeDeliminator_FUNC_AND_ARG);
 				func = splittedNode.ElementAt(0);
-				arg = splittedNode.ElementAt(1);
+				string arg = splittedNode.ElementAt(1);
 				return (func, arg);
 			}
 			catch (ArgumentException)
@@ -152,7 +147,7 @@ namespace FunctionParser
 				string codeToCheck = func + "()";
 				if (node.Equals(codeToCheck))
 				{
-					arg = string.Empty;
+					string arg = string.Empty;
 					return (func, arg);
 				}
 				else

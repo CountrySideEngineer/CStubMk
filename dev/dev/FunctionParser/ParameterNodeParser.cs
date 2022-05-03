@@ -12,6 +12,7 @@ namespace FunctionParser
 		//Deliminator to separate code into collection of nodes.
 		protected char[] CodeDeliminator = { ',' };
 		protected char[] CodeDeliminator_TYPE_AND_NAME = { ' ', '\t', '\r', '\n' };
+		protected char[] CodeDeliminator_MOD_AND_TYPE = { ' ', '\t', '\r', '\n' };
 		protected char[] CodeDeliminator_VOID = { ',', ' ', '\t', '\r', '\n' };
 
 		/// <summary>
@@ -76,7 +77,8 @@ namespace FunctionParser
 		{
 			try
 			{
-				(string dataType, string name) = SplitToDataTypeAndName(node);
+				(string type, string name) = SplitToDataTypeAndName(node);
+				(IEnumerable<string> modifier, string dataType) = SplitToModifierAndName(type);
 				if ((dataType.ToLower().Equals("void")) && 
 					((string.IsNullOrEmpty(name)) || (string.IsNullOrWhiteSpace(name))))
 				{
@@ -86,6 +88,7 @@ namespace FunctionParser
 				{
 					Name = name,
 					DataType = dataType,
+					PreModifiers = modifier,
 					FileName = string.Empty
 				};
 				return parameter;
@@ -135,6 +138,31 @@ namespace FunctionParser
 
 			string dataType = string.Join(" ", nodeCollection);
 			return (dataType, name);
+		}
+
+		protected virtual (IEnumerable<string> modifier, string name) SplitToModifierAndName(string node)
+		{
+			List<string> modifier = null;
+			string name = string.Empty;
+			var splittedNode = 
+				node.Split(CodeDeliminator_MOD_AND_TYPE, StringSplitOptions.RemoveEmptyEntries).ToList();
+			if (1 == splittedNode.Count())
+			{
+				modifier = new List<string>();
+				name = splittedNode.First();
+			}
+			else if (1 < splittedNode.Count())
+			{
+				int nameIndex = splittedNode.Count() - 1;
+				name = splittedNode.ElementAt(nameIndex);
+				splittedNode.RemoveAt(nameIndex);
+				modifier = splittedNode;
+			}
+			else
+			{
+				throw new ArgumentException();
+			}
+			return (modifier, name);
 		}
 
 		/// <summary>
