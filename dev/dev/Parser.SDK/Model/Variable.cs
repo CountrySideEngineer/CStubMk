@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Parser.SDK.Exception;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -57,6 +58,39 @@ namespace Parser.SDK.Model
 			{
 				var variable = dst as Variable;
 				variable.PointerNum = PointerNum;
+			}
+		}
+
+		/// <summary>
+		/// Validate parameters.
+		/// </summary>
+		/// <exception cref="InvalidOperationException"></exception>
+		public override void Validate()
+		{
+			try
+			{
+				base.Validate();
+			}
+			catch (ParameterException ex)
+			{
+				if (ex.Code.Equals(ParserError.INVALID_DATA_TYPE_VOID))
+				{
+					if ((DataType.ToLower().Equals("void")) &&
+						(PointerNum < 1) &&
+						((!string.IsNullOrEmpty(Name)) && (!string.IsNullOrWhiteSpace(Name))))
+					{
+						throw;
+					}
+				}
+				else
+				{
+					throw;
+				}
+			}
+
+			if (PointerNum < 0)
+			{
+				throw new ParameterException(ParserError.INVALID_POINER_LEVEL);
 			}
 		}
 	}
