@@ -13,6 +13,6 @@ namespace Parser.SDK.Exception
 		public const UInt32 INVALID_DATA_TYPE_VOID = 0x10000003;
 		public const UInt32 INVALID_NAME = 0x10000004;
 		public const UInt32 NAME_EMPTY = 0x10000005;
-		public const UInt32 INVALID_POINER_LEVEL = 0x10000006;
+		public const UInt32 INVALID_POINTER_LEVEL = 0x10000006;
 	}
 }
