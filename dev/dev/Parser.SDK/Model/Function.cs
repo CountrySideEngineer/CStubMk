@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Parser.SDK.Exception;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,6 +70,58 @@ namespace Parser.SDK.Model
 			{
 				var function = dst as Function;
 				function.Arguments = new List<Parameter>(Arguments);
+			}
+		}
+
+		/// <summary>
+		/// Validate parameters.
+		/// </summary>
+		/// <exception cref="InvalidOperationException"></exception>
+		public override void Validate()
+		{
+			try
+			{
+				base.Validate();
+			}
+			catch(ParameterException ex)
+			{
+				if (ex.Code.Equals(ParserError.INVALID_DATA_TYPE_VOID)) {
+
+					//関数の場合、データ型がvoid、かつ名前が空ではない場合を許容する。
+					//そのため、この例外は無視して問題ない。
+					//For functions, a case that the data type is void and the name is
+					//not empty is acceptable.
+					//So there is no problem to ignore the exception.
+				}
+				else
+				{
+					throw;
+				}
+			}
+
+			bool isTop = true;
+			foreach (var argItem in Arguments)
+			{
+				try
+				{
+					argItem.Validate();
+				}
+				catch (ParameterException ex)
+				{
+					if (ex.Code.Equals(ParserError.INVALID_DATA_TYPE_VOID))
+					{
+						if (isTop)
+						{
+							//先頭の引数がvoid型の場合は許容する。
+							//A case that 1st argument data type is void is acceptable.
+						}
+						else
+						{
+							throw;
+						}
+					}
+				}
+				isTop = false;
 			}
 		}
 	}
