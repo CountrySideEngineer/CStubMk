@@ -1,6 +1,7 @@
 ﻿using CodeTemplate.Template;
 using CStubMk.Model;
 using Parser;
+using Parser.SDK.Exception;
 using Parser.SDK.Model;
 using Reader;
 using Reader.FunctionReader;
@@ -18,6 +19,11 @@ namespace CStubMk.Command
 {
 	public class StubCommand : ICommand
 	{
+		/// <summary>
+		/// Execute "stub" command
+		/// </summary>
+		/// <param name="input">Command input information,</param>
+		/// <exception cref="Exception"></exception>
 		public void Execute(InputInfo input)
 		{
 			try
@@ -30,6 +36,12 @@ namespace CStubMk.Command
 			}
 		}
 
+		/// <summary>
+		/// Run "stub" command sequence
+		/// </summary>
+		/// <param name="input">Command input information</param>
+		/// <exception cref="ReaderException"></exception>
+		/// <exception cref="ParserException"></exception>
 		protected virtual void CommandSequence(InputInfo input)
 		{
 			try
@@ -54,6 +66,13 @@ namespace CStubMk.Command
 			catch (ReaderException)
 			{
 				throw new Exception("An exception has been detected while reading input file.");
+			}
+			catch (ParserException ex)
+			{
+				string message = $"An exception has been detected while parsing data." +
+					Environment.NewLine +
+					$"Error code - 0x{ex.Code.ToString("X8")}";
+				throw new Exception(message);
 			}
 		}
 
