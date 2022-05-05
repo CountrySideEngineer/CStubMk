@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Parser.SDK.Exception;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -65,6 +66,36 @@ namespace Parser.SDK.Model
 			dst.DataType = DataType;
 			dst.FileName = FileName;
 			dst.PreModifiers = new List<string>(PreModifiers);
+		}
+
+		/// <summary>
+		/// Validate parameters.
+		/// </summary>
+		/// <exception cref="InvalidOperationException"></exception>
+		public virtual void Validate()
+		{
+			//Check data type.
+			if ((string.IsNullOrEmpty(DataType)) || (string.IsNullOrWhiteSpace(DataType)))
+			{
+				throw new ParameterException(ParserError.DATA_TYPE_EMPTY);
+			}
+			else
+			{
+				if (DataType.ToLower().Equals("void"))
+				{
+					if ((!string.IsNullOrEmpty(Name)) && (!string.IsNullOrWhiteSpace(Name)))
+					{
+						throw new ParameterException(ParserError.INVALID_DATA_TYPE_VOID);
+					}
+				}
+				else
+				{
+					if ((string.IsNullOrEmpty(Name)) || (string.IsNullOrWhiteSpace(Name)))
+					{
+						throw new ParameterException(ParserError.NAME_EMPTY);
+					}
+				}
+			}
 		}
 	}
 }
