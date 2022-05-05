@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exception\ParameterException.cs" />
+    <Compile Include="Exception\ParserError.cs" />
     <Compile Include="Exception\ParserException.cs" />
     <Compile Include="Interface\IParser.cs" />
     <Compile Include="Model\Function.cs" />
