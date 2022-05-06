@@ -1,4 +1,5 @@
-﻿using Parser.SDK.Model;
+﻿using Parser.SDK.Exception;
+using Parser.SDK.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +28,13 @@ namespace FunctionParser
 		/// 解析したParameterオブジェクトの集合
 		/// Colletion of Parameter object parsed from code.
 		/// </returns>
+		/// <exception cref="ParserException"></exception>
 		public virtual IEnumerable<Parameter> Parse(string code)
 		{
+			if ((string.IsNullOrEmpty(code)) || (string.IsNullOrWhiteSpace(code)))
+			{
+				throw new ParserException(ParserError.CODE_EMPTY);
+			}
 			string codeLine = IntoALine(code);
 			IEnumerable<string> nodeCollection = NodeToCollection(codeLine, CodeDeliminator);
 			IEnumerable<Parameter> parameters = ParseNode(nodeCollection);
@@ -48,6 +54,7 @@ namespace FunctionParser
 		/// 解析したParameterオブジェクトの集合
 		/// Colletion of Parameter object parsed from code.
 		/// </returns>
+		/// <exception cref="NullReferenceException"></exception>
 		protected virtual IEnumerable<Parameter> ParseNode(IEnumerable<string> nodes)
 		{
 			var parameters = new List<Parameter>();
@@ -57,6 +64,12 @@ namespace FunctionParser
 				{
 					Parameter parameter = ParseNode(node);
 					parameters.Add(parameter);
+				}
+				catch (ParserException ex)
+				{
+					Console.WriteLine("An exception detected while parse parameter.");
+					Console.WriteLine($"Error code : 0x{ex.Code:X8}");
+					Console.WriteLine("Skip the node.");
 				}
 				catch (ArgumentException)
 				{
@@ -73,42 +86,54 @@ namespace FunctionParser
 		/// <param name="node">String to be parsed.</param>
 		/// <returns>Parameter object parsed from node.</returns>
 		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ParameterException"></exception>
+		/// <exception cref="ParserException"></exception>
 		protected virtual Parameter ParseNode(string node)
 		{
 			try
 			{
+				ParseNode(node, out Parameter parameter);
+				parameter.Validate();
+
+				return parameter;
+			}
+			catch (ParserException)
+			{
+				throw;
+			}
+		}
+
+		protected virtual void ParseNode(string node, out Parameter parameter)
+		{
+			try
+			{
 				(string type, string name) = SplitToDataTypeAndName(node);
-				(IEnumerable<string> modifier, string dataType) = SplitToModifierAndName(type);
-				if ((dataType.ToLower().Equals("void")) && 
-					((string.IsNullOrEmpty(name)) || (string.IsNullOrWhiteSpace(name))))
-				{
-					throw new ArgumentException();
-				}
-				var parameter = new Parameter()
+				(IEnumerable<string> modifier, string dataType) = SplitToModifierAndType(type);
+				parameter = new Parameter()
 				{
 					Name = name,
 					DataType = dataType,
-					PreModifiers = modifier,
-					FileName = string.Empty
+					PreModifiers = modifier
 				};
-				return parameter;
+			}
+			catch (ParserException)
+			{
+				throw;
 			}
 			catch (ArgumentException)
 			{
 				bool isVoid = IsVoid(node);
 				if (isVoid)
 				{
-					var parameter = new Parameter()
+					parameter = new Parameter()
 					{
 						Name = string.Empty,
-						DataType = node,
-						FileName = string.Empty
+						DataType = node
 					};
-					return parameter;
 				}
 				else
 				{
-					throw;
+					throw new ParserException(ParserError.INVALID_DATA_TYPE_VOID);
 				}
 			}
 		}
@@ -125,6 +150,7 @@ namespace FunctionParser
 		/// 分割された、タプル形式のデータ型と名前
 		/// Splitted data type and name in tuple type.
 		/// </returns>
+		/// <exception cref="ArgumentException"></exception>
 		protected virtual (string dataType, string name) SplitToDataTypeAndName(string node)
 		{
 			List<string> nodeCollection = NodeToCollection(node, CodeDeliminator_TYPE_AND_NAME).ToList();
@@ -140,7 +166,20 @@ namespace FunctionParser
 			return (dataType, name);
 		}
 
-		protected virtual (IEnumerable<string> modifier, string name) SplitToModifierAndName(string node)
+		/// <summary>
+		/// ノードを、修飾子とデータ型に分割します。
+		/// Split the node into modifier and data type.
+		/// </summary>
+		/// <param name="node">
+		/// 分割対象のノード
+		/// Node to be splitted.
+		/// </param>
+		/// <returns>
+		/// 分割された修飾子とデータ型(タプル形式)
+		/// Modifier and data type in tuple.
+		/// </returns>
+		/// <exception cref="ArgumentException"></exception>
+		protected virtual (IEnumerable<string> modifier, string name) SplitToModifierAndType(string node)
 		{
 			List<string> modifier = null;
 			string name = string.Empty;

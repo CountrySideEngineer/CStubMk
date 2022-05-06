@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Parser;
+using Parser.SDK.Exception;
 using Parser.SDK.Model;
 using System;
 using System.Collections.Generic;
@@ -127,7 +128,7 @@ namespace FunctionParser_utest
 		[TestMethod]
 		[TestCategory("Parse")]
 		[TestCategory("FunctionParser")]
-		[ExpectedException(typeof(ArgumentException))]
+		[ExpectedException(typeof(ParameterException))]
 		public void Parse_Test_001_007()
 		{
 			string code = "int SampleFunction(int argument, void data)";
