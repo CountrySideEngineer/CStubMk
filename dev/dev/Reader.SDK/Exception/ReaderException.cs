@@ -51,5 +51,16 @@ namespace Reader.SDK.Exception
 		{
 			Code = errorCode;
 		}
+
+		/// <summary>
+		/// Constructor with argument.
+		/// </summary>
+		/// <param name="errorCode">Error code.</param>
+		/// <param name="innerException">Inner exception.</param>
+		public ReaderException(UInt32 errorCode, System.Exception innerException) 
+			: base(string.Empty, innerException)
+		{
+			Code = errorCode;
+		}
 	}
 }
