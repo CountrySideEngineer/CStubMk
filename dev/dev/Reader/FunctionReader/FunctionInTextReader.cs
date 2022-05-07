@@ -30,9 +30,9 @@ namespace Reader.FunctionReader
 
 				return paramterInformations;
 			}
-			catch (ArgumentException ex)
+			catch (ArgumentException)
 			{
-				throw new ReaderException(ex.Message);
+				throw new ReaderException(ReaderError.ERROR_WHILE_READING);
 			}
 			catch (ReaderException)
 			{
@@ -57,10 +57,15 @@ namespace Reader.FunctionReader
 				}
 				return allCode;
 			}
-			catch (IOException ex)
+			catch (Exception ex)
+			when ((ex is ArgumentException) ||
+				(ex is ArgumentNullException) ||
+				(ex is FileNotFoundException) ||
+				(ex is DirectoryNotFoundException) ||
+				(ex is NotSupportedException))
 			{
-				var exception = new ReaderException("The file can not open.", ex);
-				throw ex;
+				var exception = new ReaderException(ReaderError.INPUT_FILE_OPEN_FAILED);
+				throw exception;
 			}
 		}
 
@@ -74,7 +79,8 @@ namespace Reader.FunctionReader
 		{
 			if ((string.IsNullOrEmpty(srcCode)) || (string.IsNullOrWhiteSpace(srcCode)))
 			{
-				throw new ArgumentException("The codes are empty.");
+				var exception = new ReaderException(ReaderError.INPUT_FILE_FORMAT_INVALID);
+				throw exception;
 			}
 			//改行を削除
 			string replacedCode = srcCode.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", " ");
