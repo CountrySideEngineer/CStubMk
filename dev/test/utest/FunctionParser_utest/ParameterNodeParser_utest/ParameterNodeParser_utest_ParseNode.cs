@@ -1,5 +1,6 @@
 ﻿using FunctionParser;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Parser.SDK.Exception;
 using Parser.SDK.Model;
 using System;
 using System.Collections.Generic;
@@ -58,7 +59,7 @@ namespace ParameterNodeParser_utest
 		[TestMethod]
 		[TestCategory("ParameterNodeParser")]
 		[TestCategory("ParseNode")]
-		[ExpectedException(typeof(ArgumentException))]
+		[ExpectedException(typeof(ParserException))]
 		public void ParseNode_overload_001_test_004()
 		{
 			string code = "int";
@@ -72,7 +73,7 @@ namespace ParameterNodeParser_utest
 		[TestMethod]
 		[TestCategory("ParameterNodeParser")]
 		[TestCategory("ParseNode")]
-		[ExpectedException(typeof(ArgumentException))]
+		[ExpectedException(typeof(ParserException))]
 		public void ParseNode_overload_001_test_005()
 		{
 			string code = string.Empty;
@@ -130,7 +131,7 @@ namespace ParameterNodeParser_utest
 			IEnumerable<string> codes = new List<string>()
 			{
 				"int function_001",
-				"TYPE ",
+				"TYPE",
 			};
 			var parser = new ParameterNodeParser();
 			var parserPrivate = new PrivateObject(parser);
@@ -148,7 +149,7 @@ namespace ParameterNodeParser_utest
 		{
 			IEnumerable<string> codes = new List<string>()
 			{
-				"TYPE ",
+				"TYPE",
 				"int function_001",
 			};
 			var parser = new ParameterNodeParser();

@@ -1,4 +1,5 @@
-﻿using Parser.SDK.Model;
+﻿using Parser.SDK.Exception;
+using Parser.SDK.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,27 +10,14 @@ namespace FunctionParser
 {
 	public class VariableNodeParser : ParameterNodeParser
 	{
-		/// <summary>
-		/// Parse node and change it into Variable object.
-		/// </summary>
-		/// <param name="node">String to be parsed.</param>
-		/// <returns>Variable object parsed from node.</returns>
-		/// <exception cref="ArgumentException"></exception>
-		protected override Parameter ParseNode(string node)
+		protected override void ParseNode(string node, out Parameter parameter)
 		{
-			try
-			{
-				Parameter baseParameter = base.ParseNode(node);
-				Parameter variable = new Variable();
-				baseParameter.CopyTo(variable);
-				((Variable)variable).PointerNum = GetPointerNum(baseParameter.DataType);
-				((Variable)variable).DataType = RemovePointer(baseParameter.DataType);
-				return variable;
-			}
-			catch (ArgumentException ex)
-			{
-				throw ex;
-			}
+			base.ParseNode(node, out Parameter baseParameter);
+			parameter = new Variable();
+			baseParameter.CopyTo(parameter);
+			var variable = parameter as Variable;
+			variable.PointerNum = GetPointerNum(baseParameter.DataType);
+			variable.DataType = RemovePointer(baseParameter.DataType);
 		}
 
 		/// <summary>

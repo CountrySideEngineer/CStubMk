@@ -90,7 +90,7 @@ namespace Parser.SDK.Model
 
 			if (PointerNum < 0)
 			{
-				throw new ParameterException(ParserError.INVALID_POINER_LEVEL);
+				throw new ParameterException(ParserError.INVALID_POINTER_LEVEL);
 			}
 		}
 	}

@@ -89,11 +89,12 @@ namespace ExcelReader
                 var workBook = new XLWorkbook(_excelStream);
                 var workSheet = workBook.Worksheet(SheetName);
                 var itemCell = workSheet.CellsUsed()
-                    .Where(_ => (0 == string.Compare(_.GetString(), item)) &&
-                    (range.StartRow <= Convert.ToUInt64(_.Address.RowNumber)) && 
-                    ((Convert.ToUInt64(_.Address.RowNumber) <= (range.StartRow + range.RowCount - 1))) &&
-                    (range.StartColumn <= Convert.ToUInt64(_.Address.ColumnNumber)) &&
-                    ((Convert.ToUInt64(_.Address.ColumnNumber) <= (range.StartColumn + range.ColumnCount - 1))))
+                    .Where(_ =>
+                        (0 == string.Compare(_.GetString(), item)) &&
+                        (range.StartRow <= Convert.ToUInt64(_.Address.RowNumber)) && 
+                        ((Convert.ToUInt64(_.Address.RowNumber) <= (range.StartRow + range.RowCount - 1))) &&
+                        (range.StartColumn <= Convert.ToUInt64(_.Address.ColumnNumber)) &&
+                        ((Convert.ToUInt64(_.Address.ColumnNumber) <= (range.StartColumn + range.ColumnCount - 1))))
                     .FirstOrDefault();
                 var itemRange = new Range()
                 {
@@ -124,10 +125,11 @@ namespace ExcelReader
                 var workBook = new XLWorkbook(_excelStream);
                 var workSheet = workBook.Worksheet(SheetName);
                 var itemCell = workSheet.CellsUsed()
-                    .Where(_ => (0 == string.Compare(_.GetString(), item)) &&
-                    (range.StartRow <= Convert.ToUInt64(_.Address.RowNumber)) &&
-                    ((Convert.ToUInt64(_.Address.RowNumber) <= (range.StartRow + range.RowCount - 1))) &&
-                    (Convert.ToUInt64(_.Address.ColumnNumber) == range.StartColumn))
+                    .Where(_ =>
+                        (0 == string.Compare(_.GetString(), item)) &&
+                        (range.StartRow <= Convert.ToUInt64(_.Address.RowNumber)) &&
+                        ((Convert.ToUInt64(_.Address.RowNumber) <= (range.StartRow + range.RowCount - 1))) &&
+                        (Convert.ToUInt64(_.Address.ColumnNumber) == range.StartColumn))
                     .FirstOrDefault();
                 var itemRange = new Range()
                 {
@@ -158,10 +160,11 @@ namespace ExcelReader
                 var workBook = new XLWorkbook(_excelStream);
                 var workSheet = workBook.Worksheet(SheetName);
                 var itemCell = workSheet.CellsUsed()
-                    .Where(_ => (0 == string.Compare(_.GetString(), item)) &&
-                    (Convert.ToUInt64(_.Address.RowNumber) == range.StartRow) &&
-                    (range.StartColumn <= Convert.ToUInt64(_.Address.ColumnNumber)) &&
-                    ((Convert.ToUInt64(_.Address.ColumnNumber) <= (range.StartColumn + range.ColumnCount - 1))))
+                    .Where(_ =>
+                        (0 == string.Compare(_.GetString(), item)) &&
+                        (Convert.ToUInt64(_.Address.RowNumber) == range.StartRow) &&
+                        (range.StartColumn <= Convert.ToUInt64(_.Address.ColumnNumber)) &&
+                        ((Convert.ToUInt64(_.Address.ColumnNumber) <= (range.StartColumn + range.ColumnCount - 1))))
                     .FirstOrDefault();
                 var itemRange = new Range()
                 {
@@ -229,9 +232,10 @@ namespace ExcelReader
                 var workBook = new XLWorkbook(_excelStream);
                 var workSheet = workBook.Worksheet(SheetName);
                 var cells = workSheet.CellsUsed()
-                    .Where(_ => (Convert.ToUInt64(_.Address.RowNumber) == range.StartRow) &&
-                    (range.StartColumn <= Convert.ToUInt64(_.Address.ColumnNumber)) &&
-                    ((Convert.ToUInt64(_.Address.ColumnNumber) <= (range.StartColumn + range.ColumnCount - 1))));
+                    .Where(_ =>
+                        (Convert.ToUInt64(_.Address.RowNumber) == range.StartRow) &&
+                        (range.StartColumn <= Convert.ToUInt64(_.Address.ColumnNumber)) &&
+                        ((Convert.ToUInt64(_.Address.ColumnNumber) <= (range.StartColumn + range.ColumnCount - 1))));
                 var items = new List<string>();
                 foreach (var cell in cells)
 				{
@@ -260,9 +264,10 @@ namespace ExcelReader
                 var workBook = new XLWorkbook(_excelStream);
                 var workSheet = workBook.Worksheet(SheetName);
                 var cells = workSheet.CellsUsed()
-                    .Where(_ => (range.StartRow <= Convert.ToUInt64(_.Address.RowNumber)) &&
-                    ((Convert.ToUInt64(_.Address.RowNumber) <= (range.StartRow + range.RowCount - 1))) &&
-                    (range.StartColumn == Convert.ToUInt64(_.Address.ColumnNumber)));
+                    .Where(_ =>
+                        (range.StartRow <= Convert.ToUInt64(_.Address.RowNumber)) &&
+                        ((Convert.ToUInt64(_.Address.RowNumber) <= (range.StartRow + range.RowCount - 1))) &&
+                        (range.StartColumn == Convert.ToUInt64(_.Address.ColumnNumber)));
                 var items = new List<string>();
                 foreach (var cell in cells)
                 {

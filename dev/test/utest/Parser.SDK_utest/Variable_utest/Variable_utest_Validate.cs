@@ -109,7 +109,7 @@ namespace Variable_utest
 			}
 			catch (ParameterException ex)
 			{
-				Assert.AreEqual(ParserError.INVALID_POINER_LEVEL, ex.Code);
+				Assert.AreEqual(ParserError.INVALID_POINTER_LEVEL, ex.Code);
 			}
 		}
 	}

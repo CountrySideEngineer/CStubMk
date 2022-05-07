@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,9 +43,19 @@ namespace Reader.FunctionReader
 				}
 
 			}
-			catch (IOException ex)
+			catch (Exception ex)
+			when ((ex is ArgumentException) ||
+				(ex is ArgumentNullException) ||
+				(ex is NotSupportedException) ||
+				(ex is FileNotFoundException) ||
+				(ex is IOException) ||
+				(ex is SecurityException) ||
+				(ex is DirectoryNotFoundException) ||
+				(ex is PathTooLongException) ||
+				(ex is ArgumentOutOfRangeException))
 			{
-				var exception = new ReaderException("The file can not open.", ex);
+				var exception = 
+					new ReaderException(ReaderError.INPUT_FILE_OPEN_FAILED, "The file can not open.", ex);
 				throw exception;
 			}
 		}
@@ -75,11 +86,11 @@ namespace Reader.FunctionReader
 				IEnumerable<ParameterInformation> paramInfos = ReadFunctinoDefinitions(excelReader, tableRange);
 				return paramInfos;
 			}
-			catch (Exception ex)
-			when (ex is ExcelReaderException)
+			catch (ExcelReaderException ex)
 			{
-				var exception = 
+				var exception =
 					new ReaderException(
+						ReaderError.ERROR_WHILE_READING,
 						$"An exception detected while getting a table range in {_sheetName}",
 						ex);
 				throw exception;
@@ -130,7 +141,10 @@ namespace Reader.FunctionReader
 				(ex is ArgumentOutOfRangeException) ||
 				(ex is ExcelReaderException))
 			{
-				var exception = new ReaderException($"An exception detected while reading {_sheetName}", ex);
+				var exception =
+					new ReaderException(
+						ReaderError.ERROR_WHILE_READING,
+						$"An exception detected while reading {_sheetName}", ex);
 				throw exception;
 			}
 		}
