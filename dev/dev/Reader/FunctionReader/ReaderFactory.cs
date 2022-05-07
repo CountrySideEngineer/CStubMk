@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Reader.SDK.Exception;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,8 @@ namespace Reader.FunctionReader
 		{
 			if (!(System.IO.File.Exists(inputFile)))
 			{
-				throw new ArgumentException();
+				var exception = new ReaderException(ReaderError.INPUT_FILE_OPEN_FAILED);
+				throw exception;
 			}
 
 			AFunctionReader reader = null;
@@ -30,7 +32,8 @@ namespace Reader.FunctionReader
 			}
 			else
 			{
-				throw new NotSupportedException();
+				var exception = new ReaderException(ReaderError.INPUT_FILE_NOT_SUPPORTED);
+				throw exception;
 			}
 			return reader;
 		}
