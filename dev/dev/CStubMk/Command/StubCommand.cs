@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +20,9 @@ namespace CStubMk.Command
 {
 	public class StubCommand : ICommand
 	{
+		protected string StubSourcePostFix = "_stub.cpp";
+		protected string StubHeaderPostFix = "_stub.h";
+
 		/// <summary>
 		/// Execute "stub" command
 		/// </summary>
@@ -58,20 +62,22 @@ namespace CStubMk.Command
 				}
 				else
 				{
-					throw new FileNotFoundException();
+					string message = "Target file can not open.";
+					throw new UnauthorizedAccessException(message);
 				}
 
 				return;
 			}
-			catch (ReaderException)
+			catch (ReaderException ex)
 			{
-				throw new Exception("An exception has been detected while reading input file.");
+				string message = "An exception has been detected while reading input file. " +
+					$"Errro code - 0x{ex.Code:X8}";
+				throw new Exception(message);
 			}
 			catch (ParserException ex)
 			{
-				string message = $"An exception has been detected while parsing data." +
-					Environment.NewLine +
-					$"Error code - 0x{ex.Code.ToString("X8")}";
+				string message = $"An exception has been detected while parsing data. " +
+					$"Error code - 0x{ex.Code:X8}";
 				throw new Exception(message);
 			}
 		}
@@ -147,22 +153,123 @@ namespace CStubMk.Command
 			}
 		}
 
+		/// <summary>
+		/// コードをファイルに書き込みます。
+		/// Write code into a file.
+		/// </summary>
+		/// <param name="path">Path to file to write code into.</param>
+		/// <param name="code">Code to write.</param>
+		/// <exception cref=UnauthorizedAccessException"/>
+		/// <exception cref=ArgumentException"/>
+		/// <exception cref=ArgumentNullException"/>
+		/// <exception cref=DirectoryNotFoundException"/>
+		/// <exception cref=IOException"/>
+		/// <exception cref=PathTooLongException"/>
+		/// <exception cref=SecurityException"/>
 		protected void WriteCode(string path, string code)
 		{
-			using (var stream = new StreamWriter(path, false, Encoding.UTF8))
+			try
 			{
-				stream.Write(code);
+				using (var stream = new StreamWriter(path, false, Encoding.UTF8))
+				{
+					stream.Write(code);
+				}
+			}
+			catch (Exception ex)
+			when ((ex is UnauthorizedAccessException) || 
+				(ex is ArgumentException) || 
+				(ex is ArgumentNullException) || 
+				(ex is DirectoryNotFoundException) || 
+				(ex is IOException) || 
+				(ex is PathTooLongException) || 
+				(ex is SecurityException))
+			{
+				throw;
 			}
 		}
 
+		/// <summary>
+		/// スタブファイルのパスを生成します。
+		/// Create path to stub file.
+		/// </summary>
+		/// <param name="inputInfo">
+		/// 入力情報
+		/// Input file information.
+		/// </param>
+		/// <returns></returns>
 		protected (string, string) GetStubFilePath(InputInfo inputInfo)
 		{
-			string inputFileName = System.IO.Path.GetFileNameWithoutExtension(inputInfo.TargetFilePath);
-			string stubSrcFileName = $"{inputFileName}_stub.cpp";
-			string stubHdrFileName = $"{inputFileName}_stub.h";
-			string stubSrcFilePath = System.IO.Path.Combine(inputInfo.OuptutDirPath, stubSrcFileName);
-			string stubHdrFilePath = System.IO.Path.Combine(inputInfo.OuptutDirPath, stubHdrFileName);
+			string stubSrcFilePath = GetStubSourceFilePath(inputInfo);
+			string stubHdrFilePath = GetStubHeaderFilePath(inputInfo);
 			return (stubSrcFilePath, stubHdrFilePath);
+		}
+
+		/// <summary>
+		/// スタブのソースファイルのパスを生成します。
+		/// Create path to stub source file.
+		/// </summary>
+		/// <param name="inputInfo">
+		/// 入力情報
+		/// Input file information
+		/// </param>
+		/// <returns>
+		/// スタブのソースファイルのパス
+		/// Path to stub source file.
+		/// </returns>
+		protected virtual string GetStubSourceFilePath(InputInfo inputInfo)
+		{
+			string filePath = GetStubFilePath(inputInfo, StubSourcePostFix);
+			return filePath;
+		}
+
+		/// <summary>
+		/// スタブのヘッダファイルのパスを生成します。
+		/// Create path to stub header file.
+		/// </summary>
+		/// <param name="inputInfo">
+		/// 入力情報
+		/// Input file information
+		/// </param>
+		/// <returns>
+		/// スタブのヘッダファイルのパス
+		/// Path to stub header file.
+		/// </returns>
+		protected virtual string GetStubHeaderFilePath(InputInfo inputInfo)
+		{
+			string filePath = GetStubFilePath(inputInfo, StubHeaderPostFix);
+			return filePath;
+		}
+
+		/// <summary>
+		/// 生成するスタブファイルのパスを生成します。
+		/// Create path to file to stub file to create.
+		/// </summary>
+		/// <param name="inputInfo">
+		/// 入力情報
+		/// Input file information.
+		/// </param>
+		/// <param name="postFix">
+		/// ファイルの後置修飾子(拡張子含む)
+		/// Post fix including extention.
+		/// </param>
+		/// <returns>
+		/// スタブファイルへのパス
+		/// Path to stub file.
+		/// </returns>
+		/// <exception cref="ArgumentException"></exception>
+		protected virtual string GetStubFilePath(InputInfo inputInfo, string postFix)
+		{
+			try
+			{
+				string inputFileName = System.IO.Path.GetFileNameWithoutExtension(inputInfo.TargetFilePath);
+				string stubFileName = $"{inputFileName}_{postFix}";
+				string stubFilePath = System.IO.Path.Combine(inputInfo.OuptutDirPath, stubFileName);
+				return stubFilePath;
+			}
+			catch (ArgumentException)
+			{
+				throw new ArgumentException("Input information invalid.");
+			}
 		}
 	}
 }
