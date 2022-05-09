@@ -20,8 +20,8 @@ namespace CStubMk.Command
 {
 	public class StubCommand : ICommand
 	{
-		protected string StubSourcePostFix = "_stub.cpp";
-		protected string StubHeaderPostFix = "_stub.h";
+		protected string StubSourcePostFix = "stub.cpp";
+		protected string StubHeaderPostFix = "stub.h";
 
 		/// <summary>
 		/// Execute "stub" command
