@@ -1,0 +1,6 @@
+int SampleFunc1(void);
+int SampleFunc2(int input);
+int SampleFunc3(int* input);
+void SampleFunc4(int input1, int* input2);
+void SampleFunc5(int input1, int** input2);
+void SampleFunc6(int input1, int** input2, int* input3);
