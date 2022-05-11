@@ -20,8 +20,11 @@ jobs:
       run: |
         msbuild /restore ./dev/test/utest/Reader_utest/Reader_utest.sln
         msbuild /m ./dev/test/utest/Reader_utest/Reader_utest.sln /p:Configuration=debug /p:platform="Any CPU"
+        msbuild /restore ./dev/test/utest/Parser.SDK_utest/Parser.SDK_utest.sln
         msbuild /m ./dev/test/utest/Parser.SDK_utest/Parser.SDK_utest.sln /p:Configuration=debug /p:platform="Any CPU"
+        msbuild /restore ./dev/test/utest/FunctionParser_utest/FunctionParser_utest.sln
         msbuild /m ./dev/test/utest/FunctionParser_utest/FunctionParser_utest.sln /p:Configuration=debug /p:platform="Any CPU"
+        msbuild /restore ./dev/test/utest/CodeTemplate_test/CodeTemplate_test.sln
         msbuild /m ./dev/test/utest/CodeTemplate_test/CodeTemplate_test.sln /p:Configuration=debug /p:platform="Any CPU"
 
     - name: Run unit test
