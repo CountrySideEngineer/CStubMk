@@ -1,0 +1,33 @@
+name: CI test
+
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    name: Run test and build
+    runs-on: windows-2019
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+      
+    - name: Setup VSTest.console.exe
+      uses: darenm/Setup-VSTest@v1
+      
+    - name: Build unit test solutions
+      run: |
+        msbuild /restore ./dev/test/utest/Reader_utest/Reader_utest.sln
+        msbuild /m ./dev/test/utest/Reader_utest/Reader_utest.sln /p:Configuration=debug /p:platform="Any CPU"
+        msbuild /m ./dev/test/utest/Parser.SDK_utest/Parser.SDK_utest.sln /p:Configuration=debug /p:platform="Any CPU"
+        msbuild /m ./dev/test/utest/FunctionParser_utest/FunctionParser_utest.sln /p:Configuration=debug /p:platform="Any CPU"
+        msbuild /m ./dev/test/utest/CodeTemplate_test/CodeTemplate_test.sln /p:Configuration=debug /p:platform="Any CPU"
+
+    - name: Run unit test
+      run: |
+        VSTest.console.exe ./dev/test/utest/Reader_utest/ReaderFactory_utest/bin/Debug/ReaderFactory_utest.dll
+        VSTest.console.exe ./dev/test/utest/Reader_utest/Reader_utest/bin/Debug/Reader_utest.dll
+        VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Function_utest/bin/Debug/Function_utest.dll
+        VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Parameter_utest/bin/Debug/Parameter_utest.dll
+        VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Variable_utest/bin/Debug/Variable_utest.dll
