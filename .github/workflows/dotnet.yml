@@ -15,6 +15,17 @@ jobs:
       
     - name: Setup VSTest.console.exe
       uses: darenm/Setup-VSTest@v1
+
+    - name: Build CStubMk and dlls the application uses
+      run: |
+        msbuild /restore ./dev/dev/Reader.sln
+        msbuild /m ./dev/dev/Reader.sln /p:Configuration=Release /p:platform="Any CPU"
+        msbuild /restore ./dev/dev/Parser.sln
+        msbuild /m ./dev/dev/Parser.sln /p:Configuration=Release /p:platform="Any CPU"
+        msbuild /restore ./dev/dev/CodeTemplate.sln
+        msbuild /m ./dev/dev/CodeTemplate.sln /p:Configuration=Release /p:platform="Any CPU"
+        msbuild /restore ./dev/dev/CStubMk.sln
+        msbuild /m ./dev/dev/CStubMk.sln /p:Configuration=Release /p:platform="Any CPU"
       
     - name: Build unit test solutions
       run: |
