@@ -14,5 +14,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1
       
     - name: Build unit test solutions
-      run:  msbuild /m ./dev/test/utest/Reader_utest/Reader_utest.sln /p:Configuration=debug /p:platform="Any CPU"
+      run: |
+        msbuild /restore ./dev/test/utest/Reader_utest/Reader_utest.sln
+        msbuild /m ./dev/test/utest/Reader_utest/Reader_utest.sln /p:Configuration=debug /p:platform="Any CPU"
       
