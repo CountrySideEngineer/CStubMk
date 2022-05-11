@@ -13,8 +13,15 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
       
+    - name: Setup VSTest.console.exe
+      uses: darenm/Setup-VSTest@v1
+      
     - name: Build unit test solutions
       run: |
         msbuild /restore ./dev/test/utest/Reader_utest/Reader_utest.sln
         msbuild /m ./dev/test/utest/Reader_utest/Reader_utest.sln /p:Configuration=debug /p:platform="Any CPU"
       
+    - name: Run unit test
+      run: |
+        VSTest.console.exe ./dev/test/utest/Reader_utest/ReaderFactory_utest/bin/Debug/ReaderFactory_utest.dll
+        VSTest.console.exe ./dev/test/utest/Reader_utest/Reader_utest/bin/Debug/Reader_utest.dll
