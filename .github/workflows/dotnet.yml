@@ -41,7 +41,7 @@ jobs:
     - name: Run unit test
       run: |
         VSTest.console.exe /help
-        VSTest.console.exe ./dev/test/utest/Reader_utest/ReaderFactory_utest/bin/Debug/ReaderFactory_utest.dll /Logger:trx /LogFileName=ReaderFactory_utest.xml
+        VSTest.console.exe ./dev/test/utest/Reader_utest/ReaderFactory_utest/bin/Debug/ReaderFactory_utest.dll /Logger:"trx;LogFileName=utest/ReaderFactory_utest.xml"
         VSTest.console.exe ./dev/test/utest/Reader_utest/Reader_utest/bin/Debug/Reader_utest.dll
         VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Function_utest/bin/Debug/Function_utest.dll
         VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Parameter_utest/bin/Debug/Parameter_utest.dll
@@ -51,5 +51,5 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action/composite@v1
       if: always()
       with:
-        files: "TestResults/*.xml"
+        files: "TestResults/**/*.xml"
     
