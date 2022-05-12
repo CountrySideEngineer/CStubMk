@@ -61,6 +61,9 @@
     <Compile Include="..\..\..\..\dev\CodeTemplate\Template\Part\StubCodeTemplateCommonBase_part.cs">
       <Link>StubCodeTemplateCommonBase_part.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\..\dev\CodeTemplate\Template\StubCodeTemplateCommonBase.cs">
+      <Link>StubCodeTemplateCommonBase.cs</Link>
+    </Compile>
     <Compile Include="StubBufferInitTemplate_StubInitializeEntryPoint_test.cs" />
     <Compile Include="StubBufferInitTemplate_ArgBufferInit_test.cs" />
     <Compile Include="StubBufferInitTemplate_ReturnValueViaPointerBufferInit_test.cs" />
