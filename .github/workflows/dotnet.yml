@@ -40,7 +40,6 @@ jobs:
 
     - name: Run unit test
       run: |
-        VSTest.console.exe /help
         VSTest.console.exe ./dev/test/utest/Reader_utest/ReaderFactory_utest/bin/Debug/ReaderFactory_utest.dll /Logger:"trx;LogFileName=utest/ReaderFactory_utest.xml"
         VSTest.console.exe ./dev/test/utest/Reader_utest/Reader_utest/bin/Debug/Reader_utest.dll
         VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Function_utest/bin/Debug/Function_utest.dll
@@ -50,5 +49,6 @@ jobs:
     - name: Upload artifact test
       uses: actions/upload-artifact@v1
       with:
+        name: test-result
         path: ./TestResults/*.xml
         
