@@ -39,12 +39,10 @@ jobs:
         msbuild /m ./dev/test/utest/CodeTemplate_test/CodeTemplate_test.sln /p:Configuration=debug /p:platform="Any CPU"
 
     - name: Run unit test
-      run: |
-        VSTest.console.exe ./dev/test/utest/Reader_utest/ReaderFactory_utest/bin/Debug/ReaderFactory_utest.dll /Logger:"trx;LogFileName=utest/ReaderFactory_utest.xml"
-        VSTest.console.exe ./dev/test/utest/Reader_utest/Reader_utest/bin/Debug/Reader_utest.dll
-        VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Function_utest/bin/Debug/Function_utest.dll
-        VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Parameter_utest/bin/Debug/Parameter_utest.dll
-        VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Variable_utest/bin/Debug/Variable_utest.dll
+      run: VSTest.console.exe ./dev/test/utest/Reader_utest/ReaderFactory_utest/bin/Debug/ReaderFactory_utest.dll /Logger:"trx;LogFileName=ReaderFactory_utest.xml"
+      
+    - name: Run unit test 002    
+      run:  VSTest.console.exe ./dev/test/utest/Reader_utest/Reader_utest/bin/Debug/Reader_utest.dll /Logger:"trx;LogFileName=Reader_utest.xml"
 
     - name: Upload artifact test
       uses: actions/upload-artifact@v1
