@@ -45,3 +45,10 @@ jobs:
         VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Function_utest/bin/Debug/Function_utest.dll
         VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Parameter_utest/bin/Debug/Parameter_utest.dll
         VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Variable_utest/bin/Debug/Variable_utest.dll
+
+    - name: Publish Unit Test results
+      uses: EnricoMi/publish-unit-test-result-action/composite@v1
+      if: always()
+      with:
+        files: "test-results/**/*.xml"
+    
