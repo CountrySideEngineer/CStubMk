@@ -50,5 +50,5 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action/composite@v1
       if: always()
       with:
-        files: "ReaderFactory_utest.xml"
+        files: "TestResults/ReaderFactory_utest.xml"
     
