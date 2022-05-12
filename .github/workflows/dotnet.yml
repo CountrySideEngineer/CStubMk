@@ -47,9 +47,8 @@ jobs:
         VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Parameter_utest/bin/Debug/Parameter_utest.dll
         VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Variable_utest/bin/Debug/Variable_utest.dll
 
-    - name: Publish Unit Test results
-      uses: EnricoMi/publish-unit-test-result-action/composite@v1
-      if: always()
+    - name: Upload artifact test
+      uses: actions/upload-artifact@v1
       with:
-        files: "TestResults/**/*.xml"
-    
+        path: ./TestResults/*.xml
+        
