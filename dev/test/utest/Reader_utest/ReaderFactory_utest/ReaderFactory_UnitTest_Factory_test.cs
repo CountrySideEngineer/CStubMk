@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Reader;
 using Reader.FunctionReader;
+using Reader.SDK.Exception;
 using System;
 
 namespace ReaderFactory_utest
@@ -253,61 +254,91 @@ namespace ReaderFactory_utest
 		[TestMethod]
 		[TestCategory("ReaderFactory")]
 		[TestCategory("Factory")]
-		[ExpectedException(typeof(NotSupportedException))]
 		public void Factory_Test_023()
 		{
-			string inputFile = @"..\SampleFile.sxt";
-			AFunctionReader reader = ReaderFactory.Factory(inputFile);
+			try
+			{
+				string inputFile = @"..\SampleFile.sxt";
+				AFunctionReader reader = ReaderFactory.Factory(inputFile);
 
-			Assert.Fail();
+				Assert.Fail();
+			}
+			catch (ReaderException ex)
+			{
+				Assert.AreEqual(ex.Code, ReaderError.INPUT_FILE_NOT_SUPPORTED);
+			}
 		}
 
 		[TestMethod]
 		[TestCategory("ReaderFactory")]
 		[TestCategory("Factory")]
-		[ExpectedException(typeof(NotSupportedException))]
 		public void Factory_Test_024()
 		{
-			string inputFile = @"..\SampleFile.uxt";
-			AFunctionReader reader = ReaderFactory.Factory(inputFile);
+			try
+			{
+				string inputFile = @"..\SampleFile.uxt";
+				AFunctionReader reader = ReaderFactory.Factory(inputFile);
 
-			Assert.Fail();
+				Assert.Fail();
+			}
+			catch (ReaderException ex)
+			{
+				Assert.AreEqual(ex.Code, ReaderError.INPUT_FILE_NOT_SUPPORTED);
+			}
 		}
 
 		[TestMethod]
 		[TestCategory("ReaderFactory")]
 		[TestCategory("Factory")]
-		[ExpectedException(typeof(NotSupportedException))]
 		public void Factory_Test_025()
 		{
-			string inputFile = @"..\SampleFile.txs";
-			AFunctionReader reader = ReaderFactory.Factory(inputFile);
+			try
+			{
+				string inputFile = @"..\SampleFile.txs";
+				AFunctionReader reader = ReaderFactory.Factory(inputFile);
 
-			Assert.Fail();
+				Assert.Fail();
+			}
+			catch (ReaderException ex)
+			{
+				Assert.AreEqual(ex.Code, ReaderError.INPUT_FILE_NOT_SUPPORTED);
+			}
 		}
 
 		[TestMethod]
 		[TestCategory("ReaderFactory")]
 		[TestCategory("Factory")]
-		[ExpectedException(typeof(NotSupportedException))]
 		public void Factory_Test_026()
 		{
-			string inputFile = @"..\SampleFile.txu";
-			AFunctionReader reader = ReaderFactory.Factory(inputFile);
+			try
+			{
+				string inputFile = @"..\SampleFile.txu";
+				AFunctionReader reader = ReaderFactory.Factory(inputFile);
 
-			Assert.Fail();
+				Assert.Fail();
+			}
+			catch (ReaderException ex)
+			{
+				Assert.AreEqual(ex.Code, ReaderError.INPUT_FILE_NOT_SUPPORTED);
+			}
 		}
 
 		[TestMethod]
 		[TestCategory("ReaderFactory")]
 		[TestCategory("Factory")]
-		[ExpectedException(typeof(ArgumentException))]
 		public void Factory_Test_027()
 		{
-			string inputFile = @"..\unknown.txt";
-			AFunctionReader reader = ReaderFactory.Factory(inputFile);
+			try
+			{
+				string inputFile = @"..\unknown.txt";
+				AFunctionReader reader = ReaderFactory.Factory(inputFile);
 
-			Assert.Fail();
+				Assert.Fail();
+			}
+			catch (ReaderException ex)
+			{
+				Assert.AreEqual(ex.Code, ReaderError.INPUT_FILE_OPEN_FAILED);
+			}
 		}
 	}
 }

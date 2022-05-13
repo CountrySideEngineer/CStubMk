@@ -83,7 +83,7 @@ namespace Reader.FunctionReader
 				throw exception;
 			}
 			//改行を削除
-			string replacedCode = srcCode.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", " ");
+			string replacedCode = srcCode.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "");
 			char[] deliminators = new char[]
 			{
 				';'
