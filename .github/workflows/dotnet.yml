@@ -38,10 +38,29 @@ jobs:
         msbuild /restore ./dev/test/utest/CodeTemplate_test/CodeTemplate_test.sln
         msbuild /m ./dev/test/utest/CodeTemplate_test/CodeTemplate_test.sln /p:Configuration=debug /p:platform="Any CPU"
 
-    - name: Run unit test
-      run: |
-        VSTest.console.exe ./dev/test/utest/Reader_utest/ReaderFactory_utest/bin/Debug/ReaderFactory_utest.dll
-        VSTest.console.exe ./dev/test/utest/Reader_utest/Reader_utest/bin/Debug/Reader_utest.dll
-        VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Function_utest/bin/Debug/Function_utest.dll
-        VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Parameter_utest/bin/Debug/Parameter_utest.dll
-        VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Variable_utest/bin/Debug/Variable_utest.dll
+    - if: always()
+      name: Run unit test of ReaderFactory dll.
+      run: VSTest.console.exe ./dev/test/utest/Reader_utest/ReaderFactory_utest/bin/Debug/ReaderFactory_utest.dll /Logger:"trx;LogFileName=ReaderFactory_utest.xml"
+      
+    - if: always()
+      name: Run unit test of Reader dll.
+      run:  VSTest.console.exe ./dev/test/utest/Reader_utest/Reader_utest/bin/Debug/Reader_utest.dll /Logger:"trx;LogFileName=Reader_utest.xml"
+      
+    - if: always()
+      name: Run unit test of Parser.SDK dll, 001
+      run:  VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Function_utest/bin/Debug/Function_utest.dll /Logger:"trx;LogFileName=Fucntion_utest.xml"
+      
+    - if: always()
+      name: Run unit test of Parser.SDK dll, 002
+      run:  VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Parameter_utest/bin/Debug/Parameter_utest.dll /Logger:"trx;LogFileName=Parameter_utest.xml"
+      
+    - if: always()
+      name: Run unit test of Parser.SDK dll, 003
+      run:  VSTest.console.exe ./dev/test/utest/Parser.SDK_utest/Variable_utest/bin/Debug/Variable_utest.dll /Logger:"trx;LogFileName=Variable_utest.xml"
+
+    - name: Upload artifact test
+      uses: actions/upload-artifact@v1
+      with:
+        name: test-result
+        path: ./
+        
